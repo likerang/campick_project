@@ -1,0 +1,33 @@
+/* 
+ * 파일명: common.css
+ * 담당자: 박연미
+ * 작성일: 2025-08-28
+ * 최근 수정일: 2025-08-28
+ * 설명:  공통 CSS 파일
+ * 수정이력:
+ *  2025-08-28: 최초 작성
+*/
+
+
+/* variant */
+
+:root{
+    
+}
+/*  */
+
+
+
+/* layout common style */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+button{}
+
+.flex{
+    display: flex;
+}

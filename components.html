@@ -1,6 +1,6 @@
 <!-- 
  * 파일명: components.html
- * 담당자: 미정
+ * 담당자: 미정, 
  * 작성일: 2025-08-28
  * 최근 수정일: 2025-08-28
  * 설명:  공통 컴포넌트 HTML 템플릿
@@ -84,7 +84,7 @@
             padding: 12px 50px 12px 16px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: var(--변수명);
             background-color: #f8f9fa;
             outline: none;
         }
@@ -165,6 +165,178 @@
     </style>
     <!-- //header style -->
 
+
+
+    <!-- /* common_slide_content 스타일 */ -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .slide_container{
+            width: 780px;
+            height: 240px;
+            position: relative;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide-track {
+            display: flex;
+            width: 500%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slide {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20%;
+            height: 100%;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .slide:nth-child(1) {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .slide:nth-child(2) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .slide:nth-child(3) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .slide:nth-child(4) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .slide:nth-child(5) {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .slide-content {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .slide-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .slide-main-text {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-arrow.prev {
+            left: 20px;
+        }
+
+        .nav-arrow.next {
+            right: 20px;
+        }
+
+        /* Pagination Dots */
+        .pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .pagination-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .pagination-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .pagination-dot:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(1.1);
+        }
+
+        /* Bar-style pagination option */
+        .pagination.bar-style .pagination-dot {
+            width: 30px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .pagination.bar-style .pagination-dot.active {
+            transform: scaleX(1.5);
+        }
+    </style>
+    <!-- /* // common_slide_content 스타일 끝 */ -->
 </head>
 
 <body>
@@ -197,6 +369,60 @@
             </nav>
         </header>
         <!-- //header -->
+
+
+        <!-- common_slide_content -->
+        <div class="slider_container_common">
+            <div class="slider-wrapper">
+                <div class="slide-track" id="slideTrack">
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-title">슬라이드 1</div>
+                            <div class="slide-main-text">첫 번째<br>콘텐츠</div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-title">슬라이드 2</div>
+                            <div class="slide-main-text">두 번째<br>콘텐츠</div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-title">슬라이드 3</div>
+                            <div class="slide-main-text">세 번째<br>콘텐츠</div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-title">슬라이드 4</div>
+                            <div class="slide-main-text">네 번째<br>콘텐츠</div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="slide-title">슬라이드 5 </div>
+                            <div class="slide-main-text">다섯 번째<br>콘텐츠</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <button class="nav-arrow prev" onclick="prevSlide()">‹</button>
+            <button class="nav-arrow next" onclick="nextSlide()">›</button>
+
+            <!-- Pagination Dots (기본 원형) -->
+            <div class="pagination" id="pagination">
+                <div class="pagination-dot active" onclick="goToSlide(0)"></div>
+                <div class="pagination-dot" onclick="goToSlide(1)"></div>
+                <div class="pagination-dot" onclick="goToSlide(2)"></div>
+                <div class="pagination-dot" onclick="goToSlide(3)"></div>
+                <div class="pagination-dot" onclick="goToSlide(4)"></div>
+            </div>
+        </div>
+        <!-- //common_slide_content -->
+
     </div>
 
 </body>
