@@ -18,9 +18,9 @@
 - 수정이력 항목은 ``큰 변경 사항 발생 시 기록``
 
 ## 2-1. 주석 작성 방식
-```
+```js
 /*
----example---
+ ---example---
  * 파일명: store.tsx
  * 담당자: 김영태
  * 작성일: 2025-08-28
@@ -30,12 +30,12 @@
  *   - 2025-08-28: 기본 Redux store 세팅 (김영태)
  */
 
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/userSlice";
+ import { configureStore } from "@reduxjs/toolkit";
+ import userReducer from "./slices/userSlice";
 
-export const store = configureStore({
+ export const store = configureStore({
   reducer: {
     user: userReducer,
   },
-});
+ });
 ```
