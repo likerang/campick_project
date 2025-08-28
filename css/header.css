@@ -7,42 +7,45 @@
  * 수정이력:
  *  2025-08-28: 최초 작성
 */
-  
-  a{
 
+  .ir_pm {
+      position: absolute;
+      overflow: hidden;
+      width: 1px;
+      height: 1px;
+      clip-path: inset(50%);
+      white-space: nowrap;
+  }
+
+  .path_100 {
+      clip-path: none;
   }
 
   /* 헤더 스타일 */
   header {
+      width: 100%;
       border-bottom: 1px solid #D9D9D9;
       padding: 0 18px;
+      background-color: #fff;
   }
 
   .header_top {
       display: flex;
-      /* align-items: center; */
-      /* padding: 16px 24px; */
-      /* height : 49px;  */
-      width: 100%;
-      /* margin: 0 auto; */
+      align-items: center;
       gap: 24px;
   }
 
-  .logo {
-   background: url();
-
-  }
-
-
   .search_area {
-      flex: 1;
       position: relative;
-      max-width: 500px;
+      flex: 1;
+      width: 500px;
   }
 
   .search_area input {
       width: 100%;
-      padding: 12px 50px 12px 16px;
+      height: 40px;
+      padding-left: 48px;
+      font-size: 16px;
       border: 1px solid #D9D9D9;
       border-radius: 5px;
 
@@ -56,32 +59,27 @@
 
   .search_area button {
       position: absolute;
-      right: 12px;
+      width: 24px;
+      height: 24px;
+      left: 14px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 16px;
-      color: #666;
+      /* font-size: 16px; */
+      /* color: #666; */
+      background: url(../images/header_search.png) no-repeat center;
   }
 
-  .header_icons ul {
+  .user_menu ul {
       display: flex;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      list-style: none;
-      gap: 32px;
+      gap: 14px;
   }
 
-  .header_icons {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-  }
 
-  .header-icons li a {
+
+  .user_menu li a {
       font-size: 20px;
       cursor: pointer;
       padding: 4px;
