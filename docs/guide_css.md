@@ -35,7 +35,6 @@
 📖 **규칙 설명**
 - Part: `_` 1개 → 구조적 하위 요소
 - Variant: `__` 2개 → 옵션/스타일 변형
-- State: `is_` / `has_` → 동적 상태 (on/off, 보유 여부) 
 
 
 | 구분           | 규칙                   | 예시                                      |
@@ -43,7 +42,6 @@
 | 컴포넌트         | 독립적인 UI 블록           | `.card`, `.button`, `.modal`            |
 | 부분 (Part)    | 언더스코어 1개 `_` 사용      | `.card_title`, `.card_footer`           |
 | 변형 (Variant) | 언더스코어 2개 `__` 사용     | `.card__featured`, `.button__primary`   |
-| 상태 (State)   | 접두사 `is_`, `has_` 사용 | `.card.is_loading`, `.button.is_active` |
 
 
 
@@ -61,10 +59,6 @@
 .card__featured {}
 .card__small {}
 
-/* State */
-.card.is_loading {}
-.card.is_active {}
-.form.has_error {}
 ```
 
 ## 4. 단위
@@ -73,6 +67,7 @@
 | 폰트    | rem, em   | `font-size: 1rem;`                          |
 | 여백/크기 | px, %     | `padding: 16px; width: 50%;`                |
 | 색상    | HEX, RGBA | `color: #333; background: rgba(0,0,0,0.1);` |
+| 변수    | 변수 | `var(--변수명)` |
 
 
 ## 5. 주석
