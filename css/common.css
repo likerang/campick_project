@@ -1,6 +1,6 @@
 /* 
  * 파일명: common.css
- * 담당자: 박연미
+ * 담당자: 김영태
  * 작성일: 2025-08-28
  * 최근 수정일: 2025-08-28
  * 설명:  공통 CSS 파일
@@ -9,66 +9,76 @@
 */
 
 
+
 /*variants*/
 :root {
-	--container: 780px;
-	--fz: 16px;
-	--lh: auto;
-	--tb: 900
-	--primary: rgba(255, 62, 28, 1);
-	--black: rgba(0, 0, 0, 1);
-	--light-black: rgba(34, 34, 34, 1);
-	--white: rgba(255, 255, 255, 1);
-	--sub-text: rgba(147, 147, 147, 1);
-	--icon-color: rgba(82, 82, 82, 1);
-	--border-1: rgba(217, 217, 217, 1);
-	--border-2: rgba(243, 243, 243, 1);
+    --container: 780px;
+    --fz: 16px;
+    --lh: auto;
+    --tb: 900;
+    --primary: rgba(255, 62, 28, 1);
+    --black: rgba(0, 0, 0, 1);
+    --light-black: rgba(34, 34, 34, 1);
+    --white: rgba(255, 255, 255, 1);
+    --sub-text: rgba(147, 147, 147, 1);
+    --icon-color: rgba(82, 82, 82, 1);
+    --border-1: rgba(217, 217, 217, 1);
+    --border-2: rgba(243, 243, 243, 1);
 }
 
-/*layout*/
+/* layout common style */
 .container {
-	width: var(--container);
-	margin: 0 auto;
+    max-width: var(--container);
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 /*typography*/
 body {
-	font: var(--lh) "Inter";
-	font-size: var(--fz);
-	color: var(--black);
-	font-weight: 400;
+    font: var(--lh) "Inter";
+    font-size: var(--fz);
+    color: var(--black);
+    font-weight: 400;
 }
+
 .body-tb {
-	font: var(--lh);
-	font-size: var(--fz);
-	font-weight: 700;
+    font: var(--lh);
+    font-size: var(--fz);
+    font-weight: 700;
 }
+
 .large-tb {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 1.75);
-	font-weight: 700;
+    font: var(--lh);
+    font-size: calc(var(--fz) * 1.75);
+    font-weight: 700;
 }
+
 .large-tr {
-	font: calc(var(--lh) * 2);
-	font-size: calc(var(--fz) * 1.75);
+    font: calc(var(--lh) * 2);
+    font-size: calc(var(--fz) * 1.75);
 }
+
 .medium-tb {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 1.25);
-	font-weight: 700;
+    font: var(--lh);
+    font-size: calc(var(--fz) * 1.25);
+    font-weight: 700;
 }
+
 .medium-tr {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 1.125);
+    font: var(--lh);
+    font-size: calc(var(--fz) * 1.125);
 }
+
 .small-tb {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 0.875);
-	font-weight: 700;
+    font: var(--lh);
+    font-size: calc(var(--fz) * 0.875);
+    font-weight: 700;
 }
+
 .small-tr {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 0.875);
+    font: var(--lh);
+    font-size: calc(var(--fz) * 0.875);
 }
 
 
@@ -76,16 +86,8 @@ body {
 
 
 
-/* layout common style */
-.container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-}
+button {}
 
-button{}
-
-.flex{
+.flex {
     display: flex;
 }

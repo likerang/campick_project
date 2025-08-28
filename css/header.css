@@ -1,0 +1,135 @@
+  /* 
+ * 파일명: header.css
+ * 담당자: 김영태
+ * 작성일: 2025-08-28
+ * 최근 수정일: 2025-08-28
+ * 설명:  header CSS 파일
+ * 수정이력:
+ *  2025-08-28: 최초 작성
+*/
+  
+  a{
+
+  }
+
+  /* 헤더 스타일 */
+  header {
+      border-bottom: 1px solid #D9D9D9;
+      padding: 0 18px;
+  }
+
+  .header_top {
+      display: flex;
+      /* align-items: center; */
+      /* padding: 16px 24px; */
+      /* height : 49px;  */
+      width: 100%;
+      /* margin: 0 auto; */
+      gap: 24px;
+  }
+
+  .logo {
+   background: url();
+
+  }
+
+
+  .search_area {
+      flex: 1;
+      position: relative;
+      max-width: 500px;
+  }
+
+  .search_area input {
+      width: 100%;
+      padding: 12px 50px 12px 16px;
+      border: 1px solid #D9D9D9;
+      border-radius: 5px;
+
+      background-color: #F3F3F3;
+      /* outline: none; */
+  }
+
+  .search_area input::placeholder {
+      color: #939393;
+  }
+
+  .search_area button {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+  }
+
+  .header_icons ul {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      list-style: none;
+      gap: 32px;
+  }
+
+  .header_icons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+  }
+
+  .header-icons li a {
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px;
+  }
+
+  /* 네비게이션 스타일 */
+  .gnb {
+      background-color: #fff;
+      border-bottom: 1px solid #e5e5e5;
+  }
+
+
+  .gnb ul {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      list-style: none;
+      gap: 32px;
+  }
+
+  .gnb ul li {
+      padding: 16px 0;
+  }
+
+  .gnb ul li a {
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+  }
+
+  .gnbul li:first-child a {
+      color: #ff4757;
+      font-weight: 600;
+  }
+
+  .gnb ul li:first-child a::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #ff4757;
+  }
+
+  .gnb ul li a:hover {
+      color: #ff4757;
+  }
