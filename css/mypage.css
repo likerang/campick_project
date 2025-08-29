@@ -1,5 +1,9 @@
+.mypage{
+  padding: 0 18px;
+}
 .mypage ul{
   display: flex;
+  max-width: 100%;
   gap: 96px;
   padding: 30px; /* 24로 수치 조절 여부 확인 */
   background: rgba(243, 243, 243, 0.4);
