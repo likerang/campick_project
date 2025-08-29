@@ -17,152 +17,13 @@
   <title>Campick | Components</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/header.css">
-
+  <link rel="stylesheet" href="css/common.css">
 
 
   <style>
-   
-    
-    .common_slider_container {
-      width: 780px;
-      height: 240px;
-      position: relative;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    }
-
-    .common_slider_wrapper {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
-    }
-
-    .common_slide_track {
-      display: flex;
-      width: 500%;
-      height: 100%;
-      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .common_slide {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 20%;
-      height: 100%;
-      font-size: 24px;
-      font-weight: bold;
-      text-align: center;
-      color: white;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .slide:nth-child(1) {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .slide:nth-child(2) {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    }
-
-    .slide-content {
-      padding: 20px;
-      text-align: left;
-    }
-
-    .slide-title {
-      font-size: 18px;
-      margin-bottom: 8px;
-      opacity: 0.9;
-    }
-
-    .slide-main-text {
-      font-size: 32px;
-      font-weight: 900;
-      line-height: 1.2;
-    }
-
-    /* Navigation Arrows */
-    .nav-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      color: white;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      z-index: 10;
-      backdrop-filter: blur(10px);
-    }
-
-    .nav-arrow:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .nav-arrow.prev {
-      left: 20px;
-    }
-
-    .nav-arrow.next {
-      right: 20px;
-    }
-
-    /* Pagination Dots */
-    .pagination {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 12px;
-      z-index: 10;
-    }
-
-    .pagination-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
-
-    .pagination-dot.active {
-      background: white;
-      transform: scale(1.2);
-    }
-
-    .pagination-dot:hover {
-      background: rgba(255, 255, 255, 0.7);
-      transform: scale(1.1);
-    }
-
-    /* Bar-style pagination option */
-    .pagination.bar-style .pagination-dot {
-      width: 30px;
-      height: 4px;
-      border-radius: 2px;
-    }
-
-    .pagination.bar-style .pagination-dot.active {
-      transform: scaleX(1.5);
-    }
+ 
   </style>
-  <!-- /* // common_slide_content 스타일 끝 */ -->
+
 </head>
 
 <body>
@@ -253,8 +114,8 @@
         <div class="common_slide_track" id="slideTrack">
           <div class="common_slide">
             <div class="slide_content">
-              <h3 class="slide-title">슬라이드 1</h3>
-              <p class="slide-main-text">첫 번째 콘텐츠</p>
+              <h3 class="slide_title">필수 겨울템</h3>
+              <p class="slide_desc">눈 내려도 따뜻하게 미리 준비하는 동계캠핑</p>
             </div>
           </div>
           <div class="common_slide">
@@ -265,21 +126,11 @@
           </div>
         </div>
       </div>
-
       <!-- Navigation Arrows -->
-      <button class="nav-arrow prev" onclick="prevSlide()">‹</button>
-      <button class="nav-arrow next" onclick="nextSlide()">›</button>
-
-      <!-- Pagination Dots (기본 원형) -->
-      <div class="pagination" id="pagination">
-        <div class="pagination-dot active" onclick="goToSlide(0)"></div>
-        <div class="pagination-dot" onclick="goToSlide(1)"></div>
-      </div>
+      <button class="nav_arrow prev" onclick="prevSlide()"><span class="ir_pm">이전</span></button>
+      <button class="nav_arrow next" onclick="nextSlide()"><span class="ir_pm">ekdma</span></button>
     </div>
     <!-- //common_slide_content -->
-
-  </div>
-
 </body>
 
 </html>
