@@ -1,6 +1,12 @@
 .mypage{
   padding: 0 18px;
 }
+.mypage>div{
+  margin-bottom: var(--mg_24);
+}
+.mypage h2{
+  margin-bottom: var(--mg_12);
+}
 .mypage ul{
   display: flex;
   max-width: 100%;
@@ -13,9 +19,6 @@
   flex-direction: column;
 }
 .mypage ul li img{
-  display: block;
-  width: 40px;
-  height: 40px;
   margin: 0 auto;
   padding-bottom: 12px;
 }
