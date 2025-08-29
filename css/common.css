@@ -6,8 +6,8 @@
  * 설명:  공통 CSS 파일
  * 수정이력:
  *  2025-08-28: 최초 작성
+    2025-08-29: :root변수, ,font style, button style 작업(박연미)
 */
-
 
 
 /*variants*/
@@ -38,44 +38,47 @@ body {
 	color: var(--black);
 	font-weight: 400;
 }
+
 .body_tb {
 	font: var(--lh);
 	font-size: var(--fz);
 	font-weight: 700;
 }
+
 .large_tb {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 1.75);
 	font-weight: 700;
 }
+
 .large_tr {
 	font: calc(var(--lh) * 2);
 	font-size: calc(var(--fz) * 1.75);
 }
+
 .medium_tb {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 1.25);
 	font-weight: 700;
 }
+
 .medium_tr {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 1.125);
 }
+
 .small_tb {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 0.875);
 	font-weight: 700;
 }
+
 .small_tr {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 0.875);
 }
-.d_flex{
-	display: flex;
-	align-self: start;
-}
-/* button */
 
+/* button */
 /* normal button */
 .btn_normal {
 	background: #000;
@@ -88,18 +91,22 @@ body {
 	transition: 0.3s;
 	line-height: 40px;
 }
+
 .btn_normal:hover {
 	background: var(--light_black);
 	color: var(--white);
 }
+
 .btn_half {
 	max-height: 362px;
 	width: 46.4%;
 }
+
 .btn_full {
 	width: 744px;
 }
-.btn_normal:disabled{
+
+.btn_normal:disabled {
 	background: var(--border_1);
 	color: var(--white);
 }
@@ -116,11 +123,13 @@ body {
 	transition: 0.3s;
 	line-height: 40px;
 }
+
 .btn_primary:hover {
 	background: #FF5132;
 	color: var(--white);
 }
-.btn_primary:disabled{
+
+.btn_primary:disabled {
 	background: #FFB2A4;
 	color: var(--white);
 }
@@ -138,13 +147,15 @@ body {
 	transition: 0.3s;
 	line-height: 40px;
 }
+
 .btn_outline:hover {
 	background: var(--black);
 	color: var(--white);
 }
-.btn_outline:disabled{
-	background:var(--border_2);
-	color:#999;
+
+.btn_outline:disabled {
+	background: var(--border_2);
+	color: #999;
 	border-color: #999;
 }
 
@@ -160,10 +171,10 @@ body {
 	transition: 0.3s;
 	line-height: 30px;
 }
+
 .category:hover,
 .category:active,
 .category.selected {
 	background: var(--black);
 	color: var(--white);
 }
-
