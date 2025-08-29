@@ -2,13 +2,13 @@
  * 파일명: common.css
  * 담당자: 김영태
  * 작성일: 2025-08-28
- * 최근 수정일: 2025-08-28
+ * 최근 수정일: 2025-08-29
  * 설명:  공통 CSS 파일
  * 수정이력:
  *  2025-08-28: 최초 작성
     2025-08-29: :root변수, ,font style, button style 작업(박연미)
+	2025-08-29: header, common_slider, user_profile style 작업(김영태)
 */
-
 
 /*variants*/
 :root {
@@ -185,7 +185,6 @@ body {
 	color: var(--white);
 }
 
-
 /* common_silder */
 .common_slider_container {
 	width: 780px;
@@ -267,4 +266,123 @@ body {
 .nav_arrow.next {
 	right: 24px;
 	background: url(../images/arrow_next.svg) no-repeat center;
+}
+
+
+
+/* 사용자 프로필(마이페이지) */
+.user_profile_wrapper {
+	width: 100%;
+	max-width: 780px;
+	display: flex;
+	gap: 12px
+}
+
+.profile_card {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 48px;
+	width: 440px;
+	background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+	border-radius: 5px;
+	padding: 22px 38px;
+	color: white;
+}
+
+.profile_img_wrapper {
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.profile_img_wrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.user_info {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.stats_wrapper {
+	display: flex;
+	gap: 72px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.stat_item {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+
+}
+
+.stat_title.stat_number {
+	font-size: var(--fz_12);
+	color: var(--white);
+	font-weight: 400;
+}
+
+.point_card {
+	width: 290px;
+	background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+	border-radius: 5px;
+	/* padding: 14px; */
+	color: white;
+	position: relative;
+}
+
+.point_card::after {
+	content: '';
+	display: block;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	background-color: rgb(187, 89, 32);
+	border-radius: 5px;
+	z-index: 1;
+}
+
+.point_title {
+	margin-top: 24px;
+	margin-left: 27px;
+	font-size: 16px;
+	font-weight: 700;
+	position: relative;
+	z-index: 2;
+}
+
+.point_value {
+	font-size: 16px;
+	font-weight: 400;
+	text-align: right;
+	margin-right: 14px;
+	margin-bottom: 11px;
+}
+
+.button_group {
+	display: flex;
+	gap: 12px;
+	justify-content: flex-end;
+	position: relative;
+	margin-right: 14px;
+}
+
+.point_btn {
+	padding: 6px 12px;
+	border: 1px solid var(--white);
+	border-radius: 5px;
+	background: transparent;
+	color: white;
+	font-size: 12px;
+	font-weight: 400;
+	cursor: pointer;
 }
