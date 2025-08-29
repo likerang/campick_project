@@ -21,8 +21,8 @@ jobs:
       - name: Set variables
         id: vars
         run: |
-          echo "OWNER=alikerock" >> $GITHUB_OUTPUT            # GitHub username owning the Project v2 board
-          echo "PROJECT_NUMBER=3" >> $GITHUB_OUTPUT           # projects/<NUMBER> from the board URL
+          echo "OWNER=kyt0830" >> $GITHUB_OUTPUT            # GitHub username owning the Project v2 board
+          echo "PROJECT_NUMBER=1" >> $GITHUB_OUTPUT           # projects/<NUMBER> from the board URL
           echo "STATUS_TODO=Todo" >> $GITHUB_OUTPUT
           echo "STATUS_INPROGRESS=In Progress" >> $GITHUB_OUTPUT
           echo "STATUS_DONE=Done" >> $GITHUB_OUTPUT
