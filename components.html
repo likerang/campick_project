@@ -21,23 +21,9 @@
 
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f0f0;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .slide_container {
+   
+    
+    .common_slider_container {
       width: 780px;
       height: 240px;
       position: relative;
@@ -47,21 +33,21 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
 
-    .slider-wrapper {
+    .common_slider_wrapper {
       position: relative;
       overflow: hidden;
       width: 100%;
       height: 100%;
     }
 
-    .slide-track {
+    .common_slide_track {
       display: flex;
       width: 500%;
       height: 100%;
       transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .slide {
+    .common_slide {
       position: relative;
       display: flex;
       align-items: center;
@@ -81,18 +67,6 @@
 
     .slide:nth-child(2) {
       background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    }
-
-    .slide:nth-child(3) {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    }
-
-    .slide:nth-child(4) {
-      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    }
-
-    .slide:nth-child(5) {
-      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
     }
 
     .slide-content {
@@ -270,57 +244,38 @@
     </header>
     <!-- //header -->
 
+    <br>
+    <br>
 
     <!-- common_slide_content -->
-    <!-- <div class="slider_container_common">
-            <div class="slider-wrapper">
-                <div class="slide-track" id="slideTrack">
-                    <div class="slide">
-                        <div class="slide-content">
-                            <div class="slide-title">슬라이드 1</div>
-                            <div class="slide-main-text">첫 번째<br>콘텐츠</div>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <div class="slide-content">
-                            <div class="slide-title">슬라이드 2</div>
-                            <div class="slide-main-text">두 번째<br>콘텐츠</div>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <div class="slide-content">
-                            <div class="slide-title">슬라이드 3</div>
-                            <div class="slide-main-text">세 번째<br>콘텐츠</div>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <div class="slide-content">
-                            <div class="slide-title">슬라이드 4</div>
-                            <div class="slide-main-text">네 번째<br>콘텐츠</div>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <div class="slide-content">
-                            <div class="slide-title">슬라이드 5 </div>
-                            <div class="slide-main-text">다섯 번째<br>콘텐츠</div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-    <!-- Navigation Arrows -->
-    <!-- <button class="nav-arrow prev" onclick="prevSlide()">‹</button>
-            <button class="nav-arrow next" onclick="nextSlide()">›</button> -->
-
-    <!-- Pagination Dots (기본 원형) -->
-    <!-- <div class="pagination" id="pagination">
-                <div class="pagination-dot active" onclick="goToSlide(0)"></div>
-                <div class="pagination-dot" onclick="goToSlide(1)"></div>
-                <div class="pagination-dot" onclick="goToSlide(2)"></div>
-                <div class="pagination-dot" onclick="goToSlide(3)"></div>
-                <div class="pagination-dot" onclick="goToSlide(4)"></div>
+    <div class="common_slider_container">
+      <div class="common_slider_wrapper">
+        <div class="common_slide_track" id="slideTrack">
+          <div class="common_slide">
+            <div class="slide_content">
+              <h3 class="slide-title">슬라이드 1</h3>
+              <p class="slide-main-text">첫 번째 콘텐츠</p>
             </div>
-        </div> -->
+          </div>
+          <div class="common_slide">
+            <div class="slide-content">
+              <h3 class="slide-title">슬라이드 1</h3>
+              <p class="slide-main-text">첫 번째 콘텐츠</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button class="nav-arrow prev" onclick="prevSlide()">‹</button>
+      <button class="nav-arrow next" onclick="nextSlide()">›</button>
+
+      <!-- Pagination Dots (기본 원형) -->
+      <div class="pagination" id="pagination">
+        <div class="pagination-dot active" onclick="goToSlide(0)"></div>
+        <div class="pagination-dot" onclick="goToSlide(1)"></div>
+      </div>
+    </div>
     <!-- //common_slide_content -->
 
   </div>
