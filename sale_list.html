@@ -1,24 +1,66 @@
 <!-- 
  * 파일명: sale_list.html
- * 담당자: 미정
- * 작성일: 2025-08-28
- * 최근 수정일: 2025-08-28
+ * 담당자: 조아랑
+ * 작성일: 2025-08-29
+ * 최근 수정일: 2025-08-29
  * 설명: 판매 목록 HTML 템플릿
  * 수정이력:
- *  2025-08-28: 최초 작성
+ *  2025-08-29: 최초 작성
 -->
 
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campick | 판매 목록</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campick | 판매 목록</title>
+  <style>
+    .sale_details{
+      display: flex;
+      align-items: center;
+      gap: 150px;
+    }
+    .sale_icons{
+      display: flex;
+      gap: 8px;
+    }
+    .sale_icons span{
+      margin-left: 4px;
+    }
+  </style>
 </head>
 
 <body>
-
+  <div class="tab_menu">
+    <ul>
+      <li><button>판매중</button></li>
+      <li><button>거래완료</button></li>
+    </ul>
+  </div>
+  <div class="sale_list">
+    <ul>
+      <li>
+        <a href="#">
+          <img src="" alt="상품이미지">
+          <div class="sale_info">
+            <h3>[힐레베르그] 알락 2 텐트 (Allak 2)</h3>
+            <p>종로1.2.3.4가동 | 4시간 전</p>
+            <div class="sale_details">
+              <p>1,893,000 원</p>
+              <div class="sale_icons">
+                <img src="" alt="조회수"><span>12</span>
+                <img src="" alt="메세지"><span>1</span>
+                <img src="" alt="저장"><span>12</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="soldout_list">
+  </div>
 </body>
 
 </html>
