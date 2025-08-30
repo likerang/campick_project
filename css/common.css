@@ -494,28 +494,6 @@ body {
 	font-weight: 300;
 }
 
-
-/* product_list 2col ver  */
-.product_list_wrapper_2col {
-	display: flex;
-	gap: 20px;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	margin: 0 18px;
-}
-
-.product_card_2col {
-	width: calc(50% - 10px);
-	background: white;
-	cursor: pointer;
-}
-
-.product_list_wrapper_2col .product_title,
-.product_list_wrapper_2col .product_price {
-	font-size: var(--fz);
-}
-
-
 /* common banner */
 .caution_banner{
 	width: calc(100% - 36px);

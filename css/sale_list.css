@@ -1,4 +1,3 @@
-
 .tab_menu{
   display: flex;
   gap: var(--mg_12);
@@ -24,9 +23,23 @@
   margin: 0 18px;
 }
 
-/* 숨김 처리 */
 .hidden {
   display: none;
+}
+
+/* product_list 2col ver  */
+.product_list_wrapper_2col {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 18px;
+}
+
+.product_card_2col {
+  width: calc(50% - 10px);
+  background: white;
+  cursor: pointer;
 }
 
 .soldout_list_wrapper .product_title,
@@ -39,7 +52,7 @@
 }
 
 .product_card_2col.disable .product_image img {
-  filter: grayscale(100%) /* 흑백 + 살짝 블러 */
+  filter: grayscale(100%);
 }
 
 .product_card_2col.disable .product_title,
