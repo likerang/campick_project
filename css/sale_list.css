@@ -1,0 +1,49 @@
+
+.tab_menu{
+  display: flex;
+  gap: var(--mg_12);
+  margin: 0 0 var(--mg_24) 18px;
+}
+
+.tab_menu a {
+  font: var(--lh);
+  font-size: calc(var(--fz) * 1.25);
+  font-weight: 700;
+  color: var(--sub_text);
+}
+
+.tab_menu a.active {
+  color: var(--light_black);
+}
+
+.soldout_list_wrapper {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 18px;
+}
+
+/* 숨김 처리 */
+.hidden {
+  display: none;
+}
+
+.soldout_list_wrapper .product_title,
+.soldout_list_wrapper .product_price {
+	font-size: var(--fz);
+}
+
+.product_card_2col.disable {
+  opacity: 0.5;
+}
+
+.product_card_2col.disable .product_image img {
+  filter: grayscale(100%) /* 흑백 + 살짝 블러 */
+}
+
+.product_card_2col.disable .product_title,
+.product_card_2col.disable .product_meta,
+.product_card_2col.disable .product_price {
+  color: var(--sub_text);
+}
