@@ -79,12 +79,6 @@ body {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 1.125);
 }
-/*
-.normal_tb {
-	font: var(--lh);
-	font-weight: 700;
-}
-*/
 
 .normal_tb {
 	font: var(--lh);
@@ -504,11 +498,12 @@ body {
 
 /* common banner */
 .caution_banner{
-	width: 100%;
+	width: calc(100% - 36px);
   display: flex;
 	justify-content: center;
   gap: calc(var(--mg_24) * 6);
 	padding: var(--mg_24) var(--mg_48);
+	margin: 0 auto;
 	border: 1px solid var(--border_1);
 	border-radius: 5px;
 }
