@@ -11,7 +11,7 @@
   display: flex;
   max-width: 100%;
   gap: 96px;
-  padding: 30px; /* 24로 수치 조절 여부 확인 */
+  padding: 30px;
   background: rgba(243, 243, 243, 0.4);
 }
 .mypage ul li a{
@@ -20,5 +20,5 @@
 }
 .mypage ul li img{
   margin: 0 auto;
-  padding-bottom: 12px;
+  margin-bottom: var(--mg_12);
 }

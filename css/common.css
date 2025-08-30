@@ -24,10 +24,16 @@
 	--border_1: rgba(217, 217, 217, 1);
 	--border_2: rgba(243, 243, 243, 1);
 
+	--fz_12: 12px;
 	--fz_14: 14px;
 	--fz_16: 16px;
 	--fz_20: 20px;
 	--fz_28: 28px;
+
+	--mg_12: 12px;
+	--mg_24: 24px;
+	--mg_48: 48px;
+	--mg_72: 72px;
 
 }
 
@@ -73,7 +79,12 @@ body {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 1.125);
 }
-
+/*
+.normal_tb {
+	font: var(--lh);
+	font-weight: 700;
+}
+*/
 .small_tb {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 0.875);
@@ -276,7 +287,8 @@ body {
 	width: 100%;
 	max-width: 780px;
 	display: flex;
-	gap: 12px
+	gap: 12px;
+	margin-bottom: var(--mg_48);
 }
 
 .profile_card {
