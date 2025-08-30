@@ -496,11 +496,12 @@ body {
 
 /* common banner */
 .caution_banner{
-	width: 100%;
+	width: calc(100% - 36px);
   display: flex;
 	justify-content: center;
   gap: calc(var(--mg_24) * 6);
 	padding: var(--mg_24) var(--mg_48);
+	margin: var(--mg_72) auto 80px;
 	border: 1px solid var(--border_1);
 	border-radius: 5px;
 }
