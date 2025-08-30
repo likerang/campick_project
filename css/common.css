@@ -291,7 +291,7 @@ body {
 	width: 100%;
 	max-width: 780px;
 	display: flex;
-	gap: 12px
+	gap: 12px;
 }
 
 .profile_card {
