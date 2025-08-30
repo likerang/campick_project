@@ -85,6 +85,12 @@ body {
 	font-weight: 700;
 }
 */
+
+.normal_tb {
+	font: var(--lh);
+	font-weight: 700;
+}
+
 .small_tb {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 0.875);
@@ -94,6 +100,11 @@ body {
 .small_tr {
 	font: var(--lh);
 	font-size: calc(var(--fz) * 0.875);
+}
+
+.xsmall_tr {
+	font: var(--lh);
+	font-size: var(--fz_12);;
 }
 
 /* button */
@@ -489,4 +500,24 @@ body {
 .product_stats li span {
 	font-size: 12px;
 	font-weight: 300;
+}
+
+/* common banner */
+.caution_banner{
+	width: 100%;
+  display: flex;
+	justify-content: center;
+  gap: calc(var(--mg_24) * 6);
+	padding: var(--mg_24) var(--mg_48);
+	border: 1px solid var(--border_1);
+	border-radius: 5px;
+}
+
+.caution_desc p {
+  margin-bottom: 4px;
+}
+
+.caution_desc a {
+  display: block;
+  text-align: right;
 }
