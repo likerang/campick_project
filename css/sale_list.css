@@ -6,25 +6,12 @@
 
 .tab_menu a {
   font: var(--lh);
-  font-size: calc(var(--fz) * 1.25);
   font-weight: 700;
   color: var(--sub_text);
 }
 
 .tab_menu a.active {
   color: var(--light_black);
-}
-
-.soldout_list_wrapper {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 0 18px;
-}
-
-.hidden {
-  display: none;
 }
 
 /* product_list 2col ver  */
@@ -38,25 +25,114 @@
 
 .product_card_2col {
   width: calc(50% - 10px);
+  position: relative;
   background: white;
   cursor: pointer;
 }
 
+.product_list_wrapper_2col .product_title,
+.product_list_wrapper_2col .product_price,
 .soldout_list_wrapper .product_title,
 .soldout_list_wrapper .product_price {
 	font-size: var(--fz);
 }
 
-.product_card_2col.disable {
-  opacity: 0.5;
+.soldout_list_wrapper {
+  display: flex;
+  position: relative;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 18px;
+}
+
+.soldout_list_wrapper.hidden,
+.product_list_wrapper_2col.hidden {
+  display: none;
+}
+
+.soldout_list_wrapper .soldout_badge {
+  position: absolute;
+  top: var(--mg_12);
+  left: var(--mg_12);
+  padding: 6px 12px;
+  background-color: var(--primary);
+  color: var(--white);
+  filter: none;
+  border-radius: 15px;
+  font-size: var(--fz_12);
+  z-index: 10;
 }
 
 .product_card_2col.disable .product_image img {
-  filter: grayscale(100%);
+  filter: grayscale(80%);
+  color: rgba(0, 0, 0, 0.5); /* 글씨 색 반투명 */
 }
 
 .product_card_2col.disable .product_title,
 .product_card_2col.disable .product_meta,
-.product_card_2col.disable .product_price {
+.product_card_2col.disable .product_price,
+.product_card_2col.disable .product_stats {
   color: var(--sub_text);
+}
+
+.more_btn {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: var(--mg_12);
+  right: var(--mg_12);
+  background: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--fz_12);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bottom_sheet {
+  width: var(--container);
+  position: fixed;
+  bottom: -300px; /* 화면 밖 */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid var(--border_1);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transition: bottom 0.3s ease;
+  z-index: 100;
+  margin: 0;
+}
+
+.bottom_sheet.active {
+  bottom: 0;
+}
+
+.bottom_sheet ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: var(--mg_12) var(--mg_24);
+}
+
+.bottom_sheet li {
+  border-bottom: 1px solid var(--border_1);
+}
+
+.bottom_sheet li:last-child {
+  margin-bottom: 0px;
+  border-bottom: none;
+}
+
+.modify_btn,
+.delete_btn,
+.soldout_btn {
+  width: 100%;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.modify_btn:active,
+.delete_btn:active,
+.soldout_btn:active {
+  color: var(--primary);
 }
