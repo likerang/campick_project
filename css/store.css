@@ -1,0 +1,110 @@
+.store_category {
+  padding: 0 18px;
+  margin-bottom: var(--mg_24);
+}
+
+.store_category h3 {
+  margin-bottom: var(--mg_24);
+}
+
+.category_menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.category_menu li {
+  white-space: nowrap;
+  margin-bottom: 6px;
+}
+
+.category_menu li a {
+  font-size: var(--fz_14);
+}
+
+.brand_filter {
+  margin-top: 16px;
+  padding: 0 18px;
+  margin-bottom: var(--mg_24);
+  font-size: 14px;
+  color: #333;
+  position: relative;
+}
+
+.brand_filter h3 {
+  margin-bottom: var(--mg_24);
+}
+
+.brand_header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand_label {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.brand_selected {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.brand_badge {
+  background: #fff;
+  border: 1px solid #ff6b57;
+  color: #ff6b57;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.brand_popup {
+  display: none; /* 기본 숨김 */
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.brand_popup.active {
+  display: block;
+}
+
+.brand_search input {
+  width: 100%;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.brand_list {
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.brand_list li {
+  margin: 6px 0;
+}
+
+.apply_btn {
+  width: 100%;
+  padding: 10px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
