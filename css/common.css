@@ -292,6 +292,7 @@ body {
 	max-width: 780px;
 	display: flex;
 	gap: 12px;
+	margin-bottom: var(--mg_48);
 }
 
 .profile_card {
