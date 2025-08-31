@@ -62,37 +62,60 @@
 }
 
 .brand_popup {
-  display: none; /* 기본 숨김 */
+  display: block;
+  width: var(--container);
   position: absolute;
-  top: 40px;
-  left: 0;
-  width: 300px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  z-index: 10;
+  border: 1px solid var(--border_1);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transition: bottom 0.3s ease;
+  z-index: 100;
+  margin: 0;
+  padding: var(--mg_24);
 }
 
 .brand_popup.active {
   display: block;
 }
 
+.search_input h4 {
+  margin-bottom: var(--mg_24);
+}
+.brand_search {
+  position: relative;
+}
+
 .brand_search input {
   width: 100%;
-  padding: 6px 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  height: 40px;
+  padding-left: 48px;
+  border: 1px solid var(--border_1);
+  border-radius: 5px;
+  background-color: #F3F3F3;
+}
+
+.brand_search button {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  background: url(../images/store_search.svg) no-repeat center;
 }
 
 .brand_list {
   max-height: 200px;
   overflow-y: auto;
   list-style: none;
-  padding: 0;
-  margin: 0 0 12px 0;
+  padding: 14px 0;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border_1);
 }
 
 .brand_list li {
@@ -100,8 +123,9 @@
 }
 
 .apply_btn {
-  width: 100%;
-  padding: 10px;
+  display: block;
+  margin-left: auto;
+  padding: 13px 50px;
   background: #000;
   color: #fff;
   border: none;
