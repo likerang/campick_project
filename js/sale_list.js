@@ -1,7 +1,8 @@
 const tabs = document.querySelectorAll('.tab_menu a');
 const lists = document.querySelectorAll('[data-list]');
 const moreBtns = document.querySelectorAll('.more_btn');
-const bottomSheet = document.querySelector('.bottom_sheet');
+const bottomSheet = document.querySelector('.more_popup');
+const overlay = document.querySelector('.overlay');
 
 // 판매중/결제완료 list tab
 tabs.forEach(tab => {
@@ -16,9 +17,9 @@ tabs.forEach(tab => {
 
     lists.forEach(list => {
       if (list.dataset.list === filter) {
-        list.classList.remove('hidden'); // 보여주기
+        list.classList.remove('hidden');
       } else {
-        list.classList.add('hidden'); // 숨기기
+        list.classList.add('hidden');
       }
     });
   });
@@ -28,11 +29,14 @@ tabs.forEach(tab => {
 moreBtns.forEach(btn => {
   btn.addEventListener('click', (e) => {
     bottomSheet.classList.toggle('active');
+    overlay.classList.toggle('active');
   });
 });
 
+// 팝업 외부 클릭 시 닫기
 window.addEventListener('click', (e) => {
-  if (!e.target.closest('.more_btn') && !e.target.closest('.bottom_sheet')) {
+  if (!e.target.closest('.more_btn') && !e.target.closest('.more_popup')) {
     bottomSheet.classList.remove('active');
+    overlay.classList.remove('active');
   }
 });
