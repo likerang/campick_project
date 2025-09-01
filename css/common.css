@@ -97,7 +97,7 @@ body {
 
 .xsmall_tr {
 	font: var(--lh);
-	font-size: var(--fz_12);;
+	font-size: var(--fz_12);
 }
 
 /* button */
@@ -408,7 +408,7 @@ body {
 /* product_list 3col ver  */
 .product_list_wrapper {
 	display: flex;
-	gap: 15px;
+	gap : 15px;
 }
 
 .product_card {
@@ -496,11 +496,11 @@ body {
 }
 
 /* common banner */
-.caution_banner{
+.caution_banner {
 	width: calc(100% - 36px);
-  display: flex;
+	display: flex;
 	justify-content: center;
-  gap: calc(var(--mg_24) * 6);
+	gap: calc(var(--mg_24) * 6);
 	padding: var(--mg_24) var(--mg_48);
 	margin: var(--mg_72) auto 80px;
 	border: 1px solid var(--border_1);
@@ -508,10 +508,10 @@ body {
 }
 
 .caution_desc p {
-  margin-bottom: 4px;
+	margin-bottom: 4px;
 }
 
 .caution_desc a {
-  display: block;
-  text-align: right;
+	display: block;
+	text-align: right;
 }
