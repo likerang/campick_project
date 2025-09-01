@@ -66,6 +66,8 @@
 }
 
 .brand_badge {
+  display: flex;
+  gap: 4px;
   background: #fff;
   border: 1px solid #ff6b57;
   color: #ff6b57;
