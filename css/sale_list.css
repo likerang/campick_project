@@ -125,7 +125,7 @@
 }
 
 .more_popup.active {
-  bottom: 0;
+  bottom: -5px;
 }
 
 .more_popup ul {
