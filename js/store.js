@@ -106,3 +106,61 @@ applyBtn.addEventListener('click', () => {
 
   closeBrandPopup();
 });
+
+/* JSON 파일 불러오기 */
+const wrapper = document.querySelector(".product_list_wrapper");
+
+fetch('json/store.data.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(products => {
+    console.log('Loaded products:', products); // 디버깅용
+    
+    if (!Array.isArray(products)) {
+      throw new Error('Data is not an array');
+    }
+    
+    products.forEach(product => {
+      const li = document.createElement("li");
+      li.className = "product_card";
+
+      li.innerHTML = `
+        <a href="#">
+          <div class="product_image">
+            <img src="${product.product_image.src}" alt="${product.product_image.alt}">
+          </div>
+          <div class="product_info">
+            <h3 class="product_title">${product.product_info.title}</h3>
+            <div class="product_meta">
+              <span class="product_location">${product.product_info.meta.location}</span>
+              <span class="product_date">${product.product_info.meta.date}</span>
+            </div>
+            <div class="product_footer">
+              <span class="product_price">${product.product_info.footer.price}</span>
+              <ul class="product_stats">
+                ${product.product_info.footer.stats.map(stat => `
+                  <li class="${stat.type}">
+                    <p class="icon">
+                      <img src="${stat.icon}" alt="${stat.label}">
+                      <span class="ir_pm">${stat.label}</span>
+                    </p>
+                    <span>${stat.count}</span>
+                  </li>
+                `).join("")}
+              </ul>
+            </div>
+          </div>
+        </a>
+      `;
+
+      wrapper.appendChild(li);
+    });
+  })
+  .catch(err => {
+    console.error("JSON 로딩 실패:", err);
+    console.error("파일 경로를 확인하세요: json/store.data.json");
+  });

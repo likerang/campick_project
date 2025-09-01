@@ -7,103 +7,122 @@
     "product_info": {
       "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
       "meta": {
-        "location": "종로1가동",
+        "location": "종로1.2.3.4가동",
         "date": "4시간 전"
       },
       "footer": {
         "price": "1,893,000 원",
         "stats": [
-          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
-          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
-          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_view.svg"},
+          {"type": "message", "count": 1, "label": "메세지", "icon": "images/prod_detail_chat.svg"},
+          {"type": "like", "count": 0, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
         ]
       }
     }
   },
   {
     "product_image": {
-      "src": "images/product_img01.jpg",
-      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
+      "src": "images/product_img02.jpg",
+      "alt": "[힐레베르그] 나마츠 2 텐트 (Nammatj 2)"
     },
     "product_info": {
-      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
+      "title": "[힐레베르그] 나마츠 2 텐트 (Nammatj 2)",
       "meta": {
-        "location": "종로1가동",
-        "date": "4시간 전"
+        "location": "평창군",
+        "date": "7시간 전"
       },
       "footer": {
-        "price": "1,893,000 원",
+        "price": "1,240,000 원",
         "stats": [
-          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
-          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
-          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+          {"type": "view", "count": 15, "label": "조회수", "icon": "images/prod_detail_view.svg"},
+          {"type": "message", "count": 3, "label": "메세지", "icon": "images/prod_detail_chat.svg"},
+          {"type": "like", "count": 2, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
         ]
       }
     }
   },
   {
     "product_image": {
-      "src": "images/product_img01.jpg",
-      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
+      "src": "images/product_img03.jpg",
+      "alt": "[힐레베르그] 나마츠 2GT 텐트 (Nammatj 2GT)"
     },
     "product_info": {
-      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
+      "title": "[힐레베르그] 나마츠 2GT 텐트 (Nammatj 2GT)",
       "meta": {
-        "location": "종로1가동",
-        "date": "4시간 전"
+        "location": "상상2동",
+        "date": "1일 전"
       },
       "footer": {
-        "price": "1,893,000 원",
+        "price": "1,300,000 원",
         "stats": [
-          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
-          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
-          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+          {"type": "view", "count": 8, "label": "조회수", "icon": "images/prod_detail_view.svg"},
+          {"type": "message", "count": 0, "label": "메세지", "icon": "images/prod_detail_chat.svg"},
+          {"type": "like", "count": 1, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  },
+  {
+    "product_image": {
+      "src": "images/product_img04.jpg",
+      "alt": "[힐레베르그] 에난 텐트 (Enan)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 에난 텐트 (Enan)",
+      "meta": {
+        "location": "언남동",
+        "date": "2일 전"
+      },
+      "footer": {
+        "price": "840,000 원",
+        "stats": [
+          {"type": "view", "count": 65, "label": "조회수", "icon": "images/prod_detail_view.svg"},
+          {"type": "message", "count": 5, "label": "메세지", "icon": "images/prod_detail_chat.svg"},
+          {"type": "like", "count": 48, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  },
+  {
+    "product_image": {
+      "src": "images/product_img05.jpg",
+      "alt": "[힐레베르그] 알락 3 텐트 (Allak 3)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 알락 3 텐트 (Allak 3)",
+      "meta": {
+        "location": "중계2.3동",
+        "date": "11시간 전"
+      },
+      "footer": {
+        "price": "950,000 원",
+        "stats": [
+          {"type": "view", "count": 65, "label": "조회수", "icon": "images/prod_detail_view.svg"},
+          {"type": "message", "count": 5, "label": "메세지", "icon": "images/prod_detail_chat.svg"},
+          {"type": "like", "count": 48, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  },
+  {
+    "product_image": {
+      "src": "images/product_img06.jpg",
+      "alt": "[힐레베르그] 헬라그스 2 텐트 (Helags 2)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 헬라그스 2 텐트 (Helags 2)",
+      "meta": {
+        "location": "하계2동",
+        "date": "6일 전"
+      },
+      "footer": {
+        "price": "1,460,000 원",
+        "stats": [
+          {"type": "view", "count": 65, "label": "조회수", "icon": "images/prod_detail_view.svg"},
+          {"type": "message", "count": 5, "label": "메세지", "icon": "images/prod_detail_chat.svg"},
+          {"type": "like", "count": 48, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
         ]
       }
     }
   }
-  ,
-  {
-    "product_image": {
-      "src": "images/product_img01.jpg",
-      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
-    },
-    "product_info": {
-      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
-      "meta": {
-        "location": "종로1가동",
-        "date": "4시간 전"
-      },
-      "footer": {
-        "price": "1,893,000 원",
-        "stats": [
-          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
-          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
-          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
-        ]
-      }
-    }
-  },
-  {
-    "product_image": {
-      "src": "images/product_img01.jpg",
-      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
-    },
-    "product_info": {
-      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
-      "meta": {
-        "location": "종로1가동",
-        "date": "4시간 전"
-      },
-      "footer": {
-        "price": "1,893,000 원",
-        "stats": [
-          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
-          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
-          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
-        ]
-      }
-    }
-  }
-
 ]
