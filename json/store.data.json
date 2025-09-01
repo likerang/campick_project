@@ -1,0 +1,109 @@
+[
+  {
+    "product_image": {
+      "src": "images/product_img01.jpg",
+      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
+      "meta": {
+        "location": "종로1가동",
+        "date": "4시간 전"
+      },
+      "footer": {
+        "price": "1,893,000 원",
+        "stats": [
+          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
+          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
+          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  },
+  {
+    "product_image": {
+      "src": "images/product_img01.jpg",
+      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
+      "meta": {
+        "location": "종로1가동",
+        "date": "4시간 전"
+      },
+      "footer": {
+        "price": "1,893,000 원",
+        "stats": [
+          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
+          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
+          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  },
+  {
+    "product_image": {
+      "src": "images/product_img01.jpg",
+      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
+      "meta": {
+        "location": "종로1가동",
+        "date": "4시간 전"
+      },
+      "footer": {
+        "price": "1,893,000 원",
+        "stats": [
+          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
+          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
+          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  }
+  ,
+  {
+    "product_image": {
+      "src": "images/product_img01.jpg",
+      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
+      "meta": {
+        "location": "종로1가동",
+        "date": "4시간 전"
+      },
+      "footer": {
+        "price": "1,893,000 원",
+        "stats": [
+          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
+          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
+          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  },
+  {
+    "product_image": {
+      "src": "images/product_img01.jpg",
+      "alt": "[힐레베르그] 알락 2 텐트 (Allak 2)"
+    },
+    "product_info": {
+      "title": "[힐레베르그] 알락 2 텐트 (Allak 2)",
+      "meta": {
+        "location": "종로1가동",
+        "date": "4시간 전"
+      },
+      "footer": {
+        "price": "1,893,000 원",
+        "stats": [
+          {"type": "view", "count": 12, "label": "조회수", "icon": "images/prod_detail_eye.svg"},
+          {"type": "message", "count": 1, "label": "메세지", "icon": "images/header_chat.svg"},
+          {"type": "like", "count": 12, "label": "즐겨찾기", "icon": "images/prod_detail_bookmark.svg"}
+        ]
+      }
+    }
+  }
+
+]
