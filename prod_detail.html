@@ -31,26 +31,179 @@
         }
 
         .product_detail_slider {
-            outline: 1px solid red;
-            width: 744px;
+            /* outline: 1px solid red; */
+            width: 750px;
             height: 690px;
+            overflow: hidden;
+            margin-bottom: 24px;
         }
 
         .slider_track {
             display: flex;
-            outline: 3px solid blue;
+            /* outline: 3px solid blue; */
             width: 400%;
-            height : 100%;
+            height: 100%;
         }
-        .slide_item{
-            width : 100%;
-            height : 100%;
-            outline: 5px solid green;
+
+        .slide_item {
+            width: 100%;
+            height: 100%;
+            /* outline: 5px solid green; */
         }
-        .slide_item img{
-            width : 100%;
-            height : 100%;
+
+        .slide_item img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+        }
+
+        .product_detail_info {
+            outline: 5px solid green;
+            margin-bottom: 72px;
+        }
+
+        .selected_brand {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 7px;
+        }
+
+        .product_title {
+            font-size: 16px;
+        }
+
+        .product_price {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .product_meta {
+            margin-bottom: 7px;
+        }
+
+        .tag_list {
+            display: flex;
+            gap: 7px;
+            margin-bottom: 24px;
+        }
+
+        .tag_item {
+            font-size: 12px;
+            padding: 6px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 50px;
+        }
+
+        .product_detail_stats_wrapper {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .btn_group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn_group button {
+            /* max-width: 740px; */
+            /* width : 30%; */
+            flex: 1;
+            height: 40px;
+            /* outline: 1px solid #333; */
+            border-radius: 5px;
+            border: 1px solid #333;
+            box-sizing: border-box;
+        }
+
+        .pay {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .product_detail_extra {
+            margin-bottom: 48px;
+        }
+
+        .product_detail_subtitle {
+            font-size: 20px;
+            font-weight: 700;
+            padding-bottom: 7px;
+            border-bottom: 1px solid #d9d9d9;
+        }
+
+        .product_detail_description {
+            padding: 24px 15px;
+        }
+
+        .seller_banner_content {
+            outline: 3px solid red;
+            margin-bottom: 72px;
+        }
+
+        .seller_banner_title {
+            font-size: 20px;
+            font-weight: 700;
+            padding-bottom: 7px;
+            border-bottom: 1px solid #d9d9d9;
+            margin-bottom: 24px;
+        }
+
+        .seller_banner_body {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .seller_profile_img {
+            width: 50px;
+            height: 50px;
+            border-radius: 500px;
+            overflow: hidden;
+        }
+
+        .seller_profile_img img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .seller_info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1
+        }
+
+        .info_header {
+            display: flex;
+            gap: 12px;
+
+        }
+
+        .seller_stats {
+            display: flex;
+            gap: 12px;
+
+        }
+
+        .follow_btn {
+            display: block;
+            height: 28px;
+            padding: 6px 12px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            font-size: 12px;
+            line-height: 12px;
+            cursor: pointer;
+        }
+
+        .recommend_product_title {
+            font-size: 20px;
+            font-weight: 700;
+            padding-left: 15px;
+            margin-bottom: 24px;
         }
     </style>
 </head>
@@ -146,10 +299,10 @@
                     <!-- slide_track -->
                     <ul class="slider_track">
                         <!-- slide_item -->
-                        <li class="slide_item"><img src="images/product_img01.jpg" alt=""></li>
-                        <li class="slide_item"><img src="images/product_img01.jpg" alt=""></li>
-                        <li class="slide_item"><img src="images/product_img01.jpg" alt=""></li>
-                        <li class="slide_item"><img src="images/product_img01.jpg" alt=""></li>
+                        <li class="slide_item"><img src="images/product_detail_tent.jpg" alt=""></li>
+                        <li class="slide_item"><img src="images/product_detail_tent.jpg" alt=""></li>
+                        <li class="slide_item"><img src="images/product_detail_tent.jpg" alt=""></li>
+                        <li class="slide_item"><img src="images/product_detail_tent.jpg" alt=""></li>
                     </ul>
                     <div class="slide_progress">
                         progress bar
@@ -157,6 +310,7 @@
                 </div>
                 <!-- product_detail_info -->
                 <div class="product_detail_info">
+                    <span class="selected_brand">헬레베르그</span>
                     <h3 class="product_title">[상품 타이틀]</h3>
                     <span class="product_price">1,893,000 원</span>
                     <div class="product_meta">
@@ -165,12 +319,12 @@
                     </div>
                     <!-- tag_list -->
                     <ul class="tag_list">
-                        <li class="tag_item">새상품</li>
-                        <li class="tag_item">미개봉</li>
-                        <li class="tag_item">여름템</li>
+                        <li class="tag_item"><a href="#">새상품</a></li>
+                        <li class="tag_item"><a href="#">미개봉</a></li>
+                        <li class="tag_item"><a href="#">여름템</a></li>
                     </ul>
-                    <div>
-                        <!-- 판매중  버튼 자리-->
+                    <div class="product_detail_stats_wrapper">
+
                         <ul class="product_stats">
                             <li class="view">
                                 <p class="icon">
@@ -213,6 +367,7 @@
                                 <span>12</span>
                             </li>
                         </ul>
+                        <!-- 버튼 -->
                     </div>
                     <div class="btn_group">
                         <button class="chat">채팅하기</button>
@@ -222,64 +377,59 @@
                 <!-- 상품 추가정보 -->
                 <div class="product_detail_extra">
                     <h4 class="product_detail_subtitle">상품 정보</h4>
-                    <!-- textarea로 해야되는가? -->
 
-                    <textarea class="product_detail_description" name="" id="" readonly>텐트와 이너매트 같이 드려요~ 
-캠핑이나 피크닉에 딱이에요!  
-- 텐트 사이즈: 설치 시 210 x 150 x 120cm, 
-수납 시 77 x 17cm 
-- 매트 사이즈: 140 x 200cm  
-- 텐트 재질: 폴리에스테르 
-- 매트 재질: 패브릭 폼  
-텐트 정가는 263,000원, 매트는 53,000원입니다  
-작년구입하여 딱2번 사용했어요 
-이젠 늙어서 캠핑 못갈거같아 내놓습니다 
-젊으실때 많이 다니세요</textarea>
+
+                    <div class="product_detail_description" name="" id="" readonly>텐트와 이너매트 같이 드려요~
+                        캠핑이나 피크닉에 딱이에요!<br>
+                        - 텐트 사이즈: 설치 시 210 x 150 x 120cm,<br>
+                        수납 시 77 x 17cm<br>
+                        - 매트 사이즈: 140 x 200cm<br>
+                        - 텐트 재질: 폴리에스테르<br>
+                        - 매트 재질: 패브릭 폼<br>
+                        텐트 정가는 263,000원, 매트는 53,000원입니다<br>
+                        작년구입하여 딱2번 사용했어요<br>
+                        이젠 늙어서 캠핑 못갈거같아 내놓습니다<br>
+                        젊으실때 많이 다니세요<br>
+                    </div>
                 </div>
 
 
                 <!-- 사용자 프로필(상품 상세페이지 첨부용) -->
-                <div class="seller-banner premium">
-                    <div class="banner-header">
-                        <h2 class="banner-title">판매자 정보</h2>
-                    </div>
+                <div class="seller_banner_content">
+                    <h2 class="seller_banner_title">판매자 정보</h2>
 
-                    <div class="banner-content">
-                        <div class="profile-avatar">
-                            <div class="avatar-image">
-                                <div class="avatar-silhouette"></div>
-                            </div>
+                    <div class="seller_banner_body">
+                        <div class="seller_profile_img">
+                            <img src="images/user_profile_img.jpg" alt="">
                         </div>
 
-                        <div class="profile-info">
-                            <div class="profile-header">
-                                <span class="profile-name">캠핑마스터</span>
-                                <div class="profile-rating">
-                                    <span class="star-icon">⭐</span>
-                                    <span class="rating-score">4.8</span>
+                        <div class="seller_info">
+                            <div class="info_header">
+                                <h4 class="profile_name">캠핑마스터</h4>
+                                <div class="profile_rating">
+                                    <span class="star_icon">⭐</span>
+                                    <span class="rating_score">4.8</span>
                                 </div>
-                                <span class="verified-badge">프리미엄</span>
                             </div>
 
-                            <div class="profile-stats">
-                                <div class="stat-item">
-                                    <span class="stat-label">게시글</span>
-                                    <span class="stat-value">156</span>
+                            <div class="seller_stats">
+                                <div class="seller_item">
+                                    <span class="seller_article">게시글</span>
+                                    <span class="value" id="seller_article">156</span>
                                 </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">판매한</span>
-                                    <span class="stat-value">1,240</span>
+                                <div class="seller_item">
+                                    <span class="seller_follower">팔로워</span>
+                                    <span class="value" id="seller_follower">1,240</span>
                                 </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">팔로잉</span>
-                                    <span class="stat-value">892</span>
+                                <div class="seller_item">
+                                    <span class="seller_following">팔로잉</span>
+                                    <span class="value" id="seller_following">892</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="banner-actions">
-                            <button class="report-button">팔로우</button>
-                        </div>
+                        <button class="follow_btn">팔로우</button>
+
                     </div>
                 </div>
                 <!-- 사용자 프로필(상품 상세페이지 첨부용) -->
@@ -287,8 +437,8 @@
 
 
             <!-- 상품 -->
-            <div>
-                <h3>이런 상품은 어때요</h3>
+            <div class="recommend_product_content">
+                <h3 class="recommend_product_title">이런 상품은 어때요</h3>
                 <!-- product_list 3col ver -->
                 <ul class="product_list_wrapper">
                     <!-- 상품 카드 1 -->
