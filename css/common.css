@@ -68,47 +68,65 @@ body {
 }
 
 .body_tb {
-	font: 700 var(--fz)/var(--lh);
+	font-weight: 700;
+	font-size: var(--fz);
+	line-height: var(--lh);
 }
 
 .large_tb {
 	/* 28px */
-	font: 700 calc(var(--fz) * 1.75)/var(--lh);
+	font-weight: 700;
+	font-size: calc(var(--fz) * 1.75);
+	line-height: var(--lh);
 }
 
 .large_tr {
 	/* 28px */
-	font: 400 calc(var(--fz) * 1.75)/calc(var(--lh) * 2);
+	font-weight: 400;
+	font-size: calc(var(--fz) * 1.75);
+	line-height: calc(var(--lh) * 2);
 }
 
 .medium_tb {
 	/* 20px */
-	font: 700 calc(var(--fz) * 1.25)/var(--lh);
+	font-weight: 700;
+	font-size: calc(var(--fz) * 1.25);
+	line-height: var(--lh);
 }
 
 .medium_tr {
 	/* 20px */
-	font: 400 calc(var(--fz) * 1.25)/var(--lh);
+	font-weight: 400;
+	font-size: calc(var(--fz) * 1.25);
+	line-height: var(--lh);
 }
 
 .normal_tb {
 	/* 16px */
-	font: 700 var(--fz)/var(--lh);
+	font-weight: 700;
+	font-size: var(--fz);
+	line-height: var(--lh);
 }
 
 .small_tb {
 	/* 14px */
-	font: 700 calc(var(--fz) * 0.875)/var(--lh);
+	font-weight: 700;
+	font-size: calc(var(--fz) * 0.875);
+	line-height: var(--lh);
 }
 
 .small_tr {
 	/* 14px */
-	font: 400 calc(var(--fz) * 0.875)/var(--lh);
+	font-weight: 700;
+	font-size: calc(var(--fz) * 0.875);
+	line-height: var(--lh);
 }
 
 .xsmall_tr {
 	/* 12px */
-	font: 400 calc(var(--fz) * 0.75)/var(--lh);
+	font-weight: 400;
+	font-size: calc(var(--fz) * 0.75);
+	line-height: var(--lh);
 }
 
 /* button */
@@ -497,7 +515,7 @@ body {
 
 .product_stats li span {
 	font-size: 12px;
-	
+
 }
 
 /* common banner */
