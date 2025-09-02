@@ -2,10 +2,10 @@
   padding: 0 18px;
 }
 .mypage>div{
-  margin-bottom: var(--mg_24);
+  margin-bottom: var(--spacing-sm);
 }
 .mypage h2{
-  margin-bottom: var(--mg_12);
+  margin-bottom: var(--spacing-xs);
   padding-left: 8px;
   font-size: 18px;
   font-weight: 700;
@@ -23,5 +23,5 @@
 }
 .mypage ul li img{
   margin: 0 auto;
-  margin-bottom: var(--mg_12);
+  margin-bottom: var(--spacing-xs);
 }
