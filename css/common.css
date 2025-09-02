@@ -12,92 +12,103 @@
 
 /*variants*/
 :root {
+	/* common */
 	--container: 780px;
 	--fz: 16px;
 	--lh: auto;
-	--primary: rgba(255, 62, 28, 1);
-	--black: rgba(51, 51, 51, 1);
-	--light_black: rgba(34, 34, 34, 1);
-	--white: rgba(255, 255, 255, 1);
-	--sub_text: rgba(147, 147, 147, 1);
-	--icon_color: rgba(82, 82, 82, 1);
-	--border_1: rgba(217, 217, 217, 1);
-	--border_2: rgba(243, 243, 243, 1);
+	--primary: #FF3E1B;
 
-	--fz_12: 12px;
-	--fz_14: 14px;
-	--fz_16: 16px;
-	--fz_20: 20px;
-	--fz_28: 28px;
+	/* font */
+	--font-color-basic: #333333;
+	--font-color-light-gray: #828282;
+	--font-color-placeholder: #939393;
+	--font-color-white: #ffffff;
+	/* bg */
+	--bg-color-basic: #000000;
+	--btn-bg-color-basic: #333333;
 
-	--mg_12: 12px;
-	--mg_24: 24px;
-	--mg_48: 48px;
-	--mg_72: 72px;
+	/* border */
+	--border-color-basic: #d9d9d9;
+	--border-color-light: #f3f3f3;
 
+	--spacing-xs: 12px;
+	/* extra small */
+
+	--spacing-sm: 24px;
+	/* small */
+
+	--spacing-md: 48px;
+	/* medium */
+
+	--spacing-lg: 72px;
+	/* large */
 }
 
 /*layout*/
 .container {
 	width: var(--container);
 	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+/* common_style */
+.ir_pm {
+	position: absolute;
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }
 
 /*typography*/
 body {
-	font: var(--lh) "Inter";
-	font-size: var(--fz);
+	font: 400 var(--fz)/var(--lh) "Inter";
 	color: var(--black);
-	font-weight: 400;
 }
 
 .body_tb {
-	font: var(--lh);
-	font-size: var(--fz);
-	font-weight: 700;
+	font: 700 var(--fz)/var(--lh);
 }
 
 .large_tb {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 1.75);
-	font-weight: 700;
+	/* 28px */
+	font: 700 calc(var(--fz) * 1.75)/var(--lh);
 }
 
 .large_tr {
-	font: calc(var(--lh) * 2);
-	font-size: calc(var(--fz) * 1.75);
+	/* 28px */
+	font: 400 calc(var(--fz) * 1.75)/calc(var(--lh) * 2);
 }
 
 .medium_tb {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 1.25);
-	font-weight: 700;
+	/* 20px */
+	font: 700 calc(var(--fz) * 1.25)/var(--lh);
 }
 
 .medium_tr {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 1.125);
+	/* 20px */
+	font: 400 calc(var(--fz) * 1.25)/var(--lh);
 }
 
 .normal_tb {
-	font: var(--lh);
-	font-weight: 700;
+	/* 16px */
+	font: 700 var(--fz)/var(--lh);
 }
 
 .small_tb {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 0.875);
-	font-weight: 700;
+	/* 14px */
+	font: 700 calc(var(--fz) * 0.875)/var(--lh);
 }
 
 .small_tr {
-	font: var(--lh);
-	font-size: calc(var(--fz) * 0.875);
+	/* 14px */
+	font: 400 calc(var(--fz) * 0.875)/var(--lh);
 }
 
 .xsmall_tr {
-	font: var(--lh);
-	font-size: var(--fz_12);
+	/* 12px */
+	font: 400 calc(var(--fz_12) * 0.75)/var(--lh);
 }
 
 /* button */
@@ -105,7 +116,7 @@ body {
 .btn_normal {
 	background: #000;
 	color: var(--white);
-	font: var(--small_tr);
+
 	padding: 0 14px;
 	border-radius: 5px;
 	height: 40px;
@@ -137,7 +148,6 @@ body {
 .btn_primary {
 	background: var(--primary);
 	color: var(--white);
-	font: var(--small_tr);
 	padding: 0 14px;
 	border-radius: 5px;
 	height: 40px;
@@ -185,7 +195,6 @@ body {
 .category {
 	background: var(--white);
 	color: var(--black);
-	font: var(--small_tr);
 	padding: 0 12px;
 	border-radius: 15px;
 	height: 30px;
@@ -292,15 +301,16 @@ body {
 	max-width: 780px;
 	display: flex;
 	gap: 12px;
+	padding: 0 18px;
 	margin-bottom: var(--mg_48);
 }
 
 .profile_card {
+	flex: 3;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	gap: 48px;
-	width: 440px;
 	background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
 	border-radius: 5px;
 	padding: 22px 38px;
@@ -347,7 +357,7 @@ body {
 }
 
 .point_card {
-	width: 290px;
+	flex: 2;
 	background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
 	border-radius: 5px;
 	/* padding: 14px; */
@@ -408,11 +418,12 @@ body {
 /* product_list 3col ver  */
 .product_list_wrapper {
 	display: flex;
-	gap : 15px;
+	gap: 15px;
 }
 
 .product_card {
-	width: 250px;
+	flex: 3;
+	display: flex;
 	background: white;
 	cursor: pointer;
 }
@@ -423,8 +434,9 @@ body {
 	gap: 20px;
 }
 
-.product-_image img {
+.product_image img {
 	width: 100%;
+	height: 100%;
 	object-fit: cover;
 }
 
@@ -433,9 +445,6 @@ body {
 }
 
 .product_title {
-	font-size: 12px;
-	color: #333;
-	font-weight: 700;
 	margin-bottom: 8px;
 }
 
@@ -468,10 +477,6 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-
-.product_price {
-	font-size: 12px;
 }
 
 .product_stats {
