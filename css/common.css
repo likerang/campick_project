@@ -424,7 +424,7 @@ body {
 	gap: 20px;
 }
 
-.product-_image img {
+.product_image img {
 	width: 100%;
 	object-fit: cover;
 }
