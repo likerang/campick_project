@@ -134,13 +134,13 @@ fetch('json/store.data.json')
             <img src="${product.product_image.src}" alt="${product.product_image.alt}">
           </div>
           <div class="product_info">
-            <h3 class="product_title">${product.product_info.title}</h3>
+            <h3 class="product_title small_tr">${product.product_info.title}</h3>
             <div class="product_meta">
               <span class="product_location">${product.product_info.meta.location}</span>
               <span class="product_date">${product.product_info.meta.date}</span>
             </div>
             <div class="product_footer">
-              <span class="product_price">${product.product_info.footer.price}</span>
+              <span class="product_price normal_tb">${product.product_info.footer.price}</span>
               <ul class="product_stats">
                 ${product.product_info.footer.stats.map(stat => `
                   <li class="${stat.type}">

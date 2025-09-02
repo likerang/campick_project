@@ -25,13 +25,14 @@
   header {
       width: 100%;
       border-bottom: 1px solid var(--border_1);
-      padding: 0 18px;
+      padding: var(--mg_24) 18px 0;
       margin-bottom: var(--mg_24);
       background-color: var(--white);
   }
 
   .header_top {
       display: flex;
+      justify-content:space-between;
       align-items: center;
       gap: 24px;
   }
@@ -43,7 +44,6 @@
 
   .search_area input {
       width: 100%;
-      max-width: 450px;
       height: 40px;
       padding-left: 48px;
       font-size: var(--fz_16);
@@ -89,7 +89,7 @@
 
   .gnb ul li {
       position: relative;
-      padding: 16px 0;
+      margin: 16px 0;
   }
 
   .gnb ul li::after {
@@ -114,6 +114,7 @@
       font-size: var(--fz_14);
       font-weight: 400;
       position: relative;
+      padding: 16px 0;
   }
 
   .gnb ul li:first-child a {

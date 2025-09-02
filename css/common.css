@@ -414,7 +414,8 @@ body {
 }
 
 .product_card {
-	width: 250px;
+	flex: 3;
+	display: flex;
 	background: white;
 	cursor: pointer;
 }
