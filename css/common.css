@@ -225,8 +225,8 @@ body {
 .category:hover,
 .category:active,
 .category.selected {
-	background: var(--black);
-	color: var(--white);
+	background: var(--bg-color-basic);
+	color: var(--bg-color-white);
 }
 
 /* common_silder */
@@ -442,12 +442,15 @@ body {
 
 .product_card {
 	flex: 3;
+	max-width: 250px;
+	width: 100%;
 	display: flex;
 	background: white;
 	cursor: pointer;
 }
 
 .product_card a {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
