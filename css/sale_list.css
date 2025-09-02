@@ -1,17 +1,16 @@
 .tab_menu{
   display: flex;
-  gap: var(--mg_12);
-  margin: 0 0 var(--mg_24) 18px;
+  gap: var(--spacing-xs);
+  margin: 0 0 var(--spacing-sm) 18px;
 }
 
 .tab_menu a {
-  font: var(--lh);
   font-weight: 700;
-  color: var(--sub_text);
+  color: var(--font-color-placeholder);
 }
 
 .tab_menu a.active {
-  color: var(--light_black);
+  color: var(--font-color-basic);
 }
 
 /* product_list 2col ver  */
@@ -53,14 +52,14 @@
 
 .soldout_list_wrapper .soldout_badge {
   position: absolute;
-  top: var(--mg_12);
-  left: var(--mg_12);
+  top: var(--spacing-xs);
+  left: var(--spacing-xs);
   padding: 6px 12px;
+  font-size: 12px;
   background-color: var(--primary);
-  color: var(--white);
+  color: var(--font-color-white);
   filter: none;
   border-radius: 15px;
-  font-size: var(--fz_12);
   z-index: 10;
 }
 
@@ -73,19 +72,18 @@
 .product_card_2col.disable .product_meta,
 .product_card_2col.disable .product_price,
 .product_card_2col.disable .product_stats {
-  color: var(--sub_text);
+  color: var(--font-color-light-gray);
 }
 
 .more_btn {
   position: absolute;
   width: 20px;
   height: 20px;
-  top: var(--mg_12);
-  right: var(--mg_12);
+  top: var(--spacing-xs);
+  right: var(--spacing-xs);
   background: #fff;
   border-radius: 5px;
   cursor: pointer;
-  font-size: var(--fz_12);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -116,7 +114,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
-  border: 1px solid var(--border_1);
+  border: 1px solid var(--border-color-basic);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   transition: bottom 0.3s ease;
@@ -131,11 +129,11 @@
 .more_popup ul {
   list-style: none;
   margin: 0 auto;
-  padding: var(--mg_12) var(--mg_24);
+  padding: var(--spacing-xs) var(--spacing-sm);
 }
 
 .more_popup li {
-  border-bottom: 1px solid var(--border_1);
+  border-bottom: 1px solid var(--border-color-basic);
 }
 
 .more_popup li:last-child {
