@@ -7,6 +7,7 @@
  * 수정이력:
  *  2025-08-28: 최초 작성
     2025-09-01: form 양식 작성 완료
+    2025-09-02: css 스타일 분리 작업
 -->
 
 <!DOCTYPE html>
@@ -20,186 +21,8 @@
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/add_prod.css">
 
-
-
-  <style>
-
-    .form_content{
-      padding : 0 15px;
-      box-sizing: border-box;
-    }
-    form div {
-      margin-bottom: 24px;
-    }
-
-    .image_upload {
-      width: 96px;
-      height: 96px;
-      border-radius: 15px;
-      background-color: #f3f3f3;
-      outline: 1px solid #d9d9d9;
-    }
-
-    .upload_box {
-      display: flex;
-      height: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .upload_img_count {
-      /* outline: 1px solid red; */
-      margin-top: -10px;
-    }
-
-    .product_title,
-    .product_pirce {
-      /* width: 600px; */
-      /* height: 40px; */
-      /* background-color: #f3f3f3; */
-      /* border-radius: 5px; */
-      /* outline: 3px solid #d9d9d9; */
-      position: relative;
-      margin-bottom: 24px;
-    }
-
-    .product_title label,
-    .product_pirce label {
-      position: absolute;
-      top: 50%;
-      left: 15px;
-      transform: translateY(-50%);
-      font-size: 14px;
-      font-weight: 400;
-      color: #939393;
-    }
-
-    .product_title input,
-    .product_pirce input {
-      width: 600px;
-      height: 40px;
-      background-color: #f3f3f3;
-      border-radius: 5px;
-      outline: 1px solid #d9d9d9;
-      border: none;
-    }
-
-    .label_box {
-      display: block;
-      width: 600px;
-      height: 40px;
-      background-color: #f3f3f3;
-      border-radius: 5px;
-      outline: 1px solid #d9d9d9;
-      border: none;
-    }
-
-    .product_status_checkbox,
-    .warranty_status_checkbox,
-    .trade_checkbox {
-      display: flex;
-      gap: 12px;
-    }
-
-    .product_status_checkbox label,
-    .warranty_status_checkbox label,
-    .trade_checkbox label {
-      width: 120px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f3f3f3;
-      border-radius: 5px;
-      outline: 1px solid #d9d9d9;
-      border: none;
-      font-size: 14px;
-      color: #939393;
-    }
-
-    .product_status_checkbox input[type="radio"],
-    .warranty_status_checkbox input[type="radio"],
-    .trade_checkbox input[type="checkbox"] {
-      display: none;
-    }
-
-    .product_status_checkbox input[type="radio"]:checked+label,
-    .warranty_status_checkbox input[type="radio"]:checked+label,
-    .trade_checkbox input[type="checkbox"]:checked+label {
-      background-color: #333;
-      color: #fff;
-    }
-
-    textarea {
-      resize: none;
-      width: 100%;
-      height: 190px;
-      background-color: #f3f3f3;
-      border-radius: 5px;
-      outline: 1px solid #d9d9d9;
-      border: none;
-      padding: 12px;
-      box-sizing: border-box;
-    }
-
-    .product_tag_content {
-      /* outline: 3px solid red; */
-    }
-
-    .product_tag_input {
-      display: flex;
-      /* outline: 3px solid rgb(22, 146, 84); */
-      gap: 12px;
-    }
-
-    .tag_input {
-      flex: 1;
-      height: 40px;
-      background-color: #f3f3f3;
-      outline: 1px solid #d9d9d9;
-      color: #939393;
-      border: none;
-      border-radius: 5px;
-      padding-left: 14px;
-    }
-
-    .tag_add_btn {
-      width: 115px;
-      height: 40px;
-      font-size: 14px;
-      outline: 1px solid #d9d9d9;
-      border-radius: 5px;
-    }
-
-    .tag_list {
-      display: flex;
-      gap: 12px;
-    }
-
-    .tag_item {
-      display: flex;
-      padding: 6px 12px;
-      outline: 1px solid #d9d9d9;
-      border-radius: 50px;
-    }
-
-    .tag_item button {
-      display: flex;
-      align-items: center;
-    }
-
-    .submit_button {
-      width: 100%;
-      height: 40px;
-      background-color: #333;
-      color: #fff;
-      border-radius: 5px;
-
-    }
-  </style>
 </head>
 
 <body>
@@ -272,10 +95,10 @@
       </div>
       <nav class="gnb">
         <ul>
-          <li><a href="#">전체</a></li>
-          <li><a href="#">중고거래</a></li>
-          <li><a href="#">브랜드</a></li>
-          <li><a href="#">커뮤니티</a></li>
+          <li><a class="small_tr" href="#">전체</a></li>
+          <li><a class="small_tr" href="#">중고거래</a></li>
+          <li><a class="small_tr" href="#">브랜드</a></li>
+          <li><a class="small_tr" href="#">커뮤니티</a></li>
         </ul>
       </nav>
     </header>
@@ -303,15 +126,15 @@
             </div>
 
             <!-- 상품명 -->
-            <div class="product_title label_box">
-              <label for="productName">상품명</label>
-              <input type="text" id="productName" name="productName" class="input-field" required>
+            <div class="product_title">
+              <label for="productName small_tr">상품명</label>
+              <input class="label_box" type="text" id="productName" name="productName" class="input-field" required>
             </div>
             <!-- 판매 가격 -->
             <div class="product_pirce label_box">
-              <label for="productPrice">판매 가격</label>
-              <input type="number" id="productPrice" name="productPrice" class="input-field" min="0" step="100"
-                required>
+              <label for="productPrice small_tr">판매 가격</label>
+              <input class="label_box" type="number" id="productPrice" name="productPrice" class="input-field" min="0"
+                step="100" required>
             </div>
 
             <!-- 카테고리 및 브랜드 -->
@@ -341,28 +164,28 @@
             <h3 class="product_status_title">제품 상태</h3>
             <div class="product_status_checkbox">
               <input type="radio" name="condition" value="new" id="new">
-              <label for="new">미개봉</label>
+              <label class="small_tr" for="new">미개봉</label>
 
               <input type="radio" name="condition" value="good" id="good" checked>
-              <label for="good">양호</label>
+              <label class="small_tr" for="good">양호</label>
 
               <input type="radio" name="condition" value="normal" id="normal">
-              <label for="normal"> 보통</label>
+              <label class="small_tr" for="normal"> 보통</label>
 
               <input type="radio" name="condition" value="used" id="used">
-              <label for="used"> 사용감 있음</label>
+              <label class="small_tr" for="used"> 사용감 있음</label>
 
               <input type="radio" name="condition" value="repair" id="repair">
-              <label for="repair"> 수리/수선 필요</label>
+              <label class="small_tr" for="repair"> 수리/수선 필요</label>
             </div>
             <!-- 보증서 유무 -->
             <h3 class="warranty_status_title">보증서 유무</h3>
             <div class="warranty_status_checkbox">
               <input type="radio" name="warranty" value="yes" id="yes" checked>
-              <label for="yes"> 유</label>
+              <label class="small_tr" for="yes"> 유</label>
 
               <input type="radio" name="warranty" value="no" id="no">
-              <label for="no"> 무</label>
+              <label class="small_tr" for="no"> 무</label>
             </div>
 
 
@@ -378,10 +201,10 @@
             <h3 class="trade_title">거래 방식</h3>
             <div class="trade_checkbox">
               <input type="checkbox" name="tradeMethod" value="delivery" id="delivery" checked>
-              <label for="delivery"> 택배</label>
+              <label class="small_tr" for="delivery"> 택배</label>
 
               <input type="checkbox" name="tradeMethod" value="direct" id="direct">
-              <label for="direct">직거래</label>
+              <label class="small_tr" for="direct">직거래</label>
             </div>
 
 
@@ -392,7 +215,7 @@
             <div class="product_tag_content">
               <div class="product_tag_input">
                 <input type="text" id="tagInput" class="tag_input" placeholder="예시 '새상품', '미개봉'">
-                <button type="button" class="tag_add_btn">추가</button>
+                <button type="button" class="tag_add_btn small_tr">추가</button>
               </div>
               <ul class="tag_list">
                 <li class="tag_item">
