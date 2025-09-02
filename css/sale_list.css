@@ -29,13 +29,6 @@
   cursor: pointer;
 }
 
-.product_list_wrapper_2col .product_title,
-.product_list_wrapper_2col .product_price,
-.soldout_list_wrapper .product_title,
-.soldout_list_wrapper .product_price {
-	font-size: var(--fz);
-}
-
 .soldout_list_wrapper {
   display: flex;
   position: relative;
