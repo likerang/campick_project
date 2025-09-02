@@ -6,6 +6,9 @@
 }
 .mypage h2{
   margin-bottom: var(--mg_12);
+  padding-left: 8px;
+  font-size: 18px;
+  font-weight: 700;
 }
 .mypage ul{
   display: flex;
