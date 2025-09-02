@@ -6,6 +6,7 @@
  * 설명:  header CSS 파일
  * 수정이력:
  *  2025-08-28: 최초 작성
+    2025-09-29: header 스타일 작성
 */
 
   /* Common CSS 불러오기 */
@@ -25,6 +26,7 @@
       width: 100%;
       border-bottom: 1px solid var(--border_1);
       padding: 0 18px;
+      margin-bottom: var(--mg_24);
       background-color: var(--white);
   }
 
