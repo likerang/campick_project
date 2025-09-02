@@ -108,7 +108,7 @@ body {
 
 .xsmall_tr {
 	/* 12px */
-	font: 400 calc(var(--fz_12) * 0.75)/var(--lh);
+	font: 400 calc(var(--fz) * 0.75)/var(--lh);
 }
 
 /* button */
@@ -451,7 +451,7 @@ body {
 .product_meta {
 	font-size: 10px;
 	color: #828282;
-	font-weight: 400;
+	/* font-weight: 400; */
 	display: flex;
 	gap: 10px;
 	margin-bottom: 24px;
@@ -497,7 +497,7 @@ body {
 
 .product_stats li span {
 	font-size: 12px;
-	font-weight: 300;
+	
 }
 
 /* common banner */
