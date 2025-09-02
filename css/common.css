@@ -26,6 +26,7 @@
 	/* bg */
 	--bg-color-basic: #000000;
 	--btn-bg-color-basic: #333333;
+	--bg-color-white: #ffffff;
 
 	/* border */
 	--border-color-basic: #d9d9d9;
@@ -189,7 +190,6 @@ body {
 	background: var(--white);
 	color: var(--black);
 	border: 1px solid var(--black);
-	font: var(--small_tr);
 	padding: 0 14px;
 	border-radius: 5px;
 	height: 40px;
@@ -211,8 +211,8 @@ body {
 
 /* category */
 .category {
-	background: var(--white);
-	color: var(--black);
+	background: var(--bg-color-white);
+	color: var(--font-color-basic);
 	padding: 0 12px;
 	border-radius: 15px;
 	height: 30px;
@@ -224,8 +224,8 @@ body {
 .category:hover,
 .category:active,
 .category.selected {
-	background: var(--black);
-	color: var(--white);
+	background: var(--bg-color-basic);
+	color: var(--bg-color-white);
 }
 
 /* common_silder */
@@ -233,7 +233,7 @@ body {
 	width: 780px;
 	height: 240px;
 	position: relative;
-	background: var(--white);
+	background: var(--bg-color-white);
 	overflow: hidden;
 }
 
@@ -272,7 +272,7 @@ body {
 	position: absolute;
 	bottom: 24px;
 	left: 40px;
-	color: var(--white);
+	color: var(--font-color-white);
 	text-align: left;
 	display: flex;
 	flex-direction: column;
@@ -286,8 +286,6 @@ body {
 
 .slide_desc {
 	order: 1;
-	font-size: var(--fz_20);
-	font-weight: 400;
 }
 
 /* Navigation Arrows */
@@ -318,9 +316,9 @@ body {
 	width: 100%;
 	max-width: 780px;
 	display: flex;
-	gap: 12px;
+	gap: var(--spacing-xs);
 	padding: 0 18px;
-	margin-bottom: var(--mg_48);
+	margin-bottom: var(--spacing-md);
 }
 
 .profile_card {
@@ -328,11 +326,11 @@ body {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 48px;
-	background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+	gap: var(--spacing-md);
+	background: var(--bg-color-basic);
 	border-radius: 5px;
 	padding: 22px 38px;
-	color: white;
+	color: var(--font-color-white);
 }
 
 .profile_img_wrapper {
@@ -351,12 +349,12 @@ body {
 .user_info {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: var(--spacing-sm);
 }
 
 .stats_wrapper {
 	display: flex;
-	gap: 72px;
+	gap: var(--spacing-lg);
 	font-size: 12px;
 	text-align: center;
 }
@@ -369,17 +367,16 @@ body {
 }
 
 .stat_title.stat_number {
-	font-size: var(--fz_12);
-	color: var(--white);
-	font-weight: 400;
+	font-size: 12px;
+	color: var(--font-color-white);
+
 }
 
 .point_card {
 	flex: 2;
-	background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+	background: var(--bg-color-basic);
 	border-radius: 5px;
-	/* padding: 14px; */
-	color: white;
+	color: var(--font-color-white);
 	position: relative;
 }
 
@@ -399,15 +396,11 @@ body {
 .point_title {
 	margin-top: 24px;
 	margin-left: 27px;
-	font-size: 16px;
-	font-weight: 700;
 	position: relative;
 	z-index: 2;
 }
 
 .point_value {
-	font-size: 16px;
-	font-weight: 400;
 	text-align: right;
 	margin-right: 14px;
 	margin-bottom: 11px;
@@ -423,12 +416,11 @@ body {
 
 .point_btn {
 	padding: 6px 12px;
-	border: 1px solid var(--white);
+	border: 1px solid #fff;
 	border-radius: 5px;
 	background: transparent;
-	color: white;
+	color: #fff;
 	font-size: 12px;
-	font-weight: 400;
 	cursor: pointer;
 }
 
@@ -441,12 +433,15 @@ body {
 
 .product_card {
 	flex: 3;
+	max-width: 250px;
+	width: 100%;
 	display: flex;
 	background: white;
 	cursor: pointer;
 }
 
 .product_card a {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
@@ -468,11 +463,11 @@ body {
 
 .product_meta {
 	font-size: 10px;
-	color: #828282;
+	color: var(--font-color-light-gray);
 	/* font-weight: 400; */
 	display: flex;
 	gap: 10px;
-	margin-bottom: 24px;
+	margin-bottom: var(--spacing-sm);
 }
 
 .product_location {
@@ -515,7 +510,6 @@ body {
 
 .product_stats li span {
 	font-size: 12px;
-
 }
 
 /* common banner */
@@ -523,10 +517,10 @@ body {
 	width: calc(100% - 36px);
 	display: flex;
 	justify-content: center;
-	gap: calc(var(--mg_24) * 6);
-	padding: var(--mg_24) var(--mg_48);
-	margin: var(--mg_72) auto 80px;
-	border: 1px solid var(--border_1);
+	gap: calc(var(--spacing-sm) * 6);
+	padding: var(--spacing-sm) var(--spacing-md);
+	margin: var(--spacing-lg) auto 80px;
+	border: 1px solid var(--border-color-basic);
 	border-radius: 5px;
 }
 
