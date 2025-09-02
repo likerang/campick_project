@@ -10,16 +10,7 @@
 */
 
   /* Common CSS 불러오기 */
-  @import url(common.css);
-
-  .ir_pm {
-      position: absolute;
-      overflow: hidden;
-      width: 1px;
-      height: 1px;
-      clip-path: inset(50%);
-      white-space: nowrap;
-  }
+  /* @import url(common.css); */
 
   /* 헤더 스타일 */
   header {

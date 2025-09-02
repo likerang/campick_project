@@ -44,6 +44,16 @@
 	box-sizing: border-box;
 }
 
+/* common_style */
+.ir_pm {
+	position: absolute;
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
 /*typography*/
 body {
 	font: var(--lh) "Inter";
@@ -410,7 +420,7 @@ body {
 /* product_list 3col ver  */
 .product_list_wrapper {
 	display: flex;
-	gap : 15px;
+	gap: 15px;
 }
 
 .product_card {
