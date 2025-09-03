@@ -34,14 +34,15 @@ body {
   .search_input {
   	width: 100%;
 		height: 40px;
+		font-size: 16px;
   	padding: 10px 14px 10px 45px;
-  	border: 1px solid var(--border_1);
-  	background-color: var(--border_2);
+  	border: 1px solid var(--border-color-basic);
+  	background-color: var(--border-color-light);
   	border-radius: 4px;
   }
 
   .search_input::placeholder {
-  	color: #9aa0a6;
+  	color: var(--font-color-placeholder);
   }
 
   .search_icon {
@@ -78,7 +79,7 @@ body {
   }
 
   .clear_all {
-  	color: var(--sub_text);
+  	color: var(--font-color-light-gray);
   	cursor: pointer;
   	line-height: 30px;
   	transition: 0.2s ease;
@@ -104,16 +105,17 @@ body {
   	align-items: center;
   	padding: 0 12px;
   	line-height: 30px;
-  	border: 1px solid var(--border_1);
+  	border: 1px solid var(--border-color-basic);
   	border-radius: 20px;
   	color: #333;
   	cursor: pointer;
   	transition: 0.2s ease;
   }
 .search_tag:hover {
-	border: 1px solid var(--black);
+	border: 1px solid var(--bg-color-basic);
 }
   .tag_remove {
+		height: 20px;
   	margin-left: 8px;
   	color: var(--black);
   	cursor: pointer;
