@@ -23,7 +23,7 @@ body {
   width: 100%;
   height: 3px;
   margin-bottom: 40px;
-  background-color: var(--black);
+  background-color: var(--bg-color-basic);
 }
 
 .section_title {
@@ -80,31 +80,17 @@ body {
 
 .verification_btn {
   width: 120px;
-  background-color: var(--black);
-  border-radius: 5px;
+  height: 50px;
   font-size: 14px;
-  color: var(--white);
+  line-height: 50px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.3s ease;
 }
 
 .verification_btn.active {
-  background-color: var(--black);
-  color: var(--white);
+  background-color: var(--bg-color-basic);
+  color: var(--bg-color-white);
 }
-
-.verification_btn:hover {
-  background: var(--light_black);
-  color: var(--white);
-}
-
-.verification_btn:disabled {
-  background: var(--border-1);
-  color: var(--white);
-}
-
-
 
 .terms_section {
   padding-top: 24px;
@@ -158,25 +144,12 @@ body {
 
 .signup_btn {
   width: 100%;
-  padding: 18px;
-  background-color: var(--black);
-  color: var(--white);
-  border: none;
-  border-radius: 4px;
+  height: 50px;
   font-size: 18px;
   font-weight: 600;
+  line-height: 50px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   margin-top: 30px;
-}
-
-.signup_btn:hover {
-  background-color: var(--light_black);
-}
-
-.signup_btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
 }
 
 /* 실제 체크박스 숨기기 */
