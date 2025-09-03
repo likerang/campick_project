@@ -54,19 +54,13 @@ body {
   height: 50px;
   width: 100%;
   line-height: 50px;
-  font-size: 16px;
-  background-color: var(--black);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+   cursor: pointer;
 }
 
 .social_signup {
   margin-top: 48px;
   padding-top: 48px;
-  border-top: 1px solid var(--border_1);
+  border-top: 1px solid var(--border-color-basic);
 }
 
 .social_buttons {
