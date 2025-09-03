@@ -131,6 +131,19 @@ body {
 }
 
 /* button */
+
+/* more_btn */
+.more_btn {
+	display: block;
+	width: calc(100% - 30px);
+	margin: 0 auto;
+	height: 50px;
+	border-radius: 5px;
+	border : 1px solid var(--border-color-basic);
+	color : var(--font-color-basic);
+	cursor: pointer;
+}
+
 /* normal button */
 .btn_normal {
 	background: #000;
@@ -427,6 +440,7 @@ body {
 
 /* product_list 3col ver  */
 .product_list_wrapper {
+    flex-wrap: wrap;
 	display: flex;
 	gap: 15px;
 }
