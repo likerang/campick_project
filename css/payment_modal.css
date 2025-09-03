@@ -12,6 +12,7 @@
    width: 480px;
    height: 370px;
    padding: 0;
+   margin: 0 18px;
    position: relative;
    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
    animation: modalAppear 0.3s ease-out;
