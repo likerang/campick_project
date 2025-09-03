@@ -144,7 +144,11 @@ body {
 }
 
 .btn_normal:hover {
+<<<<<<< Updated upstream
 	background: var(--btn-bg-color-basic);
+=======
+	background: var(--light_black);
+>>>>>>> Stashed changes
 	color: var(--font-color-white);
 }
 
