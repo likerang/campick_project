@@ -3,6 +3,7 @@ footer {
   background-color: var(--bg-color-basic);
   color: var(--font-color-white);
   padding: 40px 14px 60px 14px;
+  margin-top: var(--spacing-lg);
 }
 
 .footer_logo {
