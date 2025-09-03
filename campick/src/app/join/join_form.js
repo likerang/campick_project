@@ -3,10 +3,10 @@ import Link from 'next/link';
 
 import "../css/join_form.css";
 
-// export const metadata = {
-// 	title: "Campick - 회원가입",
-// 	description: "Welcome to Campick",
-// };
+export const metadata = {
+	title: "Campick - 회원가입",
+	description: "Welcome to Campick",
+};
 
 
 export default function JoinForm() {
