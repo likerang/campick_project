@@ -6,34 +6,24 @@
  * 설명:  header CSS 파일
  * 수정이력:
  *  2025-08-28: 최초 작성
-    2025-09-29: header 스타일 작성
+    2025-08-29: header 스타일 작성
+    2025-09-02: class refactoring
 */
-
-  /* Common CSS 불러오기 */
-  @import url(common.css);
-
-  .ir_pm {
-      position: absolute;
-      overflow: hidden;
-      width: 1px;
-      height: 1px;
-      clip-path: inset(50%);
-      white-space: nowrap;
-  }
 
   /* 헤더 스타일 */
   header {
       width: 100%;
-      border-bottom: 1px solid var(--border_1);
-      padding: 0 18px;
-      margin-bottom: var(--mg_24);
-      background-color: var(--white);
+      border-bottom: 1px solid var(--border-color-basic);
+      padding: var(--spacing-xs) 18px;
+      margin-bottom: var(--spacing-sm);
+      background-color: var(--bg-color-white);
   }
 
   .header_top {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 24px;
+      gap: var(--spacing-sm);
   }
 
   .search_area {
@@ -43,17 +33,15 @@
 
   .search_area input {
       width: 100%;
-      max-width: 450px;
       height: 40px;
-      padding-left: 48px;
-      font-size: var(--fz_16);
-      border: 1px solid var(--border_1);
+      padding-left: var(--spacing-md);
+      border: 1px solid var(--border-color-basic);
       border-radius: 5px;
       background-color: #F3F3F3;
   }
 
   .search_area input::placeholder {
-      color: #939393;
+      color: var(--font-color-placeholder);
   }
 
   .search_area button {
@@ -70,18 +58,16 @@
 
   .user_menu ul {
       display: flex;
-      gap: 14px;
+      gap: var(--spacing-xs);
   }
 
   .user_menu li a {
       display: flex;
       align-items: center;
-      font-size: var(--fz_14);
       cursor: pointer;
   }
 
   /* 네비게이션 스타일 */
-
   .gnb ul {
       display: flex;
       gap: 20px;
@@ -89,7 +75,7 @@
 
   .gnb ul li {
       position: relative;
-      padding: 16px 0;
+      margin: 16px 0;
   }
 
   .gnb ul li::after {
@@ -110,15 +96,13 @@
 
   .gnb ul li a {
       text-decoration: none;
-      color: #333;
-      font-size: var(--fz_14);
-      font-weight: 400;
+      color: var(--font-color-basic);
       position: relative;
+      padding: 16px 0;
   }
 
   .gnb ul li:first-child a {
       color: var(--primary);
-      font-weight: 400;
   }
 
   .gnb ul li a:hover {
