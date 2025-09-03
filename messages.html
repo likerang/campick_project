@@ -7,6 +7,7 @@
  * 수정이력:
  *  2025-08-28: 최초 작성
     2025-09-01: user_profile, chat_list 추가
+    2025-09-02: refactoring, css 분리 작업
 -->
 
 <!DOCTYPE html>
@@ -20,118 +21,8 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/messages.css">
 
-
-    <style>
-        .tab_menu {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .tab_menu_title {
-            font-size: 20px;
-            color: #939393;
-            font-weight: 400;
-        }
-
-        .active {
-            font-weight: 700;
-            color: #333;
-        }
-
-        .chat_list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chat_item {
-            position: relative;
-        }
-
-        .chat_link {
-            display: flex;
-            gap: 36px;
-            align-items: center;
-        }
-
-        .chat_thumbnail {
-            width: 100px;
-            height: 100px;
-            position: relative;
-        }
-
-        .product_thumb {
-            width: 64px;
-            height: 64px;
-            border-radius: 5px;
-            position: absolute;
-            top: 12px;
-            left: 12px;
-        }
-
-        .user_thumb {
-            width: 48px;
-            height: 48px;
-            border-radius: 48px;
-            position: absolute;
-            top: 40px;
-            left: 40px;
-        }
-
-        .chat_info {
-            flex: 1;
-            max-width: 550px;
-            position: relative;
-        }
-
-        .message {
-            background-color: #eee;
-        }
-
-        .message .chat_info::after {
-            content: '2';
-            display: block;
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 0;
-            background: red;
-            font-size: 10px;
-            text-align: center;
-            color: #fff;
-            border-radius: 10px;
-        }
-
-        .chat_userid {
-            font-size: 14px;
-            margin-bottom: 7px;
-        }
-
-        .chat_message {
-            font-size: 12px;
-            margin-bottom: 12px;
-        }
-
-        .chat_time {
-            font-size: 12px;
-            color: #939393;
-        }
-
-        .chat_menu {
-            width: 24px;
-            height: 24px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            position: absolute;
-            top: 12px;
-            right: 24px;
-            background: #fff;
-        }
-    </style>
 </head>
 
 <body>
@@ -207,14 +98,15 @@
             </div>
             <nav class="gnb">
                 <ul>
-                    <li><a href="#">전체</a></li>
-                    <li><a href="#">중고거래</a></li>
-                    <li><a href="#">브랜드</a></li>
-                    <li><a href="#">커뮤니티</a></li>
+                    <li><a class="small_tr" href="#">전체</a></li>
+                    <li><a class="small_tr" href="#">중고거래</a></li>
+                    <li><a class="small_tr" href="#">브랜드</a></li>
+                    <li><a class="small_tr" href="#">커뮤니티</a></li>
                 </ul>
             </nav>
         </header>
         <!-- //header -->
+
 
         <main>
             <!-- user_profile mypage.ver -->
@@ -255,13 +147,13 @@
 
             <!-- tab_menu_title -->
             <ul class="tab_menu">
-                <li class="tab_menu_title active">
+                <li class="tab_menu_title medium_tr active">
                     <h3><a href="">전체</a></h3>
                 </li>
-                <li class="tab_menu_title">
+                <li class="tab_menu_title medium_tr">
                     <h3><a href="">판매</a></h3>
                 </li>
-                <li class="tab_menu_title">
+                <li class="tab_menu_title medium_tr">
                     <h3><a href="">거래</a></h3>
                 </li>
             </ul>
@@ -276,8 +168,8 @@
                             <img class="user_thumb" src="images/user_profile_img.jpg" alt="">
                         </div>
                         <div class="chat_info">
-                            <h4 class="chat_userid">캠핑이조아랑</h4>
-                            <p class="chat_message">안녕하세요! 오늘 직거래 가능 한가요?</p>
+                            <h4 class="chat_userid small_tr">캠핑이조아랑</h4>
+                            <p class="chat_message xsmall_tr">안녕하세요! 오늘 직거래 가능 한가요?</p>
                             <span class="chat_time">30분 전</span>
                             <!-- ::after -->
 
@@ -296,7 +188,7 @@
                         <div class="chat_info">
                             <h4 class="chat_userid">캠핑이조아랑</h4>
                             <p class="chat_message">안녕하세요! 오늘 직거래 가능 한가요?</p>
-                            <span class="chat_time">30분 전</span>
+                            <span class="chat_time xsmall_tr">30분 전</span>
                             <!-- ::after -->
 
                         </div>
@@ -391,7 +283,7 @@
                 </a>
             </div>
             <nav>
-                <ul class="nav_links">
+                <ul class="nav_links small_tb">
                     <li>
                         <a href="#">
                             <span>이용약관</span>
@@ -424,9 +316,9 @@
                     </li>
                 </ul>
             </nav>
-            <div class="footer_content">
+            <div class="footer_content small_tr">
                 <div class="company_info">
-                    <h3 class="company_name">(주)캠픽</h3>
+                    <h3 class="company_name small_tb">(주)캠픽</h3>
                     <div class="company_details">
                         <p>사업자등록번호:456-25-46512 | 대표:허석윤, 이희재</p>
                         <p>통신판매업신고:2025-서울중부-3256호 | 서울시영등포구청</p>
@@ -436,7 +328,7 @@
                     </div>
                 </div>
                 <div class="customer_service">
-                    <h3 class="service_title">고객센터</h3>
+                    <h3 class="service_title small_tb">고객센터</h3>
                     <div class="service_details">
                         <p>평일 : 11:00 ~ 17:00</p>
                         <p>점심시간 : 13:00 ~ 14:00</p>
@@ -448,23 +340,22 @@
             </div>
 
             <div class="disclaimer_area">
-                <p class="disclaimer">
+                <p class="disclaimer small_tr">
                     주식회사 캠픽은 입점 상품을 제외하고 통신판매 중개자로서 통신판매의 당사자가 아닙니다.<br>
                     상품, 상품정보, 거래에 관한 의무와 책임은 각 판매자에게 있습니다. 각 상품 페이지에서 구체적인 내용을 확인 부탁드립니다.
                 </p>
                 <div class="footer_button_group">
-                    <button class="footer_button">자주하는 질문</button>
-                    <button class="footer_button">1:1 문의하기</button>
+                    <button class="footer_button small_tr btn_primary">자주하는 질문</button>
+                    <button class="footer_button small_tr btn_primary">1:1 문의하기</button>
                 </div>
             </div>
 
 
-            <p class="copyright">
+            <p class="copyright small_tb">
                 Copyright © 캠픽 아웃도어. All rights reserved.
             </p>
         </footer>
         <!-- //footer -->
-
     </div>
 </body>
 
