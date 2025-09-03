@@ -133,9 +133,8 @@ body {
 /* button */
 /* normal button */
 .btn_normal {
-	background: #000;
-	color: var(--white);
-
+	background: var(--bg-color-basic);
+	color: var(--font-color-white);
 	padding: 0 14px;
 	border-radius: 5px;
 	height: 40px;
@@ -145,8 +144,8 @@ body {
 }
 
 .btn_normal:hover {
-	background: var(--light_black);
-	color: var(--white);
+	background: var(--btn-bg-color-basic);
+	color: var(--font-color-white);
 }
 
 .btn_half {
