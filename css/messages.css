@@ -7,7 +7,13 @@
  * 수정이력:
  *  2025-09-02 : 최초 작성
 */
+
+main {
+    margin-bottom: var(--spacing-lg);
+}
+
 .tab_menu {
+    padding-left: 15px;
     display: flex;
     gap: var(--spacing-xs);
     margin-bottom: var(--spacing-sm);
@@ -75,14 +81,15 @@
 .message .chat_info::after {
     content: '2';
     display: block;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     right: 0;
-    background: red;
+    background: #ff0000;
     font-size: 10px;
+    line-height: 18px;
     text-align: center;
     color: var(--font-color-white);
     border-radius: 10px;
