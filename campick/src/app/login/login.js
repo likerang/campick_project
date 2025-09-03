@@ -3,10 +3,7 @@ import Link from 'next/link';
 
 import "../css/login.css";
 
-export const metadata = {
-  title: "Campick - 로그인",
-  description: "Welcome to Campick",
-};
+
 
 export default function login() {
   return (
