@@ -146,9 +146,8 @@ body {
 
 /* normal button */
 .btn_normal {
-	background: #000;
-	color: var(--white);
-
+	background: var(--bg-color-basic);
+	color: var(--font-color-white);
 	padding: 0 14px;
 	border-radius: 5px;
 	height: 40px;
@@ -158,8 +157,8 @@ body {
 }
 
 .btn_normal:hover {
-	background: var(--light_black);
-	color: var(--white);
+	background: var(--btn-bg-color-basic);
+	color: var(--font-color-white);
 }
 
 .btn_half {
@@ -557,6 +556,7 @@ body {
 	bottom: -5px;
 	/* 보이기 위한 수치로 원래 하단에 숨겨져있음~*/
 	left: 50%;
+
 	transform: translateX(-50%);
 	background: #fff;
 	border: 1px solid var(--border-color-basic);
@@ -565,6 +565,16 @@ body {
 	transition: bottom 0.3s ease;
 	z-index: 100;
 	margin: 0;
+
+  transform: translateX(-50%);
+  background: var(--bg-color-white);
+  border: 1px solid var(--border-color-basic);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transition: bottom 0.3s ease;
+  z-index: 100;
+  margin: 0;
+
 }
 
 .more_popup.active {
@@ -599,6 +609,131 @@ body {
 .soldout_btn:active {
 	color: var(--primary);
 }
+
+/* brand popup */
+
+.brand_popup {
+  position: fixed;
+  left: 50%;
+  /*bottom: -100%;  원래 수치 */
+  bottom: 0; /* 컴포넌트 페이지에서 보여지기 위한 수치 */
+  transform: translateX(-50%);
+  width: var(--container);
+  background: var(--bg-color-white);
+  border: 1px solid var(--border-color-basic);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transition: bottom 0.3s ease;
+  z-index: 100;
+  padding: var(--spacing-sm);
+}
+
+.brand_popup.active {
+  bottom: 0;
+}
+
+.search_input h4 {
+  margin-bottom: var(--spacing-sm);
+}
+.brand_search {
+  position: relative;
+}
+
+.brand_search input {
+  width: 100%;
+  height: 40px;
+  padding-left: 48px;
+  border: 1px solid var(--border-color-basic);
+  border-radius: 5px;
+  background-color: var(--border-color-light);
+}
+
+.brand_search button {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  background: url(../images/store_search.svg) no-repeat center;
+}
+
+.brand_list {
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding-top: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-color-basic);
+}
+
+.brand_list li {
+  margin-bottom: 14px;
+}
+
+.brand_list li:last-child {
+  margin-bottom: 0;
+}
+
+.brand_list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.brand_list::-webkit-scrollbar-thumb {
+  background-color: var(--border-color-basic);
+  border-radius: 2px;
+}
+
+.brand_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.brand_item input[type="checkbox"] {
+  display: none;
+}
+
+.custom_checkbox {
+  width: 16px;
+  height: 16px;
+  background: url("/images/store_uncheck.svg") no-repeat center / contain;
+  margin-right: 14px;
+}
+
+/* 체크되면 checked 아이콘으로 변경 */
+.brand_item input[type="checkbox"]:checked + .custom_checkbox {
+  background-image: url("/images/store_check.svg");
+}
+
+/* 검색 결과 없을 때, 나오는 UI */
+.no_result {
+  display: none;
+  text-align: center;
+  color: var(--font-color-light-gray);
+  padding: 40px 0;
+}
+
+.no_result img {
+  margin-bottom: 10px;
+}
+
+.apply_btn {
+  display: block;
+  margin-left: auto;
+  padding: 13px 50px;
+  background: var(--bg-color-basic);
+  color: var(--font-color-white);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
 
 /* common banner */
 .caution_banner {
