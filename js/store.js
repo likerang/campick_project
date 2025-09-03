@@ -11,8 +11,16 @@ const noResultList = brandList.querySelector('.no_result');
 const applyBtn = brandPopup.querySelector('.apply_btn');
 const brandSelected = document.querySelector('.brand_selected');
 const brandTitle = document.querySelector('.brand_filter h3');
+const wrapper = document.querySelector(".product_list_wrapper");
 
-/* 카테고리 제목 변경 */
+/* JSON 데이터 저장용 */
+let allProducts = [];
+
+/* 현재 선택된 카테고리와 브랜드 */
+let currentCategory = document.querySelector('.category.selected').textContent;
+let currentBrands = [];
+
+/* 카테고리 클릭 이벤트 */
 categoryLinks.forEach(link => {
   link.addEventListener('click', function(e) {
     e.preventDefault();
@@ -20,10 +28,17 @@ categoryLinks.forEach(link => {
     categoryLinks.forEach(l => l.classList.remove('selected'));
     this.classList.add('selected');
 
-    brandTitle.textContent = this.textContent;
+    // 현재 선택된 카테고리 갱신
+    currentCategory = this.textContent;
 
+    // 브랜드 선택 초기화
+    brandTitle.textContent = this.textContent;
     brandSelected.innerHTML = '';
     checkboxes.forEach(cb => cb.checked = false);
+    currentBrands = [];
+
+    // 상품 다시 그리기
+    renderProducts();
   });
 });
 
@@ -37,7 +52,6 @@ brandBtn.addEventListener('click', () => {
 function closeBrandPopup() {
   brandPopup.classList.remove('active');
   overlay.classList.remove('active');
-  checkboxes.forEach(cb => cb.checked = false);
   searchInput.value = '';
   brands.forEach(li => li.style.display = '');
   noResultList.style.display = 'none';
@@ -50,7 +64,7 @@ window.addEventListener('click', (e) => {
   }
 });
 
-/*  실시간 검색 */
+/* 실시간 검색 */
 searchInput.addEventListener('input', () => {
   const keyword = searchInput.value.toLowerCase().trim();
   if (!keyword) {
@@ -71,15 +85,15 @@ searchInput.addEventListener('input', () => {
   noResultList.style.display = hasResult ? 'none' : 'block';
 });
 
-/* 선택된 브랜드 화면 적용 */
+/* 브랜드 적용 버튼 */
 applyBtn.addEventListener('click', () => {
-  const selectedBrands = Array.from(checkboxes)
+  currentBrands = Array.from(checkboxes)
     .filter(cb => cb.checked)
     .map(cb => cb.value);
 
   brandSelected.innerHTML = ''; // 기존 뱃지 제거
 
-  selectedBrands.forEach(name => {
+  currentBrands.forEach(name => {
     const span = document.createElement('span');
     span.className = 'brand_badge';
 
@@ -97,70 +111,72 @@ applyBtn.addEventListener('click', () => {
       checkboxes.forEach(cb => {
         if (cb.value === name) cb.checked = false;
       });
+      currentBrands = currentBrands.filter(b => b !== name);
+      renderProducts();
     });
 
-    span.textContent = name + " "; // 브랜드 이름
+    span.textContent = name + " ";
     span.appendChild(removeBtn);
     brandSelected.appendChild(span);
   });
 
   closeBrandPopup();
+
+  // 상품 다시 그리기
+  renderProducts();
 });
 
-/* JSON 파일 불러오기 */
-const wrapper = document.querySelector(".product_list_wrapper");
-
+/* JSON 불러오기 */
 fetch('json/store.data.json')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
+  .then(response => response.json())
   .then(products => {
-    console.log('Loaded products:', products); // 디버깅용
-    
-    if (!Array.isArray(products)) {
-      throw new Error('Data is not an array');
-    }
-    
-    products.forEach(product => {
-      const li = document.createElement("li");
-      li.className = "product_card";
-
-      li.innerHTML = `
-        <a href="#">
-          <div class="product_image">
-            <img src="${product.product_image.src}" alt="${product.product_image.alt}">
-          </div>
-          <div class="product_info">
-            <h3 class="product_title">${product.product_info.title}</h3>
-            <div class="product_meta">
-              <span class="product_location">${product.product_info.meta.location}</span>
-              <span class="product_date">${product.product_info.meta.date}</span>
-            </div>
-            <div class="product_footer">
-              <span class="product_price">${product.product_info.footer.price}</span>
-              <ul class="product_stats">
-                ${product.product_info.footer.stats.map(stat => `
-                  <li class="${stat.type}">
-                    <p class="icon">
-                      <img src="${stat.icon}" alt="${stat.label}">
-                      <span class="ir_pm">${stat.label}</span>
-                    </p>
-                    <span>${stat.count}</span>
-                  </li>
-                `).join("")}
-              </ul>
-            </div>
-          </div>
-        </a>
-      `;
-
-      wrapper.appendChild(li);
-    });
+    allProducts = products; // 전체 데이터 저장
+    renderProducts();       // 첫 렌더링
   })
-  .catch(err => {
-    console.error("JSON 로딩 실패:", err);
-    console.error("파일 경로를 확인하세요: json/store.data.json");
+  .catch(err => console.error("JSON 로딩 실패:", err));
+
+/* 상품 렌더링 함수 */
+function renderProducts() {
+  wrapper.innerHTML = ''; // 기존 상품 제거
+
+  const filtered = allProducts.filter(product => {
+    const matchCategory = product.product_info.category === currentCategory;
+    const matchBrand = currentBrands.length === 0 || currentBrands.includes(product.product_info.brand);
+    return matchCategory && matchBrand;
   });
+
+  filtered.forEach(product => {
+    const li = document.createElement("li");
+    li.className = "product_card";
+
+    li.innerHTML = `
+      <a href="#">
+        <div class="product_image">
+          <img src="${product.product_image.src}" alt="${product.product_image.alt}">
+        </div>
+        <div class="product_info">
+          <h3 class="product_title small_tr">${product.product_info.title}</h3>
+          <div class="product_meta">
+            <span class="product_location">${product.product_info.meta.location}</span>
+            <span class="product_date">${product.product_info.meta.date}</span>
+          </div>
+          <div class="product_footer">
+            <span class="product_price normal_tb">${product.product_info.footer.price}</span>
+            <ul class="product_stats">
+              ${product.product_info.footer.stats.map(stat => `
+                <li class="${stat.type}">
+                  <p class="icon">
+                    <img src="${stat.icon}" alt="${stat.label}">
+                    <span class="ir_pm">${stat.label}</span>
+                  </p>
+                  <span>${stat.count}</span>
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        </div>
+      </a>
+    `;
+    wrapper.appendChild(li);
+  });
+}
