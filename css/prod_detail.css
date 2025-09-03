@@ -21,6 +21,8 @@
     height: 690px;
     overflow: hidden;
     margin-bottom: var(--spacing-sm);
+    position: relative;
+
 }
 
 .slider_track {
@@ -40,11 +42,31 @@
     object-fit: cover;
 }
 
+.slide_progress {
+    width: 550px;
+    height: 2px;
+    background-color: var(--border-color-basic);
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.slide_progress_bar {
+    width: 33%;
+    height: 2px;
+    background-color: #333
+}
+
 .product_detail_info {
     margin-bottom: var(--spacing-lg);
 }
 
 .selected_brand {
+    margin-bottom: 7px;
+}
+
+.product_title {
     margin-bottom: 7px;
 }
 
@@ -83,6 +105,7 @@
     border-radius: 5px;
     border: 1px solid #333;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .pay {
@@ -161,4 +184,8 @@
 .recommend_product_title {
     padding-left: 15px;
     margin-bottom: var(--spacing-sm);
+}
+
+.product_list_wrapper {
+    margin-bottom: var(--spacing-md);
 }
