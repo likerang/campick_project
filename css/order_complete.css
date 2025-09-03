@@ -1,13 +1,14 @@
 body {
-		font-family: 'inter';
 		background-color: #f8f9fa;
 	}
 
 	.container {
 		max-width: 780px;
+		width: 100%;
 		margin: 0 auto;
 		background-color: white;
 		min-height: 100vh;
+		overflow: hidden;
 	}
 
 	.success_header {
@@ -56,7 +57,8 @@ body {
 		gap: 12px;
 		align-items: center;
 		padding: 24px 0;
-		border-top: 1px solid var(--border_1);
+		border-top: 1px solid var(--border-color-basic);
+		border-bottom: 1px solid var(--border-color-basic);
 	}
 
 	.product_item .small_tr {
@@ -66,8 +68,7 @@ body {
 	}
 
 	.product_image {
-		width: 96px;
-		height: 96px;
+	
 		border-radius: 5px;
 		object-fit: cover;
 	}
@@ -83,7 +84,7 @@ body {
 	}
 
 	.payment_section {
-		border: 1px solid var(--border_1);
+		border: 1px solid var(--border-color-basic);
 		border-radius: 5px;
 		padding: 24px 20px;
 	}
@@ -91,6 +92,10 @@ body {
 	.section_title {
 		font-weight: bold;
 		padding-bottom: 24px;
+	}
+	.section_title_p {
+		font-weight: bold;
+		padding: 24px 18px;
 	}
 
 	.summary_row {
@@ -102,7 +107,7 @@ body {
 	.summary_row.total {
 		font-weight: bold;
 		padding-top: 14px;
-		border-top: 1px solid var(--border_1);
+		border-top: 1px solid var(--border-color-basic);
 	}
 
 	.payment_method {
@@ -124,7 +129,7 @@ body {
 		display: flex;
 		align-items: center;
 		padding: 14px 24px;
-		border: 1px solid var(--border_1);
+		border: 1px solid var(--border-color-basic);
 		border-radius: 5px;
 	}
 
@@ -137,7 +142,7 @@ body {
 	}
 
 	.shipping_details {
-		border-left: 1px solid var(--border_1);
+		border-left: 1px solid var(--border-color-basic);
 		padding-left: 50px;
 		margin-left: 50px;
 	}
@@ -157,9 +162,10 @@ body {
 	}
 
 	.details_section {
-		border: 1px solid var(--border_1);
+		border: 1px solid var(--border-color-basic);
 		border-radius: 5px;
 		padding: 14px 20px;
+		margin-bottom: 24px;
 	}
 
 	.details_section .detail_row:first-child {
@@ -178,7 +184,6 @@ body {
 	}
 
 	.recommendations {
-		padding: 20px;
 		border-bottom: 8px solid #f8f9fa;
 	}
 
@@ -265,4 +270,8 @@ body {
 		font-weight: 600;
 		cursor: pointer;
 		transition: background-color 0.3s ease;
+	}
+
+	.product_list_wrapper{
+		width: 780px;
 	}
