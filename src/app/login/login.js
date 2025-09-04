@@ -8,7 +8,7 @@ export const metadata = {
   description: "Welcome to Campick",
 };
 
-export default function LoginPage() {
+export default function Login() {
   return (
     <div className="container">
       <div className="logo_section">
