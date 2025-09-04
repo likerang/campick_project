@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from 'next/link'
-
-import "../css/mypage.css";
+import styles from "./page.module.css";
 
 export const metadata = {
   title: "Campick - 마이페이지",
@@ -44,8 +43,8 @@ export default function Mypage() {
         </div>
       </div>
     </div>
-    <div className="mypage">
-      <div className="mypage_activity">
+    <div className={styles.mypage}>
+      <div className={styles.mypage_activity}>
         <h2>나의거래</h2>
         <ul>
           <li><Link href="/sale_list"><Image src="/images/mypage_sale_list.svg" width={40} height={40} alt="판매목록"/><span>판매목록</span></Link></li>
@@ -55,14 +54,14 @@ export default function Mypage() {
           <li><Link href="#"><Image src="/images/mypage_key.svg" width={40} height={40} alt="키워드"/><span>키워드</span></Link></li>
         </ul>
       </div>
-      <div className="mypage_community">
+      <div className={styles.mypage_community}>
         <h2>커뮤니티</h2>
         <ul>
           <li><Link href="#"><Image src="/images/mypage_community.svg" width={40} height={40} alt="커뮤니티"/><span>커뮤니티</span></Link></li>
           <li><Link href="#"><Image src="/images/mypage_magazine.svg" width={40} height={40} alt="매거진"/><span>매거진</span></Link></li>
         </ul>
       </div>
-      <div className="mypage_service">
+      <div className={styles.mypage_service}>
         <h2>고객편의</h2>
         <ul>
           <li><Link href="#"><Image src="/images/mypage_notice.svg" width={40} height={40} alt="공지사항"/><span>공지사항</span></Link></li>
