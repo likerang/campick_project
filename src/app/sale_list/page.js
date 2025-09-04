@@ -4,16 +4,18 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useState, useEffect } from "react";
 
-import "../css/sale_list.css";
+import styles from "./page.module.css";
 
-// export const metadata = {
-//   title: "Campick - 판매목록",
-//   description: "Welcome to Campick",
-// };
+/*
+export const metadata = {
+  title: "Campick - 판매목록",
+  description: "Welcome to Campick",
+};
+*/
 
 export default function Salelist() {
   const [activeTab, setActiveTab] = useState('selling');
-  const [showPopup, setShowPopup] = useState(false);
+  const [popupState, setPopupState] = useState('hidden'); // 'hidden', 'mounting', 'active', 'closing'
   const [selectedProduct, setSelectedProduct] = useState(null);
   
   const [products, setProducts] = useState([
@@ -27,7 +29,7 @@ export default function Salelist() {
       views: 12,
       messages: 1,
       likes: 12,
-      isSoldout: false  // 판매완료 여부
+      isSoldout: false
     },
     {
       id: 2,
@@ -67,8 +69,6 @@ export default function Salelist() {
     }
   }, []);
 
-
-
   /* 탭 클릭 */
   function handleTabClick(tabName) {
     setActiveTab(tabName);
@@ -77,13 +77,27 @@ export default function Salelist() {
   /* 더보기 클릭 */
   function handleMoreClick(product) {
     setSelectedProduct(product);
-    setShowPopup(true);
+    
+    if (popupState === 'active') {
+      // 이미 열려있으면 닫고 다시 열기
+      setPopupState('closing');
+      setTimeout(() => {
+        setPopupState('mounting');
+        setTimeout(() => setPopupState('active'), 10);
+      }, 300);
+    } else {
+      setPopupState('mounting');
+      setTimeout(() => setPopupState('active'), 10);
+    }
   }
 
   /* 팝업 닫기 */
   function closePopup() {
-    setShowPopup(false);
-    setSelectedProduct(null);
+    setPopupState('closing');
+    setTimeout(() => {
+      setPopupState('hidden');
+      setSelectedProduct(null);
+    }, 300);
   }
 
   /* 판매완료 클릭 */
@@ -104,7 +118,28 @@ export default function Salelist() {
       localStorage.setItem('soldoutProducts', JSON.stringify(soldoutIds));
       
       setActiveTab('soldout');
+      closePopup();
+    }
+  }
 
+  /* 재판매 클릭 */
+  function handleResale() {
+    if (selectedProduct) {
+      const updatedProducts = products.map(product => {
+        if (product.id === selectedProduct.id) {
+          return { ...product, isSoldout: false };
+        }
+        return product;
+      });
+      setProducts(updatedProducts);
+  
+      /* 판매완료된 상품 ID를 다시 localStorage에 반영 */
+      const soldoutIds = updatedProducts
+        .filter(p => p.isSoldout)
+        .map(p => p.id);
+      localStorage.setItem('soldoutProducts', JSON.stringify(soldoutIds));
+  
+      setActiveTab('selling');
       closePopup();
     }
   }
@@ -131,8 +166,6 @@ export default function Salelist() {
       return product.isSoldout; 
     }
   });
-
-
 
   return (
     <div className="salelist_page">
@@ -169,10 +202,10 @@ export default function Salelist() {
           </div>
         </div>
       </div>
-      <div className="tab_menu">
+      <div className={styles.tab_menu}>
         <Link 
           href="#" 
-          className={activeTab === 'selling' ? 'active' : ''} 
+          className={activeTab === 'selling' ? styles.active : ''} 
           onClick={(e) => {
             e.preventDefault();
             handleTabClick('selling');
@@ -181,7 +214,7 @@ export default function Salelist() {
         </Link>
         <Link 
           href="#" 
-          className={activeTab === 'soldout' ? 'active' : ''} 
+          className={activeTab === 'soldout' ? styles.active : ''} 
           onClick={(e) => {
             e.preventDefault();
             handleTabClick('soldout');
@@ -189,13 +222,16 @@ export default function Salelist() {
         결제완료
         </Link>
       </div>
-      <ul className="product_list_wrapper_2col">
+      <ul className={styles.product_list_wrapper_2col}>
         {displayProducts.map((product) => (
-          <li key={product.id} className={`product_card_2col ${product.isSoldout ? 'disable' : ''}`}>
+          <li 
+            key={product.id} 
+            className={`${styles.product_card_2col} ${product.isSoldout ? styles.disable : ''}`}
+          >
             <Link href="#">
               {product.isSoldout && 
-              <div className="soldout_badge">판매 완료</div>}
-              <div className="product_image">
+              <div className={styles.soldout_badge}>판매 완료</div>}
+              <div className={styles.product_image}>
                 <Image 
                   src={product.image} 
                   width={357} 
@@ -237,7 +273,7 @@ export default function Salelist() {
             
             {/* 더보기 버튼 */}
             <button 
-              className="more_btn"
+              className={styles.more_btn}
               onClick={() => handleMoreClick(product)}
             >
               ⋯
@@ -245,27 +281,37 @@ export default function Salelist() {
           </li>
         ))}
       </ul>
-      {showPopup && (
+      
+      {/* 팝업 - hidden 상태일 때만 DOM에서 제거 */}
+      {(popupState !== 'hidden') && (
         <>
           <div className="overlay active" onClick={closePopup}></div>
           
-          <div className="more_popup">
+          <div className={`more_popup ${popupState === 'active' ? 'active' : ''}`}>
             <ul>
               <li>
-                <button className="modify_btn" onClick={closePopup}>
+                <button className="modify_btn small_tb" onClick={closePopup}>
                   수정
                 </button>
               </li>
               <li>
-                <button className="delete_btn" onClick={handleDelete}>
+                <button className="delete_btn small_tb" onClick={handleDelete}>
                   삭제
                 </button>
               </li>
-              <li>
-                <button className="soldout_btn" onClick={handleSoldout}>
-                  판매완료
-                </button>
-              </li>
+              {selectedProduct && !selectedProduct.isSoldout ? (
+                <li>
+                  <button className="soldout_btn small_tb" onClick={handleSoldout}>
+                    판매완료
+                  </button>
+                </li>
+              ) : selectedProduct && (
+                <li>
+                  <button className="resale_btn small_tb" onClick={handleResale}>
+                    재판매
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </>
