@@ -8,11 +8,14 @@
  *  2025-09-04: index.html의 main content-> next.js 문법으로 변경
 */
 
-
+import { createClient } from '../utils/supabase/client';
 import Image from "next/image";
 import styles from "./page.module.css";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient()
+  const { data: product } = await supabase.from("Product").select();
+  console.log(product);
   return (
     <>
       {/* common_slide_content */}
@@ -494,13 +497,13 @@ export default function Home() {
       {/* //new_product_content */}
 
       {/* review_content */}
-      <div class={styles.review_content}>
-        <div class={styles.review_header}>
-          <h3 class={`medium_tb ${styles.review_title}`} >칭찬해요!</h3>
-          <span class={`small_tr ${styles.review_desc}`} >검증된 따끈따끈한 구매후기에요!</span>
+      <div className={styles.review_content}>
+        <div className={styles.review_header}>
+          <h3 className={`medium_tb ${styles.review_title}`} >칭찬해요!</h3>
+          <span className={`small_tr ${styles.review_desc}`} >검증된 따끈따끈한 구매후기에요!</span>
         </div>
-        <div class={styles.other_review}>
-          <div class={styles.other_review_img}>
+        <div className={styles.other_review}>
+          <div className={styles.other_review_img}>
             <Image
               src="/images/product_img01.jpg"
               width={50}
@@ -508,16 +511,16 @@ export default function Home() {
               alt=""
             />
           </div>
-          <div class={styles.other_review_header}>
+          <div className={styles.other_review_header}>
             <div>
-              <h4 class={styles.other_review_title}>텐트가 너무 좋아랑</h4>
+              <h4 className={styles.other_review_title}>텐트가 너무 좋아랑</h4>
               <span>⭐ 4.5</span>
             </div>
-            <p class={styles.other_review_comment}>좋은 가격에 좋은 상품 샀어요! 😎 이번주 주말에 캠핑할 때 첫 사용해보려고 합니다~~!</p >
+            <p className={styles.other_review_comment}>좋은 가격에 좋은 상품 샀어요! 😎 이번주 주말에 캠핑할 때 첫 사용해보려고 합니다~~!</p >
           </div >
         </div >
-        <div class={styles.review_card}>
-          <div class={styles.review_card_thumbnail}>
+        <div className={styles.review_card}>
+          <div className={styles.review_card_thumbnail}>
             <a href="">
               <Image
                 src="/images/product_img01.jpg"
@@ -527,20 +530,20 @@ export default function Home() {
               />
             </a>
           </div >
-          <div class={styles.review_card_body}>
-            <h3 class={`small_tb ${styles.review_card_title}`} >
+          <div className={styles.review_card_body}>
+            <h3 className={`small_tb ${styles.review_card_title}`} >
               [헬리녹스] 테이블
             </h3 >
-            <div class={styles.review_card_info}>
-              <div class={styles.review_card_header}>
-                <h4 class={`small_tr ${styles.review_card_userid}`}> 식집사에요</h4 >
-                <div class={styles.review_card_meta}>
-                  <span class={styles.review_card_location}> 종로1가동</span >
-                  <span class={styles.review_card_date}> 4시간 전</span >
+            <div className={styles.review_card_info}>
+              <div className={styles.review_card_header}>
+                <h4 className={`small_tr ${styles.review_card_userid}`}> 식집사에요</h4 >
+                <div className={styles.review_card_meta}>
+                  <span className={styles.review_card_location}> 종로1가동</span >
+                  <span className={styles.review_card_date}> 4시간 전</span >
                 </div >
               </div >
 
-              <p class={styles.review_card_commnet}>
+              <p className={styles.review_card_commnet}>
                 조립, 분해 팁도 잘 알려주시고, 너무 친절하셨어요! < br />
                 앞으로 좋은 일만 가득하시길 바라요~!
               </p >
