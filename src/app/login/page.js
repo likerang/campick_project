@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from 'next/link';
 
-import "../css/login.css";
+import "./page.module.css";
 
 export const metadata = {
   title: "Campick - 로그인",
