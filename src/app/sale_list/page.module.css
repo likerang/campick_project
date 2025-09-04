@@ -52,7 +52,7 @@
   color: var(--font-color-white);
   filter: none;
   border-radius: 15px;
-  z-index: 10;
+  z-index: 1;
 }
 
 .product_card_2col.disable .product_image img {

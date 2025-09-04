@@ -167,6 +167,12 @@ export default function Salelist() {
     }
   });
 
+  // 디버깅용 콘솔 로그
+  console.log('activeTab:', activeTab);
+  console.log('products:', products);
+  console.log('displayProducts:', displayProducts);
+  console.log('displayProducts.length:', displayProducts.length);
+
   return (
     <div className="salelist_page">
       <div className="user_profile_wrapper">
@@ -223,63 +229,75 @@ export default function Salelist() {
         </Link>
       </div>
       <ul className={styles.product_list_wrapper_2col}>
-        {displayProducts.map((product) => (
-          <li 
-            key={product.id} 
-            className={`${styles.product_card_2col} ${product.isSoldout ? styles.disable : ''}`}
-          >
-            <Link href="#">
-              {product.isSoldout && 
-              <div className={styles.soldout_badge}>판매 완료</div>}
-              <div className={styles.product_image}>
-                <Image 
-                  src={product.image} 
-                  width={357} 
-                  height={357} 
-                  alt={product.title} 
-                />
-              </div>
-              <div className="product_info">
-                <h3 className="product_title small_tr">{product.title}</h3>
-                <div className="product_meta">
-                  <span className="product_location">{product.location}</span>
-                  <span className="product_date">{product.date}</span>
-                </div>
-                <div className="product_footer">
-                  <span className="product_price normal_tb">{product.price}</span>
-                  <ul className="product_stats">
-                    <li className="view">
-                      <p className="icon">
-                        <Image src="/images/prod_detail_view.svg" width={14} height={14} alt="조회수" />
-                      </p>
-                      <span>{product.views}</span>
-                    </li>
-                    <li className="message">
-                      <p className="icon">
-                        <Image src="/images/prod_detail_chat.svg" width={12} height={12} alt="메세지" />
-                      </p>
-                      <span>{product.messages}</span>
-                    </li>
-                    <li className="like">
-                      <p className="icon">
-                        <Image src="/images/prod_detail_bookmark.svg" width={14} height={14} alt="즐겨찾기" />
-                      </p>
-                      <span>{product.likes}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </Link>
-            
-            {/* 더보기 버튼 */}
-            <button 
-              className={styles.more_btn}
-              onClick={() => handleMoreClick(product)}
-            >
-              ⋯
-            </button>
+        {displayProducts.length === 0 && activeTab === 'soldout' ? (
+          <li className="no_result">
+            <Image
+              src="/images/store_logo_small.svg"
+              alt="검색 결과 없음"
+              width={35}
+              height={54}
+            />
+            <p className="small_tb">판매 완료된 상품이 없습니다.</p>
           </li>
-        ))}
+        ) : (
+          displayProducts.map((product) => (
+            <li 
+              key={product.id} 
+              className={`${styles.product_card_2col} ${product.isSoldout ? styles.disable : ''}`}
+            >
+              <Link href="#">
+                {product.isSoldout && 
+                <div className={styles.soldout_badge}>판매 완료</div>}
+                <div className={styles.product_image}>
+                  <Image 
+                    src={product.image} 
+                    width={357} 
+                    height={357} 
+                    alt={product.title} 
+                  />
+                </div>
+                <div className="product_info">
+                  <h3 className="product_title small_tr">{product.title}</h3>
+                  <div className="product_meta">
+                    <span className="product_location">{product.location}</span>
+                    <span className="product_date">{product.date}</span>
+                  </div>
+                  <div className="product_footer">
+                    <span className="product_price normal_tb">{product.price}</span>
+                    <ul className="product_stats">
+                      <li className="view">
+                        <p className="icon">
+                          <Image src="/images/prod_detail_view.svg" width={14} height={14} alt="조회수" />
+                        </p>
+                        <span>{product.views}</span>
+                      </li>
+                      <li className="message">
+                        <p className="icon">
+                          <Image src="/images/prod_detail_chat.svg" width={12} height={12} alt="메세지" />
+                        </p>
+                        <span>{product.messages}</span>
+                      </li>
+                      <li className="like">
+                        <p className="icon">
+                          <Image src="/images/prod_detail_bookmark.svg" width={14} height={14} alt="즐겨찾기" />
+                        </p>
+                        <span>{product.likes}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Link>
+              
+              {/* 더보기 버튼 */}
+              <button 
+                className={styles.more_btn}
+                onClick={() => handleMoreClick(product)}
+              >
+                ⋯
+              </button>
+            </li>
+          ))
+        )}
       </ul>
       
       {/* 팝업 - hidden 상태일 때만 DOM에서 제거 */}
