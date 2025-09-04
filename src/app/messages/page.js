@@ -1,11 +1,11 @@
 /*
- * 파일명: page.js (chat.html)
+ * 파일명: page.js (messages.html)
  * 담당자: 김영태
  * 작성일: 2025-09-04
  * 최근 수정일: 2025-09-04
- * 설명: chat.html의 next.js 버전
+ * 설명: messages.html의 next.js 버전
  * 수정이력:
- *  2025-09-04: chat.html의 코드 next.js 문법으로 변경
+ *  2025-09-04: messages.html의 코드 next.js 문법으로 변경
 */
 
 export const metadata = {
