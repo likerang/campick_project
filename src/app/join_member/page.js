@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from 'next/link';
 
-<<<<<<< Updated upstream
 import "./page.module.css";
-=======
-import "../css/join_member.css";
->>>>>>> Stashed changes
 
 export const metadata = {
 	title: "Campick - 회원가입 폼",
