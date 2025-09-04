@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useState } from "react";
 
-import "../css/order_complete.css";
+import "./page.module.css";
 
 export const metadata = {
 	title: "Campick - 주문완료",

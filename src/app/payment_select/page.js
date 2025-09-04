@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useState } from "react";
 
-import "../css/select_payment.css";
+import "./page.module.css";
 
 export const metadata = {
   title: "Campick - 결제 방식 선택",

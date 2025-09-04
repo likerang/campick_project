@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useState } from "react";
 
-import "../css/payment_modal.css";
+import "./page.module.css";
 
 export const metadata = {
-	title: "Campick - 회원가입",
+	title: "Campick - 결제 모달",
 	description: "Welcome to Campick",
 };
 

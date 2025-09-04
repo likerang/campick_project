@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from 'next/link';
 
-import "../css/search.css";
+import "./page.module.css";
 
 export const metadata = {
   title: "Campick - 조회",
