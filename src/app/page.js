@@ -15,7 +15,9 @@ import styles from "./page.module.css";
 export default async function Home() {
   const supabase = await createClient()
   const { data: product } = await supabase.from("Product").select();
+  const { data: Member } = await supabase.from("Member").select();
   console.log(product);
+  console.log(Member);
   return (
     <>
       {/* common_slide_content */}
