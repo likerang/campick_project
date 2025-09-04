@@ -6,6 +6,13 @@ import { useState, useEffect } from "react";
 
 import styles from "./page.module.css";
 
+/*
+export const metadata = {
+  title: "Campick - 판매목록",
+  description: "Welcome to Campick",
+};
+*/
+
 export default function Salelist() {
   const [activeTab, setActiveTab] = useState('selling');
   const [popupState, setPopupState] = useState('hidden'); // 'hidden', 'mounting', 'active', 'closing'
