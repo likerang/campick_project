@@ -144,7 +144,7 @@ export default function Store() {
           <li key={product.id} className="product_card">
             <Link href="#">
               <div className="product_image">
-                <img
+                <Image
                   src={product.product_image.src}
                   alt={product.product_image.alt}
                 />
@@ -169,7 +169,7 @@ export default function Store() {
                     {product.product_info.footer.stats.map((stat) => (
                       <li key={stat.label} className={stat.type}>
                         <p className="icon">
-                          <img src={stat.icon} alt={stat.label} />
+                          <Image src={stat.icon} alt={stat.label} />
                           <span className="ir_pm">{stat.label}</span>
                         </p>
                         <span>{stat.count}</span>
