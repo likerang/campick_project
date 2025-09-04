@@ -538,35 +538,19 @@ body {
 .more_popup {
 	width: var(--container);
 	position: fixed;
-	/*
 	bottom: -300px; 
-  */
-	bottom: -5px;
-	/* 보이기 위한 수치로 원래 하단에 숨겨져있음~*/
 	left: 50%;
-
 	transform: translateX(-50%);
 	background: #fff;
 	border: 1px solid var(--border-color-basic);
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
-	transition: bottom 0.3s ease;
+	transition: bottom 0.3s ease-in-out;
 	z-index: 100;
-	margin: 0;
-
-  transform: translateX(-50%);
-  background: var(--bg-color-white);
-  border: 1px solid var(--border-color-basic);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  transition: bottom 0.3s ease;
-  z-index: 100;
-  margin: 0;
-
 }
 
 .more_popup.active {
-	bottom: -5px;
+	bottom: 0;
 }
 
 .more_popup ul {
@@ -586,7 +570,8 @@ body {
 
 .modify_btn,
 .delete_btn,
-.soldout_btn {
+.soldout_btn,
+.resale_btn {
 	width: 100%;
 	padding: 14px;
 	cursor: pointer;
@@ -594,7 +579,8 @@ body {
 
 .modify_btn:active,
 .delete_btn:active,
-.soldout_btn:active {
+.soldout_btn:active,
+.resale_btn:active {
 	color: var(--primary);
 }
 
