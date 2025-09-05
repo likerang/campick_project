@@ -25,10 +25,10 @@ export default function OrderComplete() {
 				<div className={styles.success_header}>
 					<div className={styles.logo}>
 						<Image
-							src="/images/order_complete_check.png"
+							src="/images/order_complete_check.jpg"
 							alt="Order complete checkmark"
-							width={100} // Placeholder width
-							height={100} // Placeholder height
+							width={150} // Placeholder width
+							height={150} // Placeholder height
 						/>
 					</div>
 					<div className={styles.success_message}>결제가 완료되었습니다.</div>
