@@ -51,7 +51,7 @@ export default function Login() {
           <input type="password" className={styles.form_input} placeholder="" />
         </div>
 
-        <button type="submit" className={`${styles.login_btn} ${styles.btn_normal}`}>
+        <button type="submit" className={`${styles.login_btn} btn_normal`}>
           로그인
         </button>
 
