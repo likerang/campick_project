@@ -36,8 +36,8 @@ export default function OrderComplete() {
 							<Image
 								src="/images/product_img_s.jpg"
 								alt=""
-								width={100} // Placeholder width
-								height={100} // Placeholder height
+								width={96} // Placeholder width
+								height={96} // Placeholder height
 							/>
 						</div>
 						<div className="small_tr">
@@ -76,8 +76,8 @@ export default function OrderComplete() {
 							<Image
 								src="/images/order_complete_icon1.png"
 								alt=""
-								width={24} // Placeholder width
-								height={24} // Placeholder height
+								width={42} // Placeholder width
+								height={42} // Placeholder height
 							/>
 						</div>
 						<div className="shipping_details">
@@ -124,8 +124,8 @@ export default function OrderComplete() {
 									<Image
 										src="/images/product_img01.jpg"
 										alt=""
-										width={200} // Placeholder width
-										height={200} // Placeholder height
+										width={250} // Placeholder width
+										height={250} // Placeholder height
 									/>
 								</div>
 								<div className="product_info">
@@ -212,8 +212,8 @@ export default function OrderComplete() {
 									<Image
 										src="/images/product_img03.jpg"
 										alt=""
-										width={200} // Placeholder width
-										height={200} // Placeholder height
+										width={250} // Placeholder width
+										height={250} // Placeholder height
 									/>
 								</div>
 								<div className="product_info">
@@ -300,8 +300,8 @@ export default function OrderComplete() {
 									<Image
 										src="/images/product_img02.jpg"
 										alt=""
-										width={200} // Placeholder width
-										height={200} // Placeholder height
+										width={250} // Placeholder width
+										height={250} // Placeholder height
 									/>
 								</div>
 								<div className="product_info">
