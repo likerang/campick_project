@@ -5,7 +5,7 @@
  * 최근 수정일: 2025-09-04
  * 설명: join.html의 next.js 버전
  * 수정이력:
- *  2025-09-04: join.html의 코드 join.js 문법으로 변경
+ *  2025-09-04: join.html의 코드 next.js 문법으로 변경
 */
 
 
