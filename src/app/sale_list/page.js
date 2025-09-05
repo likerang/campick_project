@@ -124,7 +124,6 @@ export default function Salelist() {
   async function handleSoldout() {
     if (selectedProduct) {
       try {
-        // ✅ DB에서 상태 업데이트
         const { error } = await supabase
           .from('Product')
           .update({ prod_status: 0 }) // 0 = 판매완료
@@ -136,7 +135,6 @@ export default function Salelist() {
           return;
         }
 
-        // ✅ 로컬 상태 업데이트
         const updatedProducts = products.map(product => {
           if (product.id === selectedProduct.id) {
             return { ...product, isSoldout: true };
@@ -158,7 +156,6 @@ export default function Salelist() {
   async function handleResale() {
     if (selectedProduct) {
       try {
-        // ✅ DB에서 상태 업데이트
         const { error } = await supabase
           .from('Product')
           .update({ prod_status: 1 }) // 1 = 판매중
@@ -170,7 +167,6 @@ export default function Salelist() {
           return;
         }
 
-        // ✅ 로컬 상태 업데이트
         const updatedProducts = products.map(product => {
           if (product.id === selectedProduct.id) {
             return { ...product, isSoldout: false };
@@ -203,18 +199,16 @@ export default function Salelist() {
     return product.isSoldout;
   });
 
-  // ✅ 로딩 상태 처리
   if (loading) {
     return (
       <div className="salelist_page">
         <div style={{ textAlign: 'center', padding: '50px' }}>
-          <p>상품을 불러오는 중...</p>
+          <p>상품을 불러오는 중 🔥</p>
         </div>
       </div>
     );
   }
 
-  // ✅ 에러 상태 처리
   if (error) {
     return (
       <div className="salelist_page">
@@ -319,9 +313,6 @@ export default function Salelist() {
                     width={357} 
                     height={357} 
                     alt={product.title}
-                    onError={(e) => {
-                      e.target.src = '/images/default-product.jpg'; // ✅ 이미지 로드 실패 시 기본 이미지
-                    }}
                   />
                 </div>
                 <div className="product_info">
