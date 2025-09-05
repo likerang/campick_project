@@ -3,70 +3,91 @@
 import Image from "next/image";
 import Link from 'next/link';
 import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
 
 import styles from "./page.module.css";
 
-/*
-export const metadata = {
-  title: "Campick - 판매목록",
-  description: "Welcome to Campick",
-};
-*/
+// 환경 변수 검증
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Supabase 환경 변수가 설정되지 않았습니다.');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+function timeAgo(timestamp) {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffMs = now - past;
+
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}일 전`;
+  if (hours > 0) return `${hours}시간 전`;
+  if (minutes > 0) return `${minutes}분 전`;
+  return "방금 전";
+}
 
 export default function Salelist() {
   const [activeTab, setActiveTab] = useState('selling');
-  const [popupState, setPopupState] = useState('hidden'); // 'hidden', 'mounting', 'active', 'closing'
+  const [popupState, setPopupState] = useState('hidden');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      title: '[힐레베르그] 알락 1 텐트 (Allak 1)',
-      price: '1,893,000 원',
-      location: '종로1가동',
-      date: '4시간 전',
-      image: '/images/product_img01.jpg',
-      views: 12,
-      messages: 1,
-      likes: 12,
-      isSoldout: false
-    },
-    {
-      id: 2,
-      title: '[힐레베르그] 알락 2 텐트 (Allak 2)',
-      price: '2,100,000 원',
-      location: '강남구',
-      date: '6시간 전',
-      image: '/images/product_img02.jpg',
-      views: 25,
-      messages: 3,
-      likes: 18,
-      isSoldout: false
-    },
-    {
-      id: 3,
-      title: '[힐레베르그] 나마츠 2 텐트 (Nammatj 2)',
-      price: '1,240,0000 원',
-      location: '서초구',
-      date: '1일 전',
-      image: '/images/product_img03.jpg',
-      views: 8,
-      messages: 0,
-      likes: 5,
-      isSoldout: false
-    }
-  ]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  /* 저장된 판매완료 상품들 불러오기 */
+  /* DB > 상품 불러오기 */
   useEffect(() => {
-    const saved = localStorage.getItem('soldoutProducts');
-    if (saved) {
-      const soldoutIds = JSON.parse(saved);
-      setProducts(products.map(product => ({
-        ...product,
-        isSoldout: soldoutIds.includes(product.id)
-      })));
-    }
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        let { data, error } = await supabase
+          .from("Product")
+          .select("*")
+          .order("created_at", { ascending: false });
+        
+        if (error) {
+          console.error("상품 불러오기 실패:", error.message, error.status, error.details);
+          console.log("더미 데이터를 사용합니다.");
+        }
+
+        if (!data || !Array.isArray(data)) {
+          console.warn("데이터가 없거나 올바르지 않습니다:", data);
+          setProducts([]);
+          return;
+        }
+
+        const mapped = data.map((p) => ({
+          id: p.prod_id,
+          title: p.prod_title,
+          price: `${(p.prod_price || 0).toLocaleString()} 원`,
+          location: p.location || "지역 없음",
+          date: timeAgo(p.created_at),
+          image: p.prod_images,
+          views: p.view || 0,
+          messages: Math.floor(Math.random() * 5),
+          likes: p.like || 0,
+          isSoldout: p.prod_status === 0,
+        }));
+
+        setProducts(mapped);
+      } catch (err) {
+        console.error("상품 불러오기 중 오류:", err);
+        setError("상품을 불러오는 중 오류가 발생했습니다.");
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   /* 탭 클릭 */
@@ -77,9 +98,8 @@ export default function Salelist() {
   /* 더보기 클릭 */
   function handleMoreClick(product) {
     setSelectedProduct(product);
-    
+
     if (popupState === 'active') {
-      // 이미 열려있으면 닫고 다시 열기
       setPopupState('closing');
       setTimeout(() => {
         setPopupState('mounting');
@@ -101,46 +121,70 @@ export default function Salelist() {
   }
 
   /* 판매완료 클릭 */
-  function handleSoldout() {
+  async function handleSoldout() {
     if (selectedProduct) {
-      const updatedProducts = products.map(product => {
-        if (product.id === selectedProduct.id) {
-          return { ...product, isSoldout: true };
+      try {
+        // ✅ DB에서 상태 업데이트
+        const { error } = await supabase
+          .from('Product')
+          .update({ prod_status: 0 }) // 0 = 판매완료
+          .eq('prod_id', selectedProduct.id);
+        
+        if (error) {
+          console.error('상태 변경 실패:', error);
+          alert('상태 변경에 실패했습니다.');
+          return;
         }
-        return product;
-      });
-      setProducts(updatedProducts);
 
-      /* 판매완료된 상품 ID들을 localStorage에 저장 */
-      const soldoutIds = updatedProducts
-        .filter(p => p.isSoldout)
-        .map(p => p.id);
-      localStorage.setItem('soldoutProducts', JSON.stringify(soldoutIds));
-      
-      setActiveTab('soldout');
-      closePopup();
+        // ✅ 로컬 상태 업데이트
+        const updatedProducts = products.map(product => {
+          if (product.id === selectedProduct.id) {
+            return { ...product, isSoldout: true };
+          }
+          return product;
+        });
+        setProducts(updatedProducts);
+
+        setActiveTab('soldout');
+        closePopup();
+      } catch (err) {
+        console.error('상태 변경 중 오류:', err);
+        alert('상태 변경 중 오류가 발생했습니다.');
+      }
     }
   }
 
   /* 재판매 클릭 */
-  function handleResale() {
+  async function handleResale() {
     if (selectedProduct) {
-      const updatedProducts = products.map(product => {
-        if (product.id === selectedProduct.id) {
-          return { ...product, isSoldout: false };
+      try {
+        // ✅ DB에서 상태 업데이트
+        const { error } = await supabase
+          .from('Product')
+          .update({ prod_status: 1 }) // 1 = 판매중
+          .eq('prod_id', selectedProduct.id);
+        
+        if (error) {
+          console.error('상태 변경 실패:', error);
+          alert('상태 변경에 실패했습니다.');
+          return;
         }
-        return product;
-      });
-      setProducts(updatedProducts);
-  
-      /* 판매완료된 상품 ID를 다시 localStorage에 반영 */
-      const soldoutIds = updatedProducts
-        .filter(p => p.isSoldout)
-        .map(p => p.id);
-      localStorage.setItem('soldoutProducts', JSON.stringify(soldoutIds));
-  
-      setActiveTab('selling');
-      closePopup();
+
+        // ✅ 로컬 상태 업데이트
+        const updatedProducts = products.map(product => {
+          if (product.id === selectedProduct.id) {
+            return { ...product, isSoldout: false };
+          }
+          return product;
+        });
+        setProducts(updatedProducts);
+
+        setActiveTab('selling');
+        closePopup();
+      } catch (err) {
+        console.error('상태 변경 중 오류:', err);
+        alert('상태 변경 중 오류가 발생했습니다.');
+      }
     }
   }
 
@@ -150,28 +194,37 @@ export default function Salelist() {
       const updatedProducts = products.filter(p => p.id !== selectedProduct.id);
       setProducts(updatedProducts);
 
-      const soldoutIds = updatedProducts
-        .filter(p => p.isSoldout)
-        .map(p => p.id);
-      localStorage.setItem('soldoutProducts', JSON.stringify(soldoutIds));
-
       closePopup();
     }
   }
 
   const displayProducts = products.filter(product => {
-    if (activeTab === 'selling') {
-      return !product.isSoldout;
-    } else {
-      return product.isSoldout; 
-    }
+    if (activeTab === 'selling') return !product.isSoldout;
+    return product.isSoldout;
   });
 
-  // 디버깅용 콘솔 로그
-  console.log('activeTab:', activeTab);
-  console.log('products:', products);
-  console.log('displayProducts:', displayProducts);
-  console.log('displayProducts.length:', displayProducts.length);
+  // ✅ 로딩 상태 처리
+  if (loading) {
+    return (
+      <div className="salelist_page">
+        <div style={{ textAlign: 'center', padding: '50px' }}>
+          <p>상품을 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ 에러 상태 처리
+  if (error) {
+    return (
+      <div className="salelist_page">
+        <div style={{ textAlign: 'center', padding: '50px' }}>
+          <p>오류: {error}</p>
+          <button onClick={() => window.location.reload()}>다시 시도</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="salelist_page">
@@ -185,7 +238,7 @@ export default function Salelist() {
             <ul className="stats_wrapper">
               <li className="stat_item">
                 <h4 className="stat_title">게시글</h4>
-                <p className="stat_number">23</p>
+                <p className="stat_number">{products.length}</p>
               </li>
               <li className="stat_item">
                 <h4 className="stat_title">팔로워</h4>
@@ -208,6 +261,7 @@ export default function Salelist() {
           </div>
         </div>
       </div>
+
       <div className={styles.tab_menu}>
         <Link 
           href="#" 
@@ -225,9 +279,10 @@ export default function Salelist() {
             e.preventDefault();
             handleTabClick('soldout');
           }}>
-        결제완료
+          결제완료
         </Link>
       </div>
+
       <ul className={styles.product_list_wrapper_2col}>
         {displayProducts.length === 0 && activeTab === 'soldout' ? (
           <li className="no_result">
@@ -238,6 +293,16 @@ export default function Salelist() {
               height={54}
             />
             <p className="small_tb">판매 완료된 상품이 없습니다.</p>
+          </li>
+        ) : displayProducts.length === 0 ? (
+          <li className="no_result">
+            <Image
+              src="/images/store_logo_small.svg"
+              alt="검색 결과 없음"
+              width={35}
+              height={54}
+            />
+            <p className="small_tb">등록된 상품이 없습니다.</p>
           </li>
         ) : (
           displayProducts.map((product) => (
@@ -253,7 +318,10 @@ export default function Salelist() {
                     src={product.image} 
                     width={357} 
                     height={357} 
-                    alt={product.title} 
+                    alt={product.title}
+                    onError={(e) => {
+                      e.target.src = '/images/default-product.jpg'; // ✅ 이미지 로드 실패 시 기본 이미지
+                    }}
                   />
                 </div>
                 <div className="product_info">
@@ -300,7 +368,6 @@ export default function Salelist() {
         )}
       </ul>
       
-      {/* 팝업 - hidden 상태일 때만 DOM에서 제거 */}
       {(popupState !== 'hidden') && (
         <>
           <div className="overlay active" onClick={closePopup}></div>
