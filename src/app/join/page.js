@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from 'next/link';
 
-import "../css/join_form.css";
+import "./page.module.css";
 
 export const metadata = {
 	title: "Campick - 회원가입",
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 
-export default function JoinFormPage() {
+export default function JoinForm() {
   return (
     <div className="container">
       <div className="logo">
