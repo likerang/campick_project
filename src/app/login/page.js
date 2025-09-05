@@ -1,12 +1,25 @@
-import Image from "next/image";
-import Link from 'next/link';
-
-import "./page.module.css";
+/*
+ * 파일명: page.js (login.html)
+ * 담당자: 박연미
+ * 작성일: 2025-09-04
+ * 최근 수정일: 2025-09-04
+ * 설명: login.html의 next.js 버전
+ * 수정이력:
+ *  2025-09-04: login.html의 코드 next.js 문법으로 변경
+*/
 
 export const metadata = {
   title: "Campick - 로그인",
   description: "Welcome to Campick",
 };
+
+
+import Image from "next/image";
+import Link from "next/link";
+
+import styles from "./page.module.css"
+
+
 
 export default function Login() {
   return (
@@ -65,7 +78,7 @@ export default function Login() {
 
       <div className={styles.signup_section}>
         <div className={styles.border}></div>
-        <Link href="/join_form">회원가입</Link>
+        <Link href="/join">회원가입</Link>
       </div>
     </div>
   );
