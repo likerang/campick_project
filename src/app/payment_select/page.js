@@ -31,8 +31,7 @@ export default function SelectPayment() {
             </svg>
           </a>
           <div className="medium_tb">
-            원하시는 결제방법을<br />
-            선택해 주세요.
+            원하시는 결제방법을 선택해 주세요.
           </div>
         </div>
 
