@@ -16,7 +16,7 @@ export default function JoinForm() {
         <div className="flame_icon">
           <div className="flame">
             <Image
-              src="/images/logo_white 2.jpg"
+              src="/images/join_logo.svg"
               alt=""
               width={42}
               height={64}
