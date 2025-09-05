@@ -1,8 +1,17 @@
+/*
+ * 파일명: page.js (order_complete.html)
+ * 담당자: 박연미
+ * 작성일: 2025-09-04
+ * 최근 수정일: 2025-09-04
+ * 설명: order_complete.html의 next.js 버전
+ * 수정이력:
+ *  2025-09-04: order_complete.html의 코드 next.js 문법으로 변경
+*/
+
 import Image from "next/image";
 import Link from 'next/link';
-import { useState } from "react";
 
-import "./page.module.css";
+import styles from "./page.module.css"
 
 export const metadata = {
 	title: "Campick - 주문완료",
@@ -12,9 +21,9 @@ export const metadata = {
 export default function OrderComplete() {
 	return (
 		<>
-			<div className="container">
-				<div className="success_header">
-					<div className="logo">
+			<div className={styles.container}>
+				<div className={styles.success_header}>
+					<div className={styles.logo}>
 						<Image
 							src="/images/order_complete_check.png"
 							alt="Order complete checkmark"
@@ -22,19 +31,19 @@ export default function OrderComplete() {
 							height={100} // Placeholder height
 						/>
 					</div>
-					<div className="success_message">결제가 완료되었습니다.</div>
+					<div className={styles.success_message}>결제가 완료되었습니다.</div>
 				</div>
 
-				<div className="order_info">
-					<div className="order_date">2025. 08. 05</div>
-					<div className="order_number">주문번호 13246578</div>
+				<div className={styles.order_info}>
+					<div className={styles.order_date}>2025. 08. 05</div>
+					<div className={styles.order_number}>주문번호 13246578</div>
 				</div>
 
-				<div className="product_section">
-					<div className="product_item">
-						<div className="product_image">
+				<div className={styles.product_section}>
+					<div className={styles.product_item}>
+						<div className={styles.product_image}>
 							<Image
-								src="/images/product_img_s.jpg"
+								src="/images/product_img01.jpg"
 								alt=""
 								width={96} // Placeholder width
 								height={96} // Placeholder height
@@ -47,40 +56,41 @@ export default function OrderComplete() {
 					</div>
 				</div>
 
-				<div className="payment_summary">
-					<div className="section_title">결제정보</div>
-					<div className="payment_section">
-						<div className="summary_row small_tr">
+				<div className={styles.payment_summary}>
+					<div className={styles.section_title}>결제정보</div>
+					<div className={styles.payment_section}>
+						<div className={`${styles.summary_row} small_tr`}>
 							<span>상품금액</span>
 							<span>100,000 원</span>
 						</div>
-						<div className="summary_row small_tr">
+						<div className={`${styles.summary_row} small_tr`}>
 							<span>배송비</span>
 							<span>+ 4000 원</span>
 						</div>
-						<div className="summary_row total small_tr">
+						<div className={`${styles.summary_row} total small_tr`}
+						>
 							<span>결제금액</span>
 							<span>104,000 원</span>
 						</div>
-						<div className="payment_method">
-							<span className="payment_method_label">결제수단</span>
+						<div className={styles.payment_method}>
+							<span className={styles.payment_method_label}>결제수단</span>
 							<span className="small_tr">네이버 페이</span>
 						</div>
 					</div>
 				</div>
 
-				<div className="shipping_info">
-					<div className="section_title">배송지 정보</div>
-					<div className="shipping_card">
-						<div className="shipping_icon">
+				<div className={styles.shipping_info}>
+					<div className={styles.section_title}>배송지 정보</div>
+					<div className={styles.shipping_card}>
+						<div className={styles.shipping_icon}>
 							<Image
-								src="/images/order_complete_icon1.png"
+								src="/images/order_complete_icon1.jpg"
 								alt=""
-								width={42} // Placeholder width
-								height={42} // Placeholder height
+								width={70} // Placeholder width
+								height={70} // Placeholder height
 							/>
 						</div>
-						<div className="shipping_details">
+						<div className={styles.shipping_details}>
 							<h4 className="small_tb">장원영</h4>
 							<p>(03192) 서울특별시 종로구 수표로 96, 국일빌딩딩센타 2층</p>
 							<p>010-7222-2111</p>
@@ -88,23 +98,23 @@ export default function OrderComplete() {
 					</div>
 				</div>
 
-				<div className="order_details">
-					<div className="section_title">거래정보</div>
-					<div className="details_section">
-						<div className="detail_row">
-							<span className="detail_label small_tb">주문번호 13246578</span>
+				<div className={styles.order_details}>
+					<div className={styles.section_title}>거래정보</div>
+					<div className={styles.details_section}>
+						<div className={styles.detail_row}>
+							<span className={`${styles.detail_label} small_tb`}>주문번호 13246578</span>
 							<span>25년 08월 05일 18:06</span>
 						</div>
-						<div className="detail_row">
-							<span className="detail_label">판매자</span>
+						<div className={styles.detail_row}>
+							<span className={styles.detail_label}>판매자</span>
 							<span>멋있는 오토캠퍼 &gt;</span>
 						</div>
-						<div className="detail_row">
-							<span className="detail_label">거래번호</span>
+						<div className={styles.detail_row}>
+							<span className={styles.detail_label}>거래번호</span>
 							<span>일반택배(선불)</span>
 						</div>
-						<div className="detail_row">
-							<span className="detail_label">운송장</span>
+						<div className={styles.detail_row}>
+							<span className={styles.detail_label}>운송장</span>
 							<span>
 								우체국 택배
 								<br />
@@ -114,9 +124,9 @@ export default function OrderComplete() {
 					</div>
 				</div>
 
-				<div className="recommendations">
-					<div className="section_title_p">이 브랜드의 추천 상품</div>
-					<ul className="product_list_wrapper">
+				<div className={styles.recommendations}>
+					<div className={styles.section_title_p}>이 브랜드의 추천 상품</div>
+					<ul className={styles.product_list_wrapper}>
 						{/* 상품 카드 1 */}
 						<li className="product_card">
 							<a href="#">
@@ -383,7 +393,7 @@ export default function OrderComplete() {
 						</li>
 					</ul>
 				</div>
-				<button className="home_button btn_normal">홈으로</button>
+				<button className={`${styles.home_button} btn_normal`}>홈으로</button>
 			</div>
 		</>
 	);

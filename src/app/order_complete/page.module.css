@@ -274,4 +274,8 @@ body {
 
 	.product_list_wrapper{
 		width: 780px;
+		gap: 15px;
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 80px;
 	}
