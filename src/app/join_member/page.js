@@ -8,16 +8,17 @@
  *  2025-09-04: join_member.html의 코드 next.js 문법으로 변경
 */
 
+export const metadata = {
+  title: "Campick - 회원가입 폼",
+  description: "Welcome to Campick",
+};
+
 
 import Image from "next/image";
 import Link from "next/link";
 
 import styles from "./page.module.css";
 
-export const metadata = {
-  title: "Campick - 회원가입 폼",
-  description: "Welcome to Campick",
-};
 
 export default function JoinFormPage() {
   return (
