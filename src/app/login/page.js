@@ -16,8 +16,8 @@ export default function Login() {
           <Image
             src="/images/logo_black.png"
             alt="campick logo"
-            width={200}
-            height={60}
+            width={120}
+            height={49}
           />
         </div>
         <div className="subtitle">
