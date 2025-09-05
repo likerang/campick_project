@@ -199,3 +199,6 @@
 .product_list_wrapper {
     margin-bottom: var(--spacing-md);
 }
+
+.product_location{}
+.product_date{}

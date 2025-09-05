@@ -10,6 +10,7 @@
 
 import { createClient } from '../utils/supabase/client';
 import Image from "next/image";
+import Link from "next/link"
 import styles from "./page.module.css";
 
 export default async function Home() {
@@ -57,54 +58,54 @@ export default async function Home() {
 
           <ul className={styles.brand_slide_track}>
             <li className={styles.brand_slide}>
-              <a href="">
+              <Link href="">
                 <Image
                   src="/images/main_brand1.png"
                   width={71}
                   height={47}
                   alt=""
                 />
-              </a>
+              </Link>
             </li>
             <li className={styles.brand_slide}>
-              <a href="">
+              <Link href="">
                 <Image
                   src="/images/main_brand2.png"
                   width={83}
                   height={18}
                   alt=""
                 />
-              </a>
+              </Link>
             </li>
             <li className={styles.brand_slide}>
-              <a href="">
+              <Link href="">
                 <Image
                   src="/images/main_brand3.png"
                   width={79}
                   height={21}
                   alt=""
                 />
-              </a>
+              </Link>
             </li>
             <li className={styles.brand_slide}>
-              <a href="">
+              <Link href="">
                 <Image
                   src="/images/main_brand4.png"
                   width={79}
                   height={21}
                   alt=""
                 />
-              </a>
+              </Link>
             </li>
             <li className={styles.brand_slide}>
-              <a href="">
+              <Link href="">
                 <Image
                   src="/images/main_brand5.png"
                   width={74}
                   height={21}
                   alt=""
                 />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -118,7 +119,7 @@ export default async function Home() {
           {/* 상품 카드 1  */}
           {product.slice(0, 6).map(item =>
             <li className="product_card" key={item.prod_id}>
-              <a href="#">
+              <Link href={`/prod_detail/${item.prod_id}`}>
                 <div className="product_image">
                   <Image
                     src={item.prod_images}
@@ -178,7 +179,7 @@ export default async function Home() {
                     </ul>
                   </div>
                 </div>
-              </a >
+              </Link>
             </li>
           )}
         </ul >
@@ -211,14 +212,14 @@ export default async function Home() {
         </div >
         <div className={styles.review_card}>
           <div className={styles.review_card_thumbnail}>
-            <a href="">
+            <Link href="">
               <Image
                 src="/images/product_img01.jpg"
                 width={180}
                 height={180}
                 alt=""
               />
-            </a>
+            </Link>
           </div >
           <div className={styles.review_card_body}>
             <h3 className={`small_tb ${styles.review_card_title}`} >
@@ -249,7 +250,7 @@ export default async function Home() {
         <ul className={`product_list_wrapper ${styles.product_list_wrapper}`}>
           {product.slice(0, 3).map(item =>
             <li className="product_card" key={item.prod_id}>
-              <a href="#">
+              <Link href="#">
                 <div className="product_image">
                   <Image
                     src={item.prod_images}
@@ -309,7 +310,7 @@ export default async function Home() {
                     </ul>
                   </div>
                 </div>
-              </a >
+              </Link>
             </li>
           )}
         </ul>
@@ -323,7 +324,7 @@ export default async function Home() {
         <ul className={`product_list_wrapper ${styles.product_list_wrapper}`}>
           {product.slice(0, 3).map(item =>
             <li className="product_card" key={item.prod_id}>
-              <a href="#">
+              <Link href="#">
                 <div className="product_image">
                   <Image
                     src={item.prod_images}
@@ -383,7 +384,7 @@ export default async function Home() {
                     </ul>
                   </div>
                 </div>
-              </a >
+              </Link>
             </li>
           )}
         </ul>
@@ -396,14 +397,14 @@ export default async function Home() {
         <h3 className={`medium_tb ${styles.community_title}`}>캠픽 커뮤니티</h3>
         <div className={styles.community_wrapper}>
           <div className={styles.community_thumbnail}>
-            <a href="">
+            <Link href="">
               <Image
                 src="/images/product_img01.jpg"
                 width={312}
                 height={240}
                 alt=""
               />
-            </a>
+            </Link>
           </div>
           <div className={styles.community_body}>
             <h4 className={styles.community_userid}>식집사에요</h4>
@@ -476,7 +477,7 @@ export default async function Home() {
         <ul className={`product_list_wrapper ${styles.product_list_wrapper}`}>
           {product.slice(0, 3).map(item =>
             <li className="product_card" key={item.prod_id}>
-              <a href="#">
+              <Link href="#">
                 <div className="product_image">
                   <Image
                     src={item.prod_images}
@@ -536,7 +537,7 @@ export default async function Home() {
                     </ul>
                   </div>
                 </div>
-              </a >
+              </Link >
             </li>
           )}
         </ul>
