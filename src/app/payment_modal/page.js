@@ -39,7 +39,7 @@ export default function PaymentModal() {
           </button>
 
           <div className={styles.chat_icon}>
-            <div className={styles.chat-bubble}>
+            <div className={styles.chat_bubble}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
