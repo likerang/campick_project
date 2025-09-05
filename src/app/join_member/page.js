@@ -95,9 +95,9 @@ export default function JoinFormPage() {
 							<label htmlFor="age-check" className="checkbox_icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
-									height="24px"
+									height="14px"
 									viewBox="0 -960 960 960"
-									width="24px"
+									width="14px"
 								>
 									<path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
 								</svg>
@@ -115,9 +115,9 @@ export default function JoinFormPage() {
 							<label htmlFor="terms-check" className="checkbox_icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
-									height="24px"
+									height="14px"
 									viewBox="0 -960 960 960"
-									width="24px"
+									width="14px"
 								>
 									<path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
 								</svg>
@@ -135,9 +135,9 @@ export default function JoinFormPage() {
 							<label htmlFor="privacy-check" className="checkbox_icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
-									height="24px"
+									height="14px"
 									viewBox="0 -960 960 960"
-									width="24px"
+									width="14px"
 								>
 									<path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
 								</svg>
@@ -155,9 +155,9 @@ export default function JoinFormPage() {
 							<label htmlFor="privacy-optional" className="checkbox_icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
-									height="24px"
+									height="14px"
 									viewBox="0 -960 960 960"
-									width="24px"
+									width="14px"
 								>
 									<path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
 								</svg>
@@ -175,9 +175,9 @@ export default function JoinFormPage() {
 							<label htmlFor="marketing-check" className="checkbox_icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
-									height="24px"
+									height="14px"
 									viewBox="0 -960 960 960"
-									width="24px"
+									width="14px"
 								>
 									<path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
 								</svg>
