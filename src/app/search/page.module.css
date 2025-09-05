@@ -1,8 +1,3 @@
-  * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
-  }
 
   body {
      background-color: #f8f9fa;
@@ -120,14 +115,15 @@
      cursor: pointer;
      transition: 0.2s ease;
   }
+  
 .search_tag:hover {
    border: 1px solid var(--bg-color-basic);
 }
   .tag_remove {
+     height: 22px;
      margin-left: 8px;
      color: var(--bg-color-basic);
      cursor: pointer;
-     font-size: 12px;
   }
 
   .popular_searches {
