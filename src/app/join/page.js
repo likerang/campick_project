@@ -18,8 +18,8 @@ export default function JoinForm() {
             <Image
               src="/images/logo_white 2.jpg"
               alt=""
-              width={80}
-              height={80}
+              width={42}
+              height={64}
             />
           </div>
         </div>
@@ -39,26 +39,26 @@ export default function JoinForm() {
           <div className="social_buttons">
             <button className="social_button kakao">
               <Image
-                src="/images/kakao_logo.png"
+                src="/images/logo_kakao.png"
                 alt="카카오 회원가입"
-                width={40}
-                height={40}
+                width={30}
+                height={30}
               />
             </button>
             <button className="social_button naver">
               <Image
-                src="/images/naver_logo.png"
+                src="/images/logo_naver.png"
                 alt="네이버 회원가입"
-                width={40}
-                height={40}
+                width={30}
+                height={30}
               />
             </button>
             <button className="social_button google">
               <Image
-                src="/images/google_logo.png"
+                src="/images/logo_google.png"
                 alt="구글 회원가입"
-                width={40}
-                height={40}
+                width={30}
+                height={30}
               />
             </button>
           </div>
