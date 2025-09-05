@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from 'next/link';
-
 import "./css/reset.css";
-import "./css/common.css";
+import './globals.css'
+// import "./css/common.css";
 import "./css/header.css";
 import "./css/footer.css";
 
