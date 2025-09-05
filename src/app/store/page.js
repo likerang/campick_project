@@ -2,7 +2,34 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { createClient } from "@supabase/supabase-js";
 import styles from "./page.module.css";
+
+// 환경 변수 검증
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Supabase 환경 변수가 설정되지 않았습니다.');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+function timeAgo(timestamp) {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffMs = now - past;
+
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}일 전`;
+  if (hours > 0) return `${hours}시간 전`;
+  if (minutes > 0) return `${minutes}분 전`;
+  return "방금 전";
+}
 
 export default function Store() {
   const [allProducts, setAllProducts] = useState([]);
@@ -11,6 +38,8 @@ export default function Store() {
   const [brandPopupActive, setBrandPopupActive] = useState(false);
   const [brandSearch, setBrandSearch] = useState("");
   const [tempSelectedBrands, setTempSelectedBrands] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const categoryList = [
     "텐트/타프",
@@ -34,34 +63,102 @@ export default function Store() {
     { title: "니모 Nemo", value: "니모" },
   ];
 
-  /* 카테고리 선택 */
+  /* DB > 상품 불러오기 */
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        let { data, error } = await supabase
+          .from("Product")
+          .select("*")
+          .eq("prod_status", 1)
+          .order("created_at", { ascending: false });
+        
+        if (error) {
+          console.error("상품 불러오기 실패:", error.message, error.status, error.details);
+          setError(error.message);
+          setAllProducts([]);
+          return;
+        }
+
+        const mapped = data.map((p) => ({
+          id: p.prod_id || p.id,
+          product_image: {
+            src: p.prod_images || '/images/default-product.jpg',
+            alt: p.prod_title || '상품 이미지'
+          },
+          product_info: {
+            title: p.prod_title || '제목 없음',
+            category: p.prod_category || '기타',
+            brand: p.prod_brand || '브랜드 없음',
+            meta: {
+              location: p.location || "지역 없음",
+              date: timeAgo(p.created_at)
+            },
+            footer: {
+              price: `${(p.prod_price || 0).toLocaleString()} 원`,
+              stats: [
+                {
+                  type: "view",
+                  label: "조회수",
+                  icon: "/images/prod_detail_view.svg",
+                  count: p.view || 0
+                },
+                {
+                  type: "message",
+                  label: "메시지",
+                  icon: "/images/prod_detail_chat.svg",
+                  count: Math.floor(Math.random() * 5) // 임시 랜덤
+                },
+                {
+                  type: "like",
+                  label: "즐겨찾기",
+                  icon: "/images/prod_detail_bookmark.svg",
+                  count: p.like || 0
+                }
+              ]
+            }
+          }
+        }));
+
+        setAllProducts(mapped);
+      } catch (err) {
+        console.error("상품 불러오기 중 오류:", err);
+        setError("상품을 불러오는 중 오류가 발생했습니다.");
+        setAllProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const handleCategoryClick = (category) => {
     setCurrentCategory(category);
     setCurrentBrands([]);
   };
 
-  /* 브랜드 팝업 열기 */
   const toggleBrandPopup = () => {
     if (!brandPopupActive) {
-      // 팝업 열 때: 현재 선택된 브랜드를 임시 상태에 복사
       setTempSelectedBrands([...currentBrands]);
     }
     setBrandPopupActive((prev) => !prev);
   };
 
-  /* 팝업 닫기 (오버레이 클릭 시) */
   const closeBrandPopup = () => {
     setBrandPopupActive(false);
-    setBrandSearch(""); // 검색값 초기화
-    setTempSelectedBrands([]); // 임시 선택 초기화
+    setBrandSearch("");
+    setTempSelectedBrands([]); 
   };
 
-  /* 브랜드 적용 */
   const applyBrands = () => {
     setCurrentBrands([...tempSelectedBrands]); // 임시 선택을 실제로 적용
     setBrandPopupActive(false);
-    setBrandSearch(""); // 검색값 초기화
-    setTempSelectedBrands([]); // 임시 선택 초기화
+    setBrandSearch("");
+    setTempSelectedBrands([]); 
   };
 
   /* 브랜드 검색 필터링 */
@@ -77,6 +174,23 @@ export default function Store() {
       currentBrands.includes(product.product_info.brand);
     return matchCategory && matchBrand;
   });
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <p>상품을 불러오는 중 🔥</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <p>오류: {error}</p>
+        <button onClick={() => window.location.reload()}>다시 시도</button>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -140,47 +254,69 @@ export default function Store() {
       </div>
 
       <ul className={`product_list_wrapper ${styles.product_list_wrapper}`}>
-        {filteredProducts.map((product) => (
-          <li key={product.id} className="product_card">
-            <Link href="#">
-              <div className="product_image">
-                <img
-                  src={product.product_image.src}
-                  alt={product.product_image.alt}
-                />
-              </div>
-              <div className="product_info">
-                <h3 className={`product_title small_tr ${styles.product_title}`}>
-                  {product.product_info.title}
-                </h3>
-                <div className="product_meta">
-                  <span className="product_location">
-                    {product.product_info.meta.location}
-                  </span>
-                  <span className="product_date">
-                    {product.product_info.meta.date}
-                  </span>
-                </div>
-                <div className="product_footer">
-                  <span className="product_price normal_tb">
-                    {product.product_info.footer.price}
-                  </span>
-                  <ul className={`product_stats ${styles.product_stats}`}>
-                    {product.product_info.footer.stats.map((stat) => (
-                      <li key={stat.label} className={stat.type}>
-                        <p className="icon">
-                          <img src={stat.icon} alt={stat.label} />
-                          <span className="ir_pm">{stat.label}</span>
-                        </p>
-                        <span>{stat.count}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </Link>
+        {filteredProducts.length === 0 ? (
+          <li className="no_result" style={{ textAlign: 'center', padding: '50px' }}>
+            <Image
+              src="/images/store_logo_small.svg"
+              alt="검색 결과 없음"
+              width={35}
+              height={54}
+            />
+            <p className="small_tb">해당 카테고리의 상품이 없습니다.</p>
           </li>
-        ))}
+        ) : (
+          filteredProducts.map((product) => (
+            <li key={product.id} className="product_card">
+              <Link href="#">
+                <div className="product_image">
+                  <Image
+                    src={product.product_image.src}
+                    alt={product.product_image.alt}
+                    width={357}
+                    height={357}
+                    onError={(e) => {
+                      e.target.src = '/images/default-product.jpg';
+                    }}
+                  />
+                </div>
+                <div className="product_info">
+                  <h3 className={`product_title small_tr ${styles.product_title}`}>
+                    {product.product_info.title}
+                  </h3>
+                  <div className="product_meta">
+                    <span className="product_location">
+                      {product.product_info.meta.location}
+                    </span>
+                    <span className="product_date">
+                      {product.product_info.meta.date}
+                    </span>
+                  </div>
+                  <div className="product_footer">
+                    <span className="product_price normal_tb">
+                      {product.product_info.footer.price}
+                    </span>
+                    <ul className={`product_stats ${styles.product_stats}`}>
+                      {product.product_info.footer.stats.map((stat) => (
+                        <li key={stat.label} className={stat.type}>
+                          <p className="icon">
+                            <Image 
+                              src={stat.icon} 
+                              alt={stat.label} 
+                              width={14} 
+                              height={14}
+                            />
+                            <span className="ir_pm">{stat.label}</span>
+                          </p>
+                          <span>{stat.count}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Link>
+            </li>
+          ))
+        )}
       </ul>
 
       <div
@@ -238,7 +374,7 @@ export default function Store() {
           )}
         </ul>
         <button className={styles.apply_btn} onClick={applyBrands}>
-          적용하기
+          {tempSelectedBrands.length}개 상품보기
         </button>
       </div>
     </>
