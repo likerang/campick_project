@@ -78,7 +78,7 @@ export default function Login() {
 
       <div className={styles.signup_section}>
         <div className={styles.border}></div>
-        <Link href="/join_member">회원가입</Link>
+        <Link href="/join">회원가입</Link>
       </div>
     </div>
   );
