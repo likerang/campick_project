@@ -271,11 +271,11 @@ body {
 }
 
 .common_slide:nth-child(1) {
-    background: url(../images/main_banner1.jpg) no-repeat center;
+    background: url(/images/main_banner1.jpg) no-repeat center;
 }
 
 .common_slide:nth-child(2) {
-    background: url(../images/main_banner2.jpg) no-repeat center;
+    background: url(/images/main_banner2.jpg) no-repeat center;
 }
 
 .slide_content {
@@ -311,12 +311,12 @@ body {
 
 .nav_arrow.prev {
     left: 24px;
-    background: url(../images/arrow_prev.svg) no-repeat center;
+    background: url(/images/arrow_prev.svg) no-repeat center;
 }
 
 .nav_arrow.next {
     right: 24px;
-    background: url(../images/arrow_next.svg) no-repeat center;
+    background: url(/images/arrow_next.svg) no-repeat center;
 }
 
 
@@ -443,9 +443,7 @@ body {
 }
 
 .product_card {
-    flex: 3;
     max-width: 250px;
-    width: 100%;
     display: flex;
     background: white;
     cursor: pointer;
@@ -657,7 +655,7 @@ body {
     transform: translateY(-50%);
     border: none;
     cursor: pointer;
-    background: url(../images/store_search.svg) no-repeat center;
+    background: url(/images/store_search.svg) no-repeat center;
 }
 
 .brand_list {
