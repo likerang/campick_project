@@ -7,45 +7,141 @@
  * 수정이력:
  *  2025-09-04: add_prod.html의 코드 next.js 문법으로 변경
 */
-
+"use client";
 import { createClient } from '../../utils/supabase/client';
 import Image from "next/image";
 import Link from 'next/link';
 import styles from './page.module.css'
+import { useState } from 'react';
 
-export const metadata = {
-  title: "Campick - 상품등록",
-  description: "Welcome to Campick",
-};
+// export const metadata = {
+//   title: "Campick - 상품등록",
+//   description: "Welcome to Campick",
+// };
 
 export default function AddProd() {
   const supabase = createClient()
-  async function InsertData() {
-    const { error } = await supabase
-      .from('Product')
-      .insert({
-        prod_title: "헬리녹스 택티컬 체어 원 밀리터리 올리브",
-        prod_price: 125000,
-        prod_category: "체어/테이블",
-        prod_brand: "헬리녹스",
-        prod_condition: "새상품",
-        warranty: "있음",
-        prod_desc: "계절의 감동을 완성한 헬리녹스 써머 시너리 컬렉션은 가볍고 견고한 기술력으로 여름의 모든 순간을 함께합니다. 가장 가까운 곳에서, 가장 낭만적인 여름의 풍경을 만나보세요.",
-        trade_method: "택배",
-        tag: "써머체어,새상품,캠린이추천",
-        prod_images: "/images/product_img13.jpg",
-      })
+  const [prodData, setProdData] = useState({
+    prod_title: "",
+    prod_price: "",
+    prod_category: "테스트",
+    prod_brand: "테스트",
+    prod_condition: "",
+    warranty: "",
+    prod_desc: "",
+    trade_method: ["delivery"],
+    tag: "테스트1,테스트2,테스트3",
+    prod_images: [],
+  });
+
+  const handleChange = (evt) => {
+    const { name, value, type, checked } = evt.target
+    console.log(name);
+    console.log(value);
+    console.log(type);
+    console.log(checked);
+
+    if (type === "checkbox") {
+      setProdData((prev) => {
+        let trade_method = [...prev.trade_method];
+        if (checked) {
+          trade_method.push(value);
+        } else {
+          trade_method = trade_method.filter((m) => m !== value);
+        }
+        return { ...prev, trade_method };
+      });
+    } else {
+      setProdData((prev) => ({ ...prev, [name]: value }));
+    }
+    console.log(prodData);
+  }
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    const { error } = await supabase.from("Product").insert({
+      prod_title: prodData.prod_title,
+      prod_price: Number(prodData.prod_price),
+      prod_category: prodData.prod_category,
+      prod_brand: prodData.prod_brand,
+      prod_condition: prodData.prod_condition,
+      warranty: prodData.warranty,
+      prod_desc: prodData.prod_desc,
+      trade_method: prodData.trade_method.join(","), // 배열 → 문자열 저장
+      tag: prodData.tag,
+      prod_images: prodData.prod_images.join(",")
+    });
     if (error) {
       console.error(error);
+      alert("상품 등록 중 오류가 발생했습니다.");
+    } else {
+      alert("상품이 성공적으로 등록되었습니다!");
+      setProdData({
+        prod_title: "",
+        prod_price: "",
+        prod_category: "",
+        prod_brand: "",
+        prod_condition: "",
+        warranty: "",
+        prod_desc: "",
+        trade_method: [],
+        tag: "",
+        prod_images: "",
+      });
     }
-  }
-  // InsertData();
+  };
+
+  const handleFileChange = async (evt) => {
+    const files = evt.target.files;
+    if (!files || files.length === 0) return;
+
+    const uploadedUrls = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const fileName = `${Date.now()}_${file.name}`; // 파일명 충돌 방지
+
+      // ✅ Supabase Storage에 업로드
+      const { error } = await supabase.storage
+        .from("prod_images") // 👉 Storage 버킷명 (미리 생성 필요)
+        .upload(fileName, file);
+
+      if (error) {
+        console.error("이미지 업로드 실패:", error.message);
+        continue;
+      }
+
+      // ✅ 업로드 후 Public URL 가져오기
+      const { data } = supabase.storage
+        .from("prod_images")
+        .getPublicUrl(fileName);
+
+      if (data?.publicUrl) {
+        uploadedUrls.push(data.publicUrl);
+      }
+    }
+
+    // ✅ setProdData 이미지 URL 저장
+    setProdData((prev) => ({
+      ...prev,
+      prod_images: [...prev.prod_images, ...uploadedUrls],
+    }));
+  };
+
+  // 이미지 삭제 함수 추가
+  const removeImage = (indexToRemove) => {
+    setProdData((prev) => ({
+      ...prev,
+      prod_images: prev.prod_images.filter((_, index) => index !== indexToRemove)
+    }));
+  };
+
   return (
     <>
       {/* form  */}
       <div className={styles.form_content}>
         <h2 className={styles.form_title}>내 상품 판매하기</h2>
-        <form className={styles.form_style} action="">
+        <form className={styles.form_style} onSubmit={handleSubmit}>
           {/* 사진 업로드  */}
           <div className={styles.image_upload}>
             <label htmlFor="imageInput" className={styles.upload_box}>
@@ -58,19 +154,43 @@ export default function AddProd() {
               </span>
               <span className={`small_tr ${styles.upload_img_count}`}>0/10</span>
             </label>
-            <input type="file" id="imageInput" multiple accept="image/*" hidden />
+            <input type="file" id="imageInput" multiple accept="image/*" onChange={handleFileChange} hidden />
           </div>
+
+          {prodData.prod_images.length > 0 &&
+            (
+              <div className={styles.uploaded_image_box}>
+                {prodData.prod_images.slice(0, 10).map((imageUrl, index) => (
+                  <div key={index} className={styles.uploaded_image_item}>
+                    <Image
+                      src={imageUrl}
+                      width={80}
+                      height={80}
+                      alt={`업로드된 이미지 ${index + 1}`}
+                    />
+                    <button
+                      type="button"
+                      className={styles.remove_image_btn}
+                      onClick={() => removeImage(index)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )
+          }
 
           {/* 상품명 */}
           <div className={styles.product_title}>
-            <label className="ir_pm" htmlFor="productName">상품명</label>
-            <input className={styles.label_box} type="text" id="productName" placeholder="상품명" name="productName" required />
+            <label className="ir_pm" htmlFor="prod_title">상품명</label>
+            <input className={styles.label_box} type="text" id="prod_title" placeholder="상품명" name="prod_title" onChange={handleChange} required />
           </div>
 
           {/* 판매 가격  */}
           <div className={styles.product_pirce}>
-            <label className="ir_pm" htmlFor="productPrice">판매 가격</label>
-            <input className={styles.label_box} type="text" id="productPrice" placeholder="판매 가격" name="productPrice" required />
+            <label className="ir_pm" htmlFor="prod_price">판매 가격</label>
+            <input className={styles.label_box} type="text" id="prod_price" placeholder="판매 가격" name="prod_price" onChange={handleChange} required />
           </div>
 
           {/* 카테고리 */}
@@ -87,19 +207,19 @@ export default function AddProd() {
           < div className={styles.product_status}>
             <h3 className={`normal_tb ${styles.product_status_title} ${styles.title}`}> 제품 상태</h3 >
             <div className={styles.product_status_checkbox}>
-              <input type="radio" name="condition" value="new" id="new" />
+              <input type="radio" name="prod_condition" value="new" id="new" onChange={handleChange} />
               <label className="small_tr" htmlFor="new">미개봉</label>
 
-              <input type="radio" name="condition" value="good" id="good" defaultChecked />
+              <input type="radio" name="prod_condition" value="good" id="good" onChange={handleChange} defaultChecked />
               <label className="small_tr" htmlFor="good">양호</label>
 
-              <input type="radio" name="condition" value="normal" id="normal" />
+              <input type="radio" name="prod_condition" value="normal" id="normal" onChange={handleChange} />
               <label className="small_tr" htmlFor="normal"> 보통</label>
 
-              <input type="radio" name="condition" value="used" id="used" />
+              <input type="radio" name="prod_condition" value="used" id="used" onChange={handleChange} />
               <label className="small_tr" htmlFor="used"> 사용감 있음</label>
 
-              <input type="radio" name="condition" value="repair" id="repair" />
+              <input type="radio" name="prod_condition" value="repair" id="repair" onChange={handleChange} />
               <label className="small_tr" htmlFor="repair"> 수리/수선 필요</label>
             </div >
           </div >
@@ -108,10 +228,10 @@ export default function AddProd() {
           < div className={styles.warranty_status} >
             <h3 className={`normal_tb ${styles.warranty_status_title} ${styles.title}`}> 보증서 유무</h3 >
             <div className={styles.warranty_status_checkbox}>
-              <input type="radio" name="warranty" value="yes" id="yes" defaultChecked />
+              <input type="radio" name="warranty" value="yes" id="yes" onChange={handleChange} defaultChecked />
               <label className="small_tr" htmlFor="yes"> 유</label>
 
-              <input type="radio" name="warranty" value="no" id="no" />
+              <input type="radio" name="warranty" value="no" id="no" onChange={handleChange} />
               <label className="small_tr" htmlFor="no"> 무</label>
             </div >
           </div >
@@ -119,7 +239,7 @@ export default function AddProd() {
           {/* 자세한 설명  */}
           < div className={styles.product_description} >
             <h3 className={`normal_tb ${styles.product_description_title} ${styles.title}`}> 자세한 설명</h3 >
-            <textarea id="description" className={styles.product_extra} name="description" rows="6"
+            <textarea id="prod_desc" className={styles.product_extra} name="prod_desc" rows="6" onChange={handleChange}
               placeholder="구매자가 알아야 할 정보를 입력해주세요.&#10;- 사용감(스크래치, 얼룩, 하자부분 등)&#10;- 사용기간(구매 시기 등)&#10;- 고장, 파손, 염색 등 하자 정보는 꼭 기재해주세요!" ></textarea >
           </div >
 
@@ -127,9 +247,9 @@ export default function AddProd() {
           < div className={styles.trade_status} >
             <h3 className={`normal_tb ${styles.trade_title} ${styles.title}`}> 거래 방식</h3 >
             <div className={styles.trade_checkbox}>
-              <input type="checkbox" name="tradeMethod" value="delivery" id="delivery" defaultChecked />
+              <input type="checkbox" name="trade_method" value="delivery" id="delivery" onChange={handleChange} defaultChecked />
               <label className="small_tr" htmlFor="delivery"> 택배</label>
-              <input type="checkbox" name="tradeMethod" value="direct" id="direct" />
+              <input type="checkbox" name="trade_method" value="direct" id="direct" onChange={handleChange} />
               <label className="small_tr" htmlFor="direct">직거래</label>
             </div >
           </div >
@@ -208,6 +328,8 @@ export default function AddProd() {
         </div>
       </div>
       {/* //common_caution_banner */}
+
+
     </>
   )
 }

@@ -209,3 +209,47 @@ main {
 .brand_popup {
     bottom: -52%;
 }
+
+.uploaded_image_box {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.uploaded_image_item {
+    position: relative;
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+}
+
+/* X 삭제 버튼 */
+.remove_image_btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.remove_image_btn:hover {
+    background-color: rgba(255, 0, 0, 0.8);
+    transform: scale(1.1);
+}
