@@ -6,20 +6,29 @@
  * 설명: payment_select.html의 next.js 버전
  * 수정이력:
  *  2025-09-04: payment_select.html의 코드 next.js 문법으로 변경
+ *  2025-09-06: 클릭 상태 관리 추가
 */
 
+'use client';
 
 import Image from "next/image";
 import Link from 'next/link';
+import { useState } from 'react';
 
 import styles from "./page.module.css"
 
 export default function SelectPayment() {
+  const [selectedPayment, setSelectedPayment] = useState(null);
+
+  const handlePaymentSelect = (paymentType) => {
+    setSelectedPayment(paymentType);
+  };
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.header}>
-          <a href="" className={styles.back_button}>
+          <a href="/payment_modal" className={styles.back_button}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
@@ -36,13 +45,21 @@ export default function SelectPayment() {
         </div>
 
         <div className={styles.content}>
-          <div className={styles.payment_option} id="delivery">
+          <div 
+            className={`${styles.payment_option} ${selectedPayment === 'delivery' ? styles.selected : ''}`} 
+            id="delivery"
+            onClick={() => handlePaymentSelect('delivery')}
+          >
             <div className={styles.radio_indicator}></div>
             <div className={styles.payment_title}>택배거래</div>
             <div className={`${styles.payment_description} small_tr`}>원하는 주소로 편메지에게 택배로 받을 수 있어요.</div>
           </div>
 
-          <div className={styles.payment_option} id="direct">
+          <div 
+            className={`${styles.payment_option} ${selectedPayment === 'direct' ? styles.selected : ''}`} 
+            id="direct"
+            onClick={() => handlePaymentSelect('direct')}
+          >
             <div className={styles.radio_indicator}></div>
             <div className={styles.payment_title}>직거래</div>
             <div className={`${styles.payment_description} small_tr`}>채팅으로 약속을 정하고 직접 만나 받을 수 있어요.</div>
@@ -54,7 +71,7 @@ export default function SelectPayment() {
             <span className="medium_tb">결제 금액</span>
             <span className="medium_tb">100,000 원</span>
           </div>
-          <button className={`${styles.pay_button} btn_normal`}>다음</button>
+          <a href="/order_complete" className={`${styles.pay_button} btn_normal`}>다음</a>
         </div>
       </div>
     </>
