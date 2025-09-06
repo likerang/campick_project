@@ -62,10 +62,10 @@ export default function PaymentModal() {
           </p>
 
           <div className={styles.button_group}>
-            <a href="" className="primary_button">
+            <a href="/chat" className="btn_normal">
               채팅하고 거래할래요.
             </a>
-            <a href="" className="secondary_button">
+            <a href="/payment_select" className={styles.secondary_button}>
               채팅없이 거래할래요.
             </a>
           </div>
