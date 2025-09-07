@@ -189,7 +189,7 @@ export default async function ProdDetail({ params }) {
               <Link href={`/prod_detail/${item.prod_id}`}>
                 <div className="product_image">
                   <Image
-                    src={item.prod_images}
+                    src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
                     alt=""
