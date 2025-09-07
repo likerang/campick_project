@@ -48,6 +48,7 @@
     width: var(--container);
     margin: 0 auto;
     outline: 1px solid #eee;
+    position: relative;
 }
 
 /* common_style */
@@ -129,6 +130,23 @@ body {
 }
 
 /* button */
+
+/* 상품등록 버튼 */
+.btn_group {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 24px;
+    position: sticky;
+    top: 800px;
+    z-index: 999;
+}
+
+.addprod_btn {
+    padding: 12px 18px;
+    background-color: var(--primary);
+    color: var(--font-color-white);
+    border-radius: 50px;
+}
 
 /* more_btn */
 .more_btn {
