@@ -30,7 +30,7 @@ export default function AddProd() {
     warranty: "",
     prod_desc: "",
     trade_method: ["delivery"],
-    tag: "테스트1,테스트2,테스트3",
+    tag: [],
     prod_images: [],
   });
 
@@ -130,6 +130,32 @@ export default function AddProd() {
     }));
   };
 
+  const addTags = () => {
+    const tagInput = document.getElementById('tagInput');
+    const inputValue = tagInput.value.trim();//공백삭제
+    if (inputValue === '') return;//빈값이면 아무일도 일어나지 않음
+
+    setProdData({
+      ...prodData,
+      tag: [...prodData.tag, inputValue]
+    });
+    tagInput.value = '';
+  }
+
+  const enterKeyPress = (evt) => {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      addTags();
+    }
+  };
+
+  const removeTag = (indexToRemove) => {
+    setProdData({
+      ...prodData,
+      tag: prodData.tag.filter((_, index) => index !== indexToRemove)
+    });
+  };
+
   return (
     <>
       {/* form  */}
@@ -150,7 +176,6 @@ export default function AddProd() {
             </label>
             <input type="file" id="imageInput" multiple accept="image/*" onChange={handleFileChange} hidden />
           </div>
-
           {prodData.prod_images.length > 0 &&
             (
               <div className={styles.uploaded_image_box}>
@@ -175,7 +200,6 @@ export default function AddProd() {
               </div>
             )
           }
-
           {/* 상품명 */}
           <div className={styles.product_title}>
             <label className="ir_pm" htmlFor="prod_title">상품명</label>
@@ -254,40 +278,24 @@ export default function AddProd() {
             <h3 className={`normal_tb ${styles.product_tag_title} ${styles.title}`}> 태그(선택 사항) < span className="xsmall_tr" > 최대 10개</span ></h3 >
             <div className={styles.product_tag_content}>
               <div className={styles.product_tag_input}>
-                <input type="text" id="tagInput" className={styles.tag_input} placeholder="예시 '새상품', '미개봉'" />
-                <button type="button" className={`small_tr ${styles.tag_add_btn}`}> 추가</button >
+                <input type="text" id="tagInput" className={styles.tag_input} placeholder="예시 '새상품', '미개봉'" onKeyDown={enterKeyPress} />
+                <button type="button" className={`small_tr ${styles.tag_add_btn}`} onClick={addTags}> 추가</button >
               </div >
               <ul className={styles.tag_list}>
-                <li className={`small_tr ${styles.tag_item} `}>
-                  <span>새상품</span>
-                  <button className={styles.tag_delete_btn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
-                      fill="#939393">
-                      <path
-                        d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
-                    </svg>
-                  </button >
-                </li >
-                <li className={`small_tr ${styles.tag_item}`}>
-                  <span>미개봉</span>
-                  <button className={styles.tag_delete_btn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
-                      fill="#939393">
-                      <path
-                        d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
-                    </svg>
-                  </button >
-                </li >
-                <li className={`small_tr ${styles.tag_item}`}>
-                  <span>여름용</span>
-                  <button className={styles.tag_delete_btn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
-                      fill="#939393">
-                      <path
-                        d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
-                    </svg>
-                  </button >
-                </li >
+                {prodData.tag.map((tag, idx) => {
+                  return (
+                    <li key={idx} className={`small_tr ${styles.tag_item} `}>
+                      <span>{tag}</span>
+                      <button className={styles.tag_delete_btn} onClick={() => removeTag(idx)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
+                          fill="#939393">
+                          <path
+                            d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
+                        </svg>
+                      </button >
+                    </li >
+                  )
+                })}
               </ul >
             </div >
           </div >
