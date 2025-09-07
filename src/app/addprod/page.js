@@ -36,11 +36,6 @@ export default function AddProd() {
 
   const handleChange = (evt) => {
     const { name, value, type, checked } = evt.target
-    console.log(name);
-    console.log(value);
-    console.log(type);
-    console.log(checked);
-
     if (type === "checkbox") {
       setProdData((prev) => {
         let trade_method = [...prev.trade_method];
@@ -54,14 +49,13 @@ export default function AddProd() {
     } else {
       setProdData((prev) => ({ ...prev, [name]: value }));
     }
-    console.log(prodData);
   }
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const { error } = await supabase.from("Product").insert({
       prod_title: prodData.prod_title,
-      prod_price: Number(prodData.prod_price),
+      prod_price: Number(prodData.prod_price), //숫자형 자료로 변환
       prod_category: prodData.prod_category,
       prod_brand: prodData.prod_brand,
       prod_condition: prodData.prod_condition,
@@ -99,11 +93,11 @@ export default function AddProd() {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const fileName = `${Date.now()}_${file.name}`; // 파일명 충돌 방지
+      const fileName = `${Date.now()}_${file.name}`; // 파일명 충돌 방지 -> 현재 시간이 입력
 
-      // ✅ Supabase Storage에 업로드
+      //  Supabase Storage에 업로드
       const { error } = await supabase.storage
-        .from("prod_images") // 👉 Storage 버킷명 (미리 생성 필요)
+        .from("prod_images") //  Storage 버킷명 
         .upload(fileName, file);
 
       if (error) {
@@ -111,7 +105,7 @@ export default function AddProd() {
         continue;
       }
 
-      // ✅ 업로드 후 Public URL 가져오기
+      //  업로드 후 Public URL 가져오기
       const { data } = supabase.storage
         .from("prod_images")
         .getPublicUrl(fileName);
@@ -123,8 +117,8 @@ export default function AddProd() {
 
     // ✅ setProdData 이미지 URL 저장
     setProdData((prev) => ({
-      ...prev,
-      prod_images: [...prev.prod_images, ...uploadedUrls],
+      ...prev, // 기존 내용 나열
+      prod_images: [...prev.prod_images, ...uploadedUrls],//배열에 내용 추가
     }));
   };
 
@@ -132,7 +126,7 @@ export default function AddProd() {
   const removeImage = (indexToRemove) => {
     setProdData((prev) => ({
       ...prev,
-      prod_images: prev.prod_images.filter((_, index) => index !== indexToRemove)
+      prod_images: prev.prod_images.filter((_, index) => index !== indexToRemove) // 선택된 index 번호를 제외한 나머지를 필터링해서 다시 저장
     }));
   };
 
@@ -152,7 +146,7 @@ export default function AddProd() {
                     d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Z" />
                 </svg>
               </span>
-              <span className={`small_tr ${styles.upload_img_count}`}>0/10</span>
+              <span className={`small_tr ${styles.upload_img_count}`}>{prodData.prod_images.length}/10</span>
             </label>
             <input type="file" id="imageInput" multiple accept="image/*" onChange={handleFileChange} hidden />
           </div>
@@ -162,6 +156,7 @@ export default function AddProd() {
               <div className={styles.uploaded_image_box}>
                 {prodData.prod_images.slice(0, 10).map((imageUrl, index) => (
                   <div key={index} className={styles.uploaded_image_item}>
+                    {index === 0 && <span className={styles.thumbnail}>대표사진</span>}
                     <Image
                       src={imageUrl}
                       width={80}

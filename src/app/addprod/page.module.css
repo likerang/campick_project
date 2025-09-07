@@ -228,6 +228,20 @@ main {
     background-color: #f5f5f5;
 }
 
+.thumbnail {
+    position: absolute;
+    width: 60px;
+    top: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background-color: var(--primary);
+    padding: 2px 4px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 20px;
+}
+
 /* X 삭제 버튼 */
 .remove_image_btn {
     position: absolute;
