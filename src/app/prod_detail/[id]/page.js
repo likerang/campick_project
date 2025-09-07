@@ -12,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css"
 
-
 export default async function ProdDetail({ params }) {
   console.log(params)
   const supabase = await createClient();
@@ -22,7 +21,9 @@ export default async function ProdDetail({ params }) {
 
   console.log(product.tag);
   const tags = product.tag.split(',');
+  const images = product.prod_images.split(',');
   console.log(tags);
+  console.log(images);
 
   console.log(product)
   console.log(allProduct)
@@ -35,14 +36,19 @@ export default async function ProdDetail({ params }) {
           {/* slide_track  */}
           <ul className={styles.slider_track}>
             {/* slide_item  */}
-            <li className={styles.slide_item}>
-              <Image
-                src={product.prod_images}
-                width={750}
-                height={690}
-                alt=""
-              />
-            </li>
+            {images.map((item, idx) => {
+              return (
+                
+                <li key={idx} className={styles.slide_item}>
+                  <Image
+                    src={item}
+                    width={750}
+                    height={690}
+                    alt=""
+                  />
+                </li>
+              );
+            })}
           </ul>
           <div className={styles.slide_progress}>
             <div className={styles.slide_progress_bar}></div>
