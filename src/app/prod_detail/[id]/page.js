@@ -119,8 +119,8 @@ export default async function ProdDetail({ params }) {
 
           <div className={styles.btn_group}>
             {/* 해당 상품이 로그인된 사용자의 상품이라면 */}
-            <button className={styles.chat}> 채팅하기</button >
-            <button className={styles.pay}> 결제하기</button >
+            <button className={styles.chat}><Link href={`/chat/${product.prod_id}`}>채팅하기</Link></button >
+            <button className={styles.pay}><Link href={`/payment_select/${product.prod_id}`}>결제하기</Link></button >
           </div >
         </div >
 
@@ -189,7 +189,7 @@ export default async function ProdDetail({ params }) {
               <Link href={`/prod_detail/${item.prod_id}`}>
                 <div className="product_image">
                   <Image
-                    src={item.prod_images}
+                    src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
                     alt=""
