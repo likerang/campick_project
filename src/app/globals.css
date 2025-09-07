@@ -465,6 +465,7 @@ body {
     display: flex;
     background: white;
     cursor: pointer;
+    width : 33%;
 }
 
 .product_card a {
