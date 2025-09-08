@@ -9,10 +9,12 @@
 */
 
 import { createClient } from '../utils/supabase/client';
+import BannerSlide from './slideComponent';
+import BrandSlide from './brandSlideComponent';
+
 import Image from "next/image";
 import Link from "next/link"
 import styles from "./page.module.css";
-
 export default async function Home() {
   const supabase = await createClient()
   const { data: product, error: product_error } = await supabase.from("Product").select();
@@ -30,24 +32,8 @@ export default async function Home() {
       {/* common_slide_content */}
       <div className={`common_slider_container ${styles.common_slider_container}`}>
         <div className="common_slider_wrapper">
-          <div className="common_slide_track" id="slideTrack">
-            <div className="common_slide">
-              <div className="slide_content">
-                <h3 className="slide_title">필수 겨울템</h3>
-                <p className="slide_desc">눈 내려도 따뜻하게 미리 준비하는 동계캠핑</p>
-              </div>
-            </div>
-            <div className="common_slide">
-              <div className="slide-content">
-                <h3 className="slide-title">슬라이드 1</h3>
-                <p className="slide-main-text">첫 번째 콘텐츠</p>
-              </div>
-            </div>
-          </div>
+          <BannerSlide />
         </div>
-        {/* Navigation Arrows */}
-        <button className="nav_arrow prev" onClick="prevSlide()"><span className="ir_pm">이전</span></button>
-        <button className="nav_arrow next" onClick="nextSlide()"><span className="ir_pm">다음</span></button>
       </div>
       {/* //common_slide_content */}
 
@@ -55,59 +41,7 @@ export default async function Home() {
       <div className={styles.brand_slide_content}>
         <h3 className={`medium_tb ${styles.brand_title}`}>추천 브랜드</h3>
         <div className={styles.brand_slider_container}>
-
-          <ul className={styles.brand_slide_track}>
-            <li className={styles.brand_slide}>
-              <Link href="">
-                <Image
-                  src="/images/main_brand1.png"
-                  width={71}
-                  height={47}
-                  alt=""
-                />
-              </Link>
-            </li>
-            <li className={styles.brand_slide}>
-              <Link href="">
-                <Image
-                  src="/images/main_brand2.png"
-                  width={83}
-                  height={18}
-                  alt=""
-                />
-              </Link>
-            </li>
-            <li className={styles.brand_slide}>
-              <Link href="">
-                <Image
-                  src="/images/main_brand3.png"
-                  width={79}
-                  height={21}
-                  alt=""
-                />
-              </Link>
-            </li>
-            <li className={styles.brand_slide}>
-              <Link href="">
-                <Image
-                  src="/images/main_brand4.png"
-                  width={79}
-                  height={21}
-                  alt=""
-                />
-              </Link>
-            </li>
-            <li className={styles.brand_slide}>
-              <Link href="">
-                <Image
-                  src="/images/main_brand5.png"
-                  width={74}
-                  height={21}
-                  alt=""
-                />
-              </Link>
-            </li>
-          </ul>
+          <BrandSlide />
         </div>
       </div>
       {/* //barnd_slide_content  */}
