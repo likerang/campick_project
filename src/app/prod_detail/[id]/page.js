@@ -8,6 +8,7 @@
  *  2025-09-04: prod_detail.html의 코드 next.js 문법으로 변경
 */
 import { createClient } from '../../../utils/supabase/client';
+import ProdDetailClient from './component'; // ← 이 줄 추가
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css"
@@ -15,8 +16,15 @@ import styles from "./page.module.css"
 export default async function ProdDetail({ params }) {
   console.log(params)
   const supabase = await createClient();
-  const { data: product, error: product_error } = await supabase.from("Product").select("*").eq('prod_id', params.id).single();
-  const { data: allProduct, error: all_error } = await supabase.from("Product").select();
+  const { data: product, error: product_error } = await supabase
+    .from("Product")
+    .select("*")
+    .eq('prod_id', params.id)
+    .single();
+
+  const { data: allProduct, error: all_error } = await supabase
+    .from("Product")
+    .select();
   // 문자열로 이루어진 데이터를 배열로 반환 및 변수 할당
 
   console.log(product.tag);
@@ -34,25 +42,7 @@ export default async function ProdDetail({ params }) {
         {/* slide_wrapper(image)  */}
         <div className={styles.product_detail_slider}>
           {/* slide_track  */}
-          <ul className={styles.slider_track}>
-            {/* slide_item  */}
-            {images.map((item, idx) => {
-              return (
-                
-                <li key={idx} className={styles.slide_item}>
-                  <Image
-                    src={item}
-                    width={750}
-                    height={690}
-                    alt=""
-                  />
-                </li>
-              );
-            })}
-          </ul>
-          <div className={styles.slide_progress}>
-            <div className={styles.slide_progress_bar}></div>
-          </div>
+          <ProdDetailClient images={product.prod_images} />
         </div>
 
         {/* product_detail_info  */}
