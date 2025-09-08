@@ -8,7 +8,7 @@
  *  2025-09-04: prod_detail.html의 코드 next.js 문법으로 변경
 */
 import { createClient } from '../../../utils/supabase/client';
-import ProdDetailClient from './component'; // ← 이 줄 추가
+import ProdDetailClient from './component';
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css"
