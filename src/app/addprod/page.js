@@ -20,18 +20,39 @@ import { useState } from 'react';
 // };
 
 export default function AddProd() {
-  const supabase = createClient()
+  const supabase = createClient();
+  const brands = [
+    { title: "힐레베르그 Hilleberg", value: "A01" },
+    { title: "몽벨 Montbell", value: "A02" },
+    { title: "헬리녹스 Helinox", value: "A03" },
+    { title: "노르디스트 Nordisk", value: "A04" },
+    { title: "엠에스알 Msr", value: "A05" },
+    { title: "니모 Nemo", value: "A06" },
+  ];
+  const categories = [
+    { title: "텐트/타프", value: "A01" },
+    { title: "침구/매트", value: "A02" },
+    { title: "체어/테이블", value: "A03" },
+    { title: "가구/가방/수납", value: "A04" },
+    { title: "랜턴/조명", value: "A05" },
+    { title: "키친", value: "A06" },
+    { title: "버너/토치/화로", value: "A07" },
+    { title: "쿨러/워터저그", value: "A08" },
+    { title: "웨건/카드", value: "A09" },
+    { title: "계절용품/기타", value: "A10" }
+  ];
   const [prodData, setProdData] = useState({
     prod_title: "",
     prod_price: "",
-    prod_category: "테스트",
-    prod_brand: "테스트",
+    prod_category: "",
+    prod_brand: "",
     prod_condition: "",
     warranty: "",
     prod_desc: "",
     trade_method: ["delivery"],
     tag: [],
     prod_images: [],
+    user_id: ""
   });
 
   const handleChange = (evt) => {
@@ -62,8 +83,9 @@ export default function AddProd() {
       warranty: prodData.warranty,
       prod_desc: prodData.prod_desc,
       trade_method: prodData.trade_method.join(","), // 배열 → 문자열 저장
-      tag: prodData.tag,
-      prod_images: prodData.prod_images.join(",")
+      tag: prodData.tag.join(","),
+      prod_images: prodData.prod_images.join(","),
+      user_id: 1
     });
     if (error) {
       console.error(error);
@@ -79,8 +101,9 @@ export default function AddProd() {
         warranty: "",
         prod_desc: "",
         trade_method: [],
-        tag: "",
-        prod_images: "",
+        tag: [],
+        prod_images: [],
+        user_id: ""
       });
     }
   };
@@ -214,12 +237,18 @@ export default function AddProd() {
 
           {/* 카테고리 */}
           <div className={styles.product_category}>
-            <button type="button" className={styles.category_btn}>카테고리</button>
+            <select name="prod_category" onChange={handleChange}>
+              <option value="" disabled defaultValue="" >카테고리 선택</option>
+              {categories.map((category, idx) => <option key={idx} value={category.value}>{category.title}</option>)}
+            </select>
           </div>
 
           {/* 브랜드  */}
           <div className={styles.product_brand}>
-            <button type="button" className={styles.brand_btn}>브랜드</button >
+            <select name="prod_brand" onChange={handleChange}>
+              <option value="" disabled defaultValue="" >브랜드 선택</option>
+              {brands.map((brand, idx) => <option key={idx} value={brand.value}>{brand.title}</option>)}
+            </select>
           </div >
 
           {/* 제품 상태  */}
@@ -305,7 +334,6 @@ export default function AddProd() {
       </div >
       {/* //form  */}
 
-
       {/* common_caution_banner */}
       <div className="caution_banner">
         <Image
@@ -331,7 +359,6 @@ export default function AddProd() {
         </div>
       </div>
       {/* //common_caution_banner */}
-
 
     </>
   )
