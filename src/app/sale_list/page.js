@@ -3,71 +3,92 @@
 import Image from "next/image";
 import Link from 'next/link';
 import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
 
-import "../css/sale_list.css";
+import styles from "./page.module.css";
 
-// export const metadata = {
-//   title: "Campick - 판매목록",
-//   description: "Welcome to Campick",
-// };
+// 환경 변수 검증
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Supabase 환경 변수가 설정되지 않았습니다.');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+function timeAgo(timestamp) {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffMs = now - past;
+
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}일 전`;
+  if (hours > 0) return `${hours}시간 전`;
+  if (minutes > 0) return `${minutes}분 전`;
+  return "방금 전";
+}
 
 export default function Salelist() {
   const [activeTab, setActiveTab] = useState('selling');
-  const [showPopup, setShowPopup] = useState(false);
+  const [popupState, setPopupState] = useState('hidden');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      title: '[힐레베르그] 알락 1 텐트 (Allak 1)',
-      price: '1,893,000 원',
-      location: '종로1가동',
-      date: '4시간 전',
-      image: '/images/product_img01.jpg',
-      views: 12,
-      messages: 1,
-      likes: 12,
-      isSoldout: false  // 판매완료 여부
-    },
-    {
-      id: 2,
-      title: '[힐레베르그] 알락 2 텐트 (Allak 2)',
-      price: '2,100,000 원',
-      location: '강남구',
-      date: '6시간 전',
-      image: '/images/product_img02.jpg',
-      views: 25,
-      messages: 3,
-      likes: 18,
-      isSoldout: false
-    },
-    {
-      id: 3,
-      title: '[힐레베르그] 나마츠 2 텐트 (Nammatj 2)',
-      price: '1,240,0000 원',
-      location: '서초구',
-      date: '1일 전',
-      image: '/images/product_img03.jpg',
-      views: 8,
-      messages: 0,
-      likes: 5,
-      isSoldout: false
-    }
-  ]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  /* 저장된 판매완료 상품들 불러오기 */
+  /* DB > 상품 불러오기 */
   useEffect(() => {
-    const saved = localStorage.getItem('soldoutProducts');
-    if (saved) {
-      const soldoutIds = JSON.parse(saved);
-      setProducts(products.map(product => ({
-        ...product,
-        isSoldout: soldoutIds.includes(product.id)
-      })));
-    }
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        let { data, error } = await supabase
+          .from("Product")
+          .select("*")
+          .order("created_at", { ascending: false });
+        
+        if (error) {
+          console.error("상품 불러오기 실패:", error.message, error.status, error.details);
+          console.log("더미 데이터를 사용합니다.");
+        }
+
+        if (!data || !Array.isArray(data)) {
+          console.warn("데이터가 없거나 올바르지 않습니다:", data);
+          setProducts([]);
+          return;
+        }
+
+        const mapped = data.map((p) => ({
+          id: p.prod_id,
+          title: p.prod_title,
+          price: `${(p.prod_price || 0).toLocaleString()} 원`,
+          location: p.location || "지역 없음",
+          date: timeAgo(p.created_at),
+          image: p.prod_images,
+          views: p.view || 0,
+          messages: Math.floor(Math.random() * 5),
+          likes: p.like || 0,
+          isSoldout: p.prod_status === 0,
+        }));
+
+        setProducts(mapped);
+      } catch (err) {
+        console.error("상품 불러오기 중 오류:", err);
+        setError("상품을 불러오는 중 오류가 발생했습니다.");
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
-
-
 
   /* 탭 클릭 */
   function handleTabClick(tabName) {
@@ -77,35 +98,89 @@ export default function Salelist() {
   /* 더보기 클릭 */
   function handleMoreClick(product) {
     setSelectedProduct(product);
-    setShowPopup(true);
+
+    if (popupState === 'active') {
+      setPopupState('closing');
+      setTimeout(() => {
+        setPopupState('mounting');
+        setTimeout(() => setPopupState('active'), 10);
+      }, 300);
+    } else {
+      setPopupState('mounting');
+      setTimeout(() => setPopupState('active'), 10);
+    }
   }
 
   /* 팝업 닫기 */
   function closePopup() {
-    setShowPopup(false);
-    setSelectedProduct(null);
+    setPopupState('closing');
+    setTimeout(() => {
+      setPopupState('hidden');
+      setSelectedProduct(null);
+    }, 300);
   }
 
   /* 판매완료 클릭 */
-  function handleSoldout() {
+  async function handleSoldout() {
     if (selectedProduct) {
-      const updatedProducts = products.map(product => {
-        if (product.id === selectedProduct.id) {
-          return { ...product, isSoldout: true };
+      try {
+        const { error } = await supabase
+          .from('Product')
+          .update({ prod_status: 0 }) // 0 = 판매완료
+          .eq('prod_id', selectedProduct.id);
+        
+        if (error) {
+          console.error('상태 변경 실패:', error);
+          alert('상태 변경에 실패했습니다.');
+          return;
         }
-        return product;
-      });
-      setProducts(updatedProducts);
 
-      /* 판매완료된 상품 ID들을 localStorage에 저장 */
-      const soldoutIds = updatedProducts
-        .filter(p => p.isSoldout)
-        .map(p => p.id);
-      localStorage.setItem('soldoutProducts', JSON.stringify(soldoutIds));
-      
-      setActiveTab('soldout');
+        const updatedProducts = products.map(product => {
+          if (product.id === selectedProduct.id) {
+            return { ...product, isSoldout: true };
+          }
+          return product;
+        });
+        setProducts(updatedProducts);
 
-      closePopup();
+        setActiveTab('soldout');
+        closePopup();
+      } catch (err) {
+        console.error('상태 변경 중 오류:', err);
+        alert('상태 변경 중 오류가 발생했습니다.');
+      }
+    }
+  }
+
+  /* 재판매 클릭 */
+  async function handleResale() {
+    if (selectedProduct) {
+      try {
+        const { error } = await supabase
+          .from('Product')
+          .update({ prod_status: 1 }) // 1 = 판매중
+          .eq('prod_id', selectedProduct.id);
+        
+        if (error) {
+          console.error('상태 변경 실패:', error);
+          alert('상태 변경에 실패했습니다.');
+          return;
+        }
+
+        const updatedProducts = products.map(product => {
+          if (product.id === selectedProduct.id) {
+            return { ...product, isSoldout: false };
+          }
+          return product;
+        });
+        setProducts(updatedProducts);
+
+        setActiveTab('selling');
+        closePopup();
+      } catch (err) {
+        console.error('상태 변경 중 오류:', err);
+        alert('상태 변경 중 오류가 발생했습니다.');
+      }
     }
   }
 
@@ -115,24 +190,35 @@ export default function Salelist() {
       const updatedProducts = products.filter(p => p.id !== selectedProduct.id);
       setProducts(updatedProducts);
 
-      const soldoutIds = updatedProducts
-        .filter(p => p.isSoldout)
-        .map(p => p.id);
-      localStorage.setItem('soldoutProducts', JSON.stringify(soldoutIds));
-
       closePopup();
     }
   }
 
   const displayProducts = products.filter(product => {
-    if (activeTab === 'selling') {
-      return !product.isSoldout;
-    } else {
-      return product.isSoldout; 
-    }
+    if (activeTab === 'selling') return !product.isSoldout;
+    return product.isSoldout;
   });
 
+  if (loading) {
+    return (
+      <div className="salelist_page">
+        <div style={{ textAlign: 'center', padding: '50px' }}>
+          <p>상품을 불러오는 중 🔥</p>
+        </div>
+      </div>
+    );
+  }
 
+  if (error) {
+    return (
+      <div className="salelist_page">
+        <div style={{ textAlign: 'center', padding: '50px' }}>
+          <p>오류: {error}</p>
+          <button onClick={() => window.location.reload()}>다시 시도</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="salelist_page">
@@ -146,7 +232,7 @@ export default function Salelist() {
             <ul className="stats_wrapper">
               <li className="stat_item">
                 <h4 className="stat_title">게시글</h4>
-                <p className="stat_number">23</p>
+                <p className="stat_number">{products.length}</p>
               </li>
               <li className="stat_item">
                 <h4 className="stat_title">팔로워</h4>
@@ -169,10 +255,11 @@ export default function Salelist() {
           </div>
         </div>
       </div>
-      <div className="tab_menu">
+
+      <div className={styles.tab_menu}>
         <Link 
           href="#" 
-          className={activeTab === 'selling' ? 'active' : ''} 
+          className={activeTab === 'selling' ? styles.active : ''} 
           onClick={(e) => {
             e.preventDefault();
             handleTabClick('selling');
@@ -181,91 +268,126 @@ export default function Salelist() {
         </Link>
         <Link 
           href="#" 
-          className={activeTab === 'soldout' ? 'active' : ''} 
+          className={activeTab === 'soldout' ? styles.active : ''} 
           onClick={(e) => {
             e.preventDefault();
             handleTabClick('soldout');
           }}>
-        결제완료
+          결제완료
         </Link>
       </div>
-      <ul className="product_list_wrapper_2col">
-        {displayProducts.map((product) => (
-          <li key={product.id} className={`product_card_2col ${product.isSoldout ? 'disable' : ''}`}>
-            <Link href="#">
-              {product.isSoldout && 
-              <div className="soldout_badge">판매 완료</div>}
-              <div className="product_image">
-                <Image 
-                  src={product.image} 
-                  width={357} 
-                  height={357} 
-                  alt={product.title} 
-                />
-              </div>
-              <div className="product_info">
-                <h3 className="product_title small_tr">{product.title}</h3>
-                <div className="product_meta">
-                  <span className="product_location">{product.location}</span>
-                  <span className="product_date">{product.date}</span>
-                </div>
-                <div className="product_footer">
-                  <span className="product_price normal_tb">{product.price}</span>
-                  <ul className="product_stats">
-                    <li className="view">
-                      <p className="icon">
-                        <Image src="/images/prod_detail_view.svg" width={14} height={14} alt="조회수" />
-                      </p>
-                      <span>{product.views}</span>
-                    </li>
-                    <li className="message">
-                      <p className="icon">
-                        <Image src="/images/prod_detail_chat.svg" width={12} height={12} alt="메세지" />
-                      </p>
-                      <span>{product.messages}</span>
-                    </li>
-                    <li className="like">
-                      <p className="icon">
-                        <Image src="/images/prod_detail_bookmark.svg" width={14} height={14} alt="즐겨찾기" />
-                      </p>
-                      <span>{product.likes}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </Link>
-            
-            {/* 더보기 버튼 */}
-            <button 
-              className="more_btn"
-              onClick={() => handleMoreClick(product)}
-            >
-              ⋯
-            </button>
+
+      <ul className={styles.product_list_wrapper_2col}>
+        {displayProducts.length === 0 && activeTab === 'soldout' ? (
+          <li className="no_result">
+            <Image
+              src="/images/store_logo_small.svg"
+              alt="검색 결과 없음"
+              width={35}
+              height={54}
+            />
+            <p className="small_tb">판매 완료된 상품이 없습니다.</p>
           </li>
-        ))}
+        ) : displayProducts.length === 0 ? (
+          <li className="no_result">
+            <Image
+              src="/images/store_logo_small.svg"
+              alt="검색 결과 없음"
+              width={35}
+              height={54}
+            />
+            <p className="small_tb">등록된 상품이 없습니다.</p>
+          </li>
+        ) : (
+          displayProducts.map((product) => (
+            <li 
+              key={product.id} 
+              className={`${styles.product_card_2col} ${product.isSoldout ? styles.disable : ''}`}
+            >
+              <Link href="#">
+                {product.isSoldout && 
+                <div className={styles.soldout_badge}>판매 완료</div>}
+                <div className={styles.product_image}>
+                  <Image 
+                    src={product.image} 
+                    width={357} 
+                    height={357} 
+                    alt={product.title}
+                  />
+                </div>
+                <div className="product_info">
+                  <h3 className="product_title small_tr">{product.title}</h3>
+                  <div className="product_meta">
+                    <span className="product_location">{product.location}</span>
+                    <span className="product_date">{product.date}</span>
+                  </div>
+                  <div className="product_footer">
+                    <span className="product_price normal_tb">{product.price}</span>
+                    <ul className="product_stats">
+                      <li className="view">
+                        <p className="icon">
+                          <Image src="/images/prod_detail_view.svg" width={14} height={14} alt="조회수" />
+                        </p>
+                        <span>{product.views}</span>
+                      </li>
+                      <li className="message">
+                        <p className="icon">
+                          <Image src="/images/prod_detail_chat.svg" width={12} height={12} alt="메세지" />
+                        </p>
+                        <span>{product.messages}</span>
+                      </li>
+                      <li className="like">
+                        <p className="icon">
+                          <Image src="/images/prod_detail_bookmark.svg" width={14} height={14} alt="즐겨찾기" />
+                        </p>
+                        <span>{product.likes}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Link>
+              
+              {/* 더보기 버튼 */}
+              <button 
+                className={styles.more_btn}
+                onClick={() => handleMoreClick(product)}
+              >
+                ⋯
+              </button>
+            </li>
+          ))
+        )}
       </ul>
-      {showPopup && (
+      
+      {(popupState !== 'hidden') && (
         <>
           <div className="overlay active" onClick={closePopup}></div>
           
-          <div className="more_popup">
+          <div className={`more_popup ${popupState === 'active' ? 'active' : ''}`}>
             <ul>
               <li>
-                <button className="modify_btn" onClick={closePopup}>
+                <button className="modify_btn small_tb" onClick={closePopup}>
                   수정
                 </button>
               </li>
               <li>
-                <button className="delete_btn" onClick={handleDelete}>
+                <button className="delete_btn small_tb" onClick={handleDelete}>
                   삭제
                 </button>
               </li>
-              <li>
-                <button className="soldout_btn" onClick={handleSoldout}>
-                  판매완료
-                </button>
-              </li>
+              {selectedProduct && !selectedProduct.isSoldout ? (
+                <li>
+                  <button className="soldout_btn small_tb" onClick={handleSoldout}>
+                    판매완료
+                  </button>
+                </li>
+              ) : selectedProduct && (
+                <li>
+                  <button className="resale_btn small_tb" onClick={handleResale}>
+                    재판매
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </>
