@@ -136,9 +136,12 @@ body {
     display: flex;
     flex-direction: row-reverse;
     padding-right: 24px;
-    position: sticky;
-    top: 800px;
-    z-index: 999;
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    /* top: 800px; */
+    /* z-index: 999; */
+    margin-left : 400px;
 }
 
 .addprod_btn {
@@ -146,6 +149,7 @@ body {
     background-color: var(--primary);
     color: var(--font-color-white);
     border-radius: 50px;
+    white-space: nowrap;
 }
 
 /* more_btn */
@@ -465,7 +469,7 @@ body {
     display: flex;
     background: white;
     cursor: pointer;
-    width : 33%;
+    width: 33%;
 }
 
 .product_card a {
