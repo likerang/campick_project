@@ -7,6 +7,7 @@
  * 수정이력:
  *  2025-09-04: chat.html의 코드 next.js 문법으로 변경
 */
+import { useState } from "react";
 import Image from "next/image"
 import Link from "next/link"
 import styles from "./page.module.css"
@@ -16,7 +17,16 @@ export const metadata = {
   description: "Welcome to Campick",
 };
 
-export default function Chat() {
+export default function Chat({ params }) {
+  const [messages, setMessages] = useState([
+    { id: 1, sender: "seller", content: "안녕하세요! 텐트 구매 가능한가요?", time: "오후 4시 30분" },
+    { id: 1, sender: "seller", content: "답변 기다릴게요!", time: "오후 4시 31분" },
+  ]);
+  const [newMessage, setNewMessage] = useState("");
+
+
+
+  console.log(params)
   return (
     <>
       <div className={styles.chat_content}>
@@ -64,11 +74,13 @@ export default function Chat() {
         {/* chat_body  */}
         <div className={styles.chat_body}>
           <div className={`xsmall_tr ${styles.chat_date}`}>2025년 8월 18일</div>
-          <div className={`${styles.message} ${styles.seller}`}>
-            <div className={`small_tr ${styles.message_bubble}`}>안녕하세요! 텐트 구매 가능한가요?</div>
-            <div className={styles.message_time}> 오후 4시 30분</div >
-          </div >
-
+          {messages.map((msg) => (
+            <div key={msg.id} className={`message ${msg.sender}`}>
+              <div>{msg.content}</div>
+              <div>{msg.time}</div>
+            </div>
+          ))}
+          {/* 
           <div className={`${styles.message} ${styles.buyer}`}>
             <div className={`small_tr ${styles.message_bubble}`}> 네~구매 가능하세요!</div >
             <div className={styles.message_time}> 오후 4시 45분</div >
@@ -137,7 +149,7 @@ export default function Chat() {
           <div className={`${styles.message} ${styles.buyer}`} >
             <div className={`small_tr ${styles.message_bubble}`}> 저는 수원에 살고 있어요.</div >
             <div className={styles.message_time}> 오후 4시 45분</div >
-          </div >
+          </div > */}
         </div >
         {/* //chat_body */}
 
@@ -150,7 +162,7 @@ export default function Chat() {
             </svg>
           </button >
           <input className={styles.input_field} type="text" placeholder="메시지를 입력하세요..." rows="1" />
-          <button className={styles.send_btn}> 
+          <button className={styles.send_btn}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
               fill="#000000">
               <path
