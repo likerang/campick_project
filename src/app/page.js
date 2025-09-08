@@ -187,7 +187,7 @@ export default async function Home() {
               <Link href="#">
                 <div className="product_image">
                   <Image
-                    src={item.prod_images}
+                    src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
                     alt=""
@@ -261,7 +261,7 @@ export default async function Home() {
               <Link href="#">
                 <div className="product_image">
                   <Image
-                    src={item.prod_images}
+                    src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
                     alt=""
@@ -414,7 +414,7 @@ export default async function Home() {
               <Link href="#">
                 <div className="product_image">
                   <Image
-                    src={item.prod_images}
+                    src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
                     alt=""
