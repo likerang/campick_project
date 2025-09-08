@@ -50,22 +50,6 @@
     object-fit: cover;
 }
 
-.slide_progress {
-    width: 550px;
-    height: 2px;
-    background-color: var(--border-color-basic);
-    position: absolute;
-    bottom: 48px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.slide_progress_bar {
-    width: 33%;
-    height: 2px;
-    background-color: #333
-}
-
 .product_detail_info {
     margin-bottom: var(--spacing-lg);
 }
