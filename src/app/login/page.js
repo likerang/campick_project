@@ -14,12 +14,35 @@ import styles from "./page.module.css"
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
 
-import { supabase } from "../../lib/supabaseClient"
+import { createClient } from "../../utils/supabase/client";
+
+const supabase = createClient();
+
+
 
 // export const metadata = {
 //   title: "Campick - 로그인",
 //   description: "Welcome to Campick",
 // };
+
+const handleKakaoLogin = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "kakao",
+        options: {
+          redirectTo: "http://localhost:3000", // 로그인 후 이동할 URL
+        },
+      });
+
+      if (error) {
+        console.error("로그인 에러:", error.message);
+      } else {
+        console.log("로그인 성공:", data);
+      }
+    } catch (err) {
+      console.error("예상치 못한 에러:", err);
+    }
+  };
 
 
 export default function Login() {
@@ -113,11 +136,7 @@ export default function Login() {
             </button>
 
             <button type="button" className={`${styles.social_btn} ${styles.kakao_btn}`}
-              onClick={() => {
-                window.Kakao.Auth.authorize({
-                  redirectUri: "http://localhost:3000/auth/kakao/callback",
-                });
-              }}
+              onClick={handleKakaoLogin}
             >
               카카오 로그인
             </button>
