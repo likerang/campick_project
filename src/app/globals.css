@@ -587,7 +587,8 @@ body {
 
 .modify_btn,
 .delete_btn,
-.soldout_btn {
+.soldout_btn,
+.resale_btn {
     width: 100%;
     padding: 14px;
     cursor: pointer;
@@ -595,7 +596,8 @@ body {
 
 .modify_btn:active,
 .delete_btn:active,
-.soldout_btn:active {
+.soldout_btn:active,
+.resale_btn:active {
     color: var(--primary);
 }
 
