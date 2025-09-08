@@ -267,7 +267,7 @@ export default function Store() {
         ) : (
           filteredProducts.map((product) => (
             <li key={product.id} className="product_card">
-              <Link href="#">
+              <Link href={`/prod_detail/${product.id}`}>
                 <div className="product_image">
                   <Image
                     src={product.product_image.src}
