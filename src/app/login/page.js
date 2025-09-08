@@ -30,7 +30,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      router.push("/mypage");
+      router.push("/");
     }
   }, [user, router]);
 
@@ -54,9 +54,10 @@ export default function Login() {
     if (error) {
       alert('로그인 실패', error.message);
     } else {
+      const { data: { user } } = await supabase.auth.getUser(); // 유저 정보 강제 조회
+    setUser(user);//로그인한 유저의 유저 정보 반영
       alert('로그인 성공');
-      setUser(data.user); //로그인한 유저의 유저 정보 반영
-      router.push("/mypage"); // ✅ 로그인 성공 시 바로 /mypage로 이동
+      router.push("/"); // ✅ 로그인 성공 시 바로 /mypage로 이동
     }
   }
 
@@ -111,7 +112,13 @@ export default function Login() {
               네이버로 로그인
             </button>
 
-            <button type="button" className={`${styles.social_btn} ${styles.kakao_btn}`}>
+            <button type="button" className={`${styles.social_btn} ${styles.kakao_btn}`}
+              onClick={() => {
+                window.Kakao.Auth.authorize({
+                  redirectUri: "http://localhost:3000/auth/kakao/callback",
+                });
+              }}
+            >
               카카오 로그인
             </button>
           </div>
