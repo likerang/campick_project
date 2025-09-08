@@ -20,27 +20,43 @@ import { useState } from 'react';
 // };
 
 export default function AddProd() {
-  const supabase = createClient()
+  const supabase = createClient();
+  const brands = [
+    { title: "힐레베르그 Hilleberg", value: "A01" },
+    { title: "몽벨 Montbell", value: "A02" },
+    { title: "헬리녹스 Helinox", value: "A03" },
+    { title: "노르디스트 Nordisk", value: "A04" },
+    { title: "엠에스알 Msr", value: "A05" },
+    { title: "니모 Nemo", value: "A06" },
+  ];
+  const categories = [
+    { title: "텐트/타프", value: "A01" },
+    { title: "침구/매트", value: "A02" },
+    { title: "체어/테이블", value: "A03" },
+    { title: "가구/가방/수납", value: "A04" },
+    { title: "랜턴/조명", value: "A05" },
+    { title: "키친", value: "A06" },
+    { title: "버너/토치/화로", value: "A07" },
+    { title: "쿨러/워터저그", value: "A08" },
+    { title: "웨건/카드", value: "A09" },
+    { title: "계절용품/기타", value: "A10" }
+  ];
   const [prodData, setProdData] = useState({
     prod_title: "",
     prod_price: "",
-    prod_category: "테스트",
-    prod_brand: "테스트",
+    prod_category: "",
+    prod_brand: "",
     prod_condition: "",
     warranty: "",
     prod_desc: "",
     trade_method: ["delivery"],
-    tag: "테스트1,테스트2,테스트3",
+    tag: [],
     prod_images: [],
+    user_id: ""
   });
 
   const handleChange = (evt) => {
     const { name, value, type, checked } = evt.target
-    console.log(name);
-    console.log(value);
-    console.log(type);
-    console.log(checked);
-
     if (type === "checkbox") {
       setProdData((prev) => {
         let trade_method = [...prev.trade_method];
@@ -54,22 +70,22 @@ export default function AddProd() {
     } else {
       setProdData((prev) => ({ ...prev, [name]: value }));
     }
-    console.log(prodData);
   }
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const { error } = await supabase.from("Product").insert({
       prod_title: prodData.prod_title,
-      prod_price: Number(prodData.prod_price),
+      prod_price: Number(prodData.prod_price), //숫자형 자료로 변환
       prod_category: prodData.prod_category,
       prod_brand: prodData.prod_brand,
       prod_condition: prodData.prod_condition,
       warranty: prodData.warranty,
       prod_desc: prodData.prod_desc,
       trade_method: prodData.trade_method.join(","), // 배열 → 문자열 저장
-      tag: prodData.tag,
-      prod_images: prodData.prod_images.join(",")
+      tag: prodData.tag.join(","),
+      prod_images: prodData.prod_images.join(","),
+      user_id: 1
     });
     if (error) {
       console.error(error);
@@ -85,8 +101,9 @@ export default function AddProd() {
         warranty: "",
         prod_desc: "",
         trade_method: [],
-        tag: "",
-        prod_images: "",
+        tag: [],
+        prod_images: [],
+        user_id: ""
       });
     }
   };
@@ -99,11 +116,11 @@ export default function AddProd() {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const fileName = `${Date.now()}_${file.name}`; // 파일명 충돌 방지
+      const fileName = `${Date.now()}_${file.name}`; // 파일명 충돌 방지 -> 현재 시간이 입력
 
-      // ✅ Supabase Storage에 업로드
+      //  Supabase Storage에 업로드
       const { error } = await supabase.storage
-        .from("prod_images") // 👉 Storage 버킷명 (미리 생성 필요)
+        .from("prod_images") //  Storage 버킷명 
         .upload(fileName, file);
 
       if (error) {
@@ -111,7 +128,7 @@ export default function AddProd() {
         continue;
       }
 
-      // ✅ 업로드 후 Public URL 가져오기
+      //  업로드 후 Public URL 가져오기
       const { data } = supabase.storage
         .from("prod_images")
         .getPublicUrl(fileName);
@@ -123,8 +140,8 @@ export default function AddProd() {
 
     // ✅ setProdData 이미지 URL 저장
     setProdData((prev) => ({
-      ...prev,
-      prod_images: [...prev.prod_images, ...uploadedUrls],
+      ...prev, // 기존 내용 나열
+      prod_images: [...prev.prod_images, ...uploadedUrls],//배열에 내용 추가
     }));
   };
 
@@ -132,8 +149,34 @@ export default function AddProd() {
   const removeImage = (indexToRemove) => {
     setProdData((prev) => ({
       ...prev,
-      prod_images: prev.prod_images.filter((_, index) => index !== indexToRemove)
+      prod_images: prev.prod_images.filter((_, index) => index !== indexToRemove) // 선택된 index 번호를 제외한 나머지를 필터링해서 다시 저장
     }));
+  };
+
+  const addTags = () => {
+    const tagInput = document.getElementById('tagInput');
+    const inputValue = tagInput.value.trim();//공백삭제
+    if (inputValue === '') return;//빈값이면 아무일도 일어나지 않음
+
+    setProdData({
+      ...prodData,
+      tag: [...prodData.tag, inputValue]
+    });
+    tagInput.value = '';
+  }
+
+  const enterKeyPress = (evt) => {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      addTags();
+    }
+  };
+
+  const removeTag = (indexToRemove) => {
+    setProdData({
+      ...prodData,
+      tag: prodData.tag.filter((_, index) => index !== indexToRemove)
+    });
   };
 
   return (
@@ -152,16 +195,16 @@ export default function AddProd() {
                     d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Z" />
                 </svg>
               </span>
-              <span className={`small_tr ${styles.upload_img_count}`}>0/10</span>
+              <span className={`small_tr ${styles.upload_img_count}`}>{prodData.prod_images.length}/10</span>
             </label>
             <input type="file" id="imageInput" multiple accept="image/*" onChange={handleFileChange} hidden />
           </div>
-
           {prodData.prod_images.length > 0 &&
             (
               <div className={styles.uploaded_image_box}>
                 {prodData.prod_images.slice(0, 10).map((imageUrl, index) => (
                   <div key={index} className={styles.uploaded_image_item}>
+                    {index === 0 && <span className={styles.thumbnail}>대표사진</span>}
                     <Image
                       src={imageUrl}
                       width={80}
@@ -180,7 +223,6 @@ export default function AddProd() {
               </div>
             )
           }
-
           {/* 상품명 */}
           <div className={styles.product_title}>
             <label className="ir_pm" htmlFor="prod_title">상품명</label>
@@ -195,12 +237,18 @@ export default function AddProd() {
 
           {/* 카테고리 */}
           <div className={styles.product_category}>
-            <button type="button" className={styles.category_btn}>카테고리</button>
+            <select name="prod_category" onChange={handleChange}>
+              <option value="" disabled defaultValue="" >카테고리 선택</option>
+              {categories.map((category, idx) => <option key={idx} value={category.value}>{category.title}</option>)}
+            </select>
           </div>
 
           {/* 브랜드  */}
           <div className={styles.product_brand}>
-            <button type="button" className={styles.brand_btn}>브랜드</button >
+            <select name="prod_brand" onChange={handleChange}>
+              <option value="" disabled defaultValue="" >브랜드 선택</option>
+              {brands.map((brand, idx) => <option key={idx} value={brand.value}>{brand.title}</option>)}
+            </select>
           </div >
 
           {/* 제품 상태  */}
@@ -259,40 +307,24 @@ export default function AddProd() {
             <h3 className={`normal_tb ${styles.product_tag_title} ${styles.title}`}> 태그(선택 사항) < span className="xsmall_tr" > 최대 10개</span ></h3 >
             <div className={styles.product_tag_content}>
               <div className={styles.product_tag_input}>
-                <input type="text" id="tagInput" className={styles.tag_input} placeholder="예시 '새상품', '미개봉'" />
-                <button type="button" className={`small_tr ${styles.tag_add_btn}`}> 추가</button >
+                <input type="text" id="tagInput" className={styles.tag_input} placeholder="예시 '새상품', '미개봉'" onKeyDown={enterKeyPress} />
+                <button type="button" className={`small_tr ${styles.tag_add_btn}`} onClick={addTags}> 추가</button >
               </div >
               <ul className={styles.tag_list}>
-                <li className={`small_tr ${styles.tag_item} `}>
-                  <span>새상품</span>
-                  <button className={styles.tag_delete_btn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
-                      fill="#939393">
-                      <path
-                        d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
-                    </svg>
-                  </button >
-                </li >
-                <li className={`small_tr ${styles.tag_item}`}>
-                  <span>미개봉</span>
-                  <button className={styles.tag_delete_btn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
-                      fill="#939393">
-                      <path
-                        d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
-                    </svg>
-                  </button >
-                </li >
-                <li className={`small_tr ${styles.tag_item}`}>
-                  <span>여름용</span>
-                  <button className={styles.tag_delete_btn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
-                      fill="#939393">
-                      <path
-                        d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
-                    </svg>
-                  </button >
-                </li >
+                {prodData.tag.map((tag, idx) => {
+                  return (
+                    <li key={idx} className={`small_tr ${styles.tag_item} `}>
+                      <span>{tag}</span>
+                      <button className={styles.tag_delete_btn} onClick={() => removeTag(idx)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
+                          fill="#939393">
+                          <path
+                            d="m291-240-51-51 189-189-189-189 51-51 189 189 189-189 51 51-189 189 189 189-51 51-189-189-189 189Z" />
+                        </svg>
+                      </button >
+                    </li >
+                  )
+                })}
               </ul >
             </div >
           </div >
@@ -301,7 +333,6 @@ export default function AddProd() {
         </form >
       </div >
       {/* //form  */}
-
 
       {/* common_caution_banner */}
       <div className="caution_banner">
@@ -328,7 +359,6 @@ export default function AddProd() {
         </div>
       </div>
       {/* //common_caution_banner */}
-
 
     </>
   )

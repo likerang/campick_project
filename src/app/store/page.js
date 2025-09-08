@@ -94,7 +94,7 @@ export default function Store() {
             category: p.prod_category || '기타',
             brand: p.prod_brand || '브랜드 없음',
             meta: {
-              location: p.location || "지역 없음",
+              location: p.location || "종로 1가",
               date: timeAgo(p.created_at)
             },
             footer: {
@@ -267,7 +267,7 @@ export default function Store() {
         ) : (
           filteredProducts.map((product) => (
             <li key={product.id} className="product_card">
-              <Link href="#">
+              <Link href={`/prod_detail/${product.id}`}>
                 <div className="product_image">
                   <Image
                     src={product.product_image.src}

@@ -8,21 +8,30 @@
  *  2025-09-04: prod_detail.html의 코드 next.js 문법으로 변경
 */
 import { createClient } from '../../../utils/supabase/client';
+import ProdDetailClient from './component';
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css"
 
-
 export default async function ProdDetail({ params }) {
   console.log(params)
   const supabase = await createClient();
-  const { data: product, error: product_error } = await supabase.from("Product").select("*").eq('prod_id', params.id).single();
-  const { data: allProduct, error: all_error } = await supabase.from("Product").select();
+  const { data: product, error: product_error } = await supabase
+    .from("Product")
+    .select("*")
+    .eq('prod_id', params.id)
+    .single();
+
+  const { data: allProduct, error: all_error } = await supabase
+    .from("Product")
+    .select();
   // 문자열로 이루어진 데이터를 배열로 반환 및 변수 할당
 
   console.log(product.tag);
   const tags = product.tag.split(',');
+  const images = product.prod_images.split(',');
   console.log(tags);
+  console.log(images);
 
   console.log(product)
   console.log(allProduct)
@@ -33,20 +42,7 @@ export default async function ProdDetail({ params }) {
         {/* slide_wrapper(image)  */}
         <div className={styles.product_detail_slider}>
           {/* slide_track  */}
-          <ul className={styles.slider_track}>
-            {/* slide_item  */}
-            <li className={styles.slide_item}>
-              <Image
-                src={product.prod_images}
-                width={750}
-                height={690}
-                alt=""
-              />
-            </li>
-          </ul>
-          <div className={styles.slide_progress}>
-            <div className={styles.slide_progress_bar}></div>
-          </div>
+          <ProdDetailClient images={product.prod_images} />
         </div>
 
         {/* product_detail_info  */}
@@ -119,8 +115,8 @@ export default async function ProdDetail({ params }) {
 
           <div className={styles.btn_group}>
             {/* 해당 상품이 로그인된 사용자의 상품이라면 */}
-            <button className={styles.chat}> 채팅하기</button >
-            <button className={styles.pay}> 결제하기</button >
+            <button className={styles.chat}><Link href={`/chat/${product.prod_id}`}>채팅하기</Link></button >
+            <button className={styles.pay}><Link href={`/payment_select/${product.prod_id}`}>결제하기</Link></button >
           </div >
         </div >
 
@@ -189,7 +185,7 @@ export default async function ProdDetail({ params }) {
               <Link href={`/prod_detail/${item.prod_id}`}>
                 <div className="product_image">
                   <Image
-                    src={item.prod_images}
+                    src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
                     alt=""

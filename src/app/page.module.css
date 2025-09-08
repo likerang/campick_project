@@ -8,6 +8,7 @@
  *  2025-09-04: 기존 index.css 내용 첨부
     
 */
+
 .common_slider_container {
     margin-bottom: var(--spacing-sm);
 }
@@ -24,29 +25,6 @@
 .brand_slider_container {
     overflow: hidden;
 }
-
-.brand_slide_track {
-    width: 200%;
-    display: flex;
-    gap: var(--spacing-sm);
-}
-
-.brand_slide {
-    width: 130px;
-    height: 60px;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.brand_slide a {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
 
 .new_product_content {
     margin-bottom: var(--spacing-md);
