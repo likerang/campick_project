@@ -1,10 +1,14 @@
+
+'use client';
 import Image from "next/image";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import "./css/reset.css";
 import './globals.css'
 // import "./css/common.css";
 import "./css/header.css";
 import "./css/footer.css";
+
 
 /* 폰트 설정 예시
 const geistSans = Geist({
@@ -18,22 +22,32 @@ const geistMono = Geist_Mono({
 });
 */
 
-export const metadata = {
-  title: "Campick",
-  description: "Welcome to Campick",
-};
+// export const metadata = {
+//   title: "Campick",
+//   description: "Welcome to Campick",
+// };
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
   return (
     <html lang="ko">
       <body>
         <div className="container">
+          {/* 상품등록 버튼 */}
+          {pathname !== '/addprod' && (
+            <div className='btn_group'>
+              <Link className="addprod_btn small_tr" href="/addprod">
+                상품등록 +
+              </Link>
+            </div>
+          )}
+          {/* //상품등록 버튼 */}
           <header>
             <div className="header_top">
               <h1 className="logo">
                 <Link href="/">
-                  <Image 
-                    src="/images/logo_black.png" 
+                  <Image
+                    src="/images/logo_black.png"
                     alt="campick logo"
                     width={120}
                     height={49}
@@ -49,9 +63,9 @@ export default function RootLayout({ children }) {
                 <ul>
                   <li>
                     <Link href="/messages">
-                      <Image 
-                        src="/images/header_chat.svg" 
-                        alt="메세지" 
+                      <Image
+                        src="/images/header_chat.svg"
+                        alt="메세지"
                         width={14}
                         height={14}
                       />
@@ -60,22 +74,22 @@ export default function RootLayout({ children }) {
                   </li>
                   <li>
                     <Link href="/notifications">
-                      <Image 
-                          src="/images/header_notifications.svg" 
-                          alt="알림" 
-                          width={14}
-                          height={14}
+                      <Image
+                        src="/images/header_notifications.svg"
+                        alt="알림"
+                        width={14}
+                        height={14}
                       />
                       <span className="ir_pm">알림</span>
                     </Link>
                   </li>
                   <li>
                     <Link href="/login">
-                      <Image 
-                          src="/images/header_person.svg" 
-                          alt="로그인" 
-                          width={14}
-                          height={14}
+                      <Image
+                        src="/images/header_person.svg"
+                        alt="로그인"
+                        width={14}
+                        height={14}
                       />
                       <span className="ir_pm">로그인</span>
                     </Link>
@@ -98,8 +112,8 @@ export default function RootLayout({ children }) {
           <footer>
             <div className="footer_logo">
               <Link href="/">
-                <Image 
-                  src="/images/logo_white.png" 
+                <Image
+                  src="/images/logo_white.png"
                   alt="campick logo"
                   width={168}
                   height={69}

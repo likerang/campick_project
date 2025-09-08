@@ -34,3 +34,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+```bash
+KAKAO_CLIENT_REST_ID=__KAKAO_CLIENT_REST_ID__ KAKAO_CLIENT_SECRET=__KAKAO_CLIENT_SECRET__ node server.js
+KAKAO_CLIENT_REST_ID=__418c8f9d1a5bc463493394a218670635__ KAKAO_CLIENT_SECRET=__l3pOLNsAHJwxNX2YgKfQBNWYGMZZRSnC__ node server.js
+```
