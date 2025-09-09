@@ -303,9 +303,15 @@ export default function Salelist() {
         </Link>
       </div>
 
-      <ul className={styles.product_list_wrapper_2col}>
+      <ul
+        className={
+          displayProducts.length === 0
+            ? styles.no_result_wrapper
+            : styles.product_list_wrapper_2col
+        }
+      >
         {displayProducts.length === 0 && activeTab === 'soldout' ? (
-          <li className="no_result">
+          <li className={styles.no_result}>
             <Image
               src="/images/store_logo_small.svg"
               alt="검색 결과 없음"
@@ -315,7 +321,7 @@ export default function Salelist() {
             <p className="small_tb">판매 완료된 상품이 없습니다.</p>
           </li>
         ) : displayProducts.length === 0 ? (
-          <li className="no_result">
+          <li className={styles.no_result}>
             <Image
               src="/images/store_logo_small.svg"
               alt="검색 결과 없음"
