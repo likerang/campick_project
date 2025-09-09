@@ -110,7 +110,7 @@ const mapped = data.map((p) => {
       category: p.prod_category || "A01",
       brand: p.prod_brand || "A01",
       meta: {
-        location: p.location || "지역 없음",
+        location: p.location || "종로 1가",
         date: timeAgo(p.created_at),
       },
       footer: {

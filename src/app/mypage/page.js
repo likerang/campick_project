@@ -13,7 +13,7 @@ export default function Mypage() {
     <div className="user_profile_wrapper">
       <div className="profile_card">
         <div className="profile_img_wrapper">
-          <Image src="/images/user_profile_img.jpg" alt="사용자 프로필" />
+          <Image src="/images/user_profile_img.jpg" alt="사용자 프로필" width={72} height={72}/>
         </div>
         <div className="user_info">
           <h2 id="user_id">User_ID</h2>
