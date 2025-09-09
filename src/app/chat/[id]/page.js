@@ -72,7 +72,7 @@ export default function Chat({ params }) {
     loadChatRoom();
     loadMessages();
     // eslint-disable-next-line
-  }, [chatRoomId, loadChatRoom, loadMessages]);
+  }, [chatRoomId]);
 
 
 
