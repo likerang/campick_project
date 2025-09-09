@@ -207,7 +207,7 @@
 .no_result {
   display: block;
   text-align: center;
-  color: rgba(72, 72, 72, 1);
+  color: var(--font-color-light-gray);
   padding: 40px 0;
   font-size: 16px;
 }
@@ -255,3 +255,4 @@
   width: 12px;
   height: 12px;
 }
+

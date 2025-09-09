@@ -290,9 +290,15 @@ const mapped = data.map((p) => {
         </div>
       </div>
 
-      <ul className={`product_list_wrapper ${styles.product_list_wrapper}`}>
+      <ul
+        className={
+          filteredProducts.length === 0
+            ? styles.no_result_wrapper
+            : styles.product_list_wrapper
+        }
+      >
         {filteredProducts.length === 0 ? (
-          <li className="no_result" style={{ textAlign: 'center', padding: '50px' }}>
+          <li className={styles.no_result}>
             <Image
               src="/images/store_logo_small.svg"
               alt="검색 결과 없음"
@@ -300,9 +306,8 @@ const mapped = data.map((p) => {
               height={54}
             />
             <p className="small_tb">해당 카테고리의 상품이 없습니다.</p>
-            <p className="small_tb">전체 상품 수: {allProducts.length}</p>
           </li>
-        ) : (
+          ) : (
           filteredProducts.map((product) => (
             <li key={product.id} className="product_card">
               <Link href={`/prod_detail/${product.id}`}>
