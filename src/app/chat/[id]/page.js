@@ -36,43 +36,44 @@ export default function Chat({ params }) {
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef(null);
   // 컴포넌트 마운트 또는 chatRoomId 변경 시 채팅방 정보&메시지 로드
-  useEffect(() => {
+  useEffect(() => {  // 채팅방 정보 로드 (ChatRoom 테이블에서 chat_id로 단일 조회)
+    const loadChatRoom = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('ChatRoom')
+          .select('*')
+          .eq('chat_id', chatRoomId)
+          .single();
+
+        if (error) throw error;
+        setChatRoom(data);
+      } catch (err) {
+        console.error('채팅방 로드 에러:', err);
+        setChatRoom(null);
+      }
+    };
+
+    // 메시지 불러오기 (ChatMessage 테이블에서 chat_id 기준)
+    const loadMessages = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('ChatMessage')
+          .select('message_id, chat_id, sender_id, content, created_at, is_read')
+          .eq('chat_id', chatRoomId)
+          .order('created_at', { ascending: true });
+
+        if (error) throw error;
+        setMessages(data || []);
+      } catch (err) {
+        console.error('메시지 로드 에러:', err);
+      }
+    };
+
     loadChatRoom();
     loadMessages();
-  }, [chatRoomId]);
+    // eslint-disable-next-line
+  }, [chatRoomId, loadChatRoom, loadMessages]);
 
-  // 채팅방 정보 로드 (ChatRoom 테이블에서 chat_id로 단일 조회)
-  const loadChatRoom = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('ChatRoom')
-        .select('*')
-        .eq('chat_id', chatRoomId)
-        .single();
-
-      if (error) throw error;
-      setChatRoom(data);
-    } catch (err) {
-      console.error('채팅방 로드 에러:', err);
-      setChatRoom(null);
-    }
-  };
-
-  // 메시지 불러오기 (ChatMessage 테이블에서 chat_id 기준)
-  const loadMessages = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('ChatMessage')
-        .select('message_id, chat_id, sender_id, content, created_at, is_read')
-        .eq('chat_id', chatRoomId)
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-      setMessages(data || []);
-    } catch (err) {
-      console.error('메시지 로드 에러:', err);
-    }
-  };
 
 
 
