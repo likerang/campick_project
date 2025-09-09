@@ -8,18 +8,50 @@
  *  2025-09-04: join.html의 코드 next.js 문법으로 변경
 */
 
+"use client";
 
-export const metadata = {
-	title: "Campick - 회원가입",
-	description: "Welcome to Campick",
-};
+// export const metadata = {
+// 	title: "Campick - 회원가입",
+// 	description: "Welcome to Campick",
+// };
 
+import { createClient } from "../../utils/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
+const supabase = createClient();
 
 import styles from "./page.module.css"
 
+// async function signInWithKakao() {
+//   const { data, error } = await supabase.auth.signInWithOAuth({
+//     provider: 'kakao',
+//     options: {
+//     redirectTo: `http://localhost:3000
+// `,//로그인후 이동할 URL
+//   },
+//   })
+// }
+const handleKakaoLogin = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "kakao",
+        options: {
+          redirectTo: "http://localhost:3000", // 로그인 후 이동할 URL
+        },
+      });
+
+      if (error) {
+        console.error("로그인 에러:", error.message);
+      } else {
+        console.log("로그인 성공:", data);
+      }
+    } catch (err) {
+      console.error("예상치 못한 에러:", err);
+    }
+  };
+
 export default function JoinForm() {
+
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -47,7 +79,7 @@ export default function JoinForm() {
         <div className={styles.social_signup}>
           <p className={`${styles.section_title} ${styles.medium_tr}`}>간편 회원가입</p>
           <div className={styles.social_buttons}>
-            <button className={`${styles.social_button} ${styles.kakao}`}>
+            <button className={`${styles.social_button} ${styles.kakao}`} onClick={handleKakaoLogin}>
               <Image
                 src="/images/logo_kakao.png"
                 alt="카카오 회원가입"

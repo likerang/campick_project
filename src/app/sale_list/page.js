@@ -299,7 +299,7 @@ export default function Salelist() {
             e.preventDefault();
             handleTabClick('soldout');
           }}>
-          결제완료
+          판매완료
         </Link>
       </div>
 
