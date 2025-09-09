@@ -16,6 +16,27 @@ export default function ProductUpdate() {
   const params = useParams();
   const id = params.id;
 
+  const brands = [
+    { title: "힐레베르그 Hilleberg", value: "A01" },
+    { title: "몽벨 Montbell", value: "A02" },
+    { title: "헬리녹스 Helinox", value: "A03" },
+    { title: "노르디스트 Nordisk", value: "A04" },
+    { title: "엠에스알 Msr", value: "A05" },
+    { title: "니모 Nemo", value: "A06" },
+  ];
+  const categories = [
+    { title: "텐트/타프", value: "A01" },
+    { title: "침구/매트", value: "A02" },
+    { title: "체어/테이블", value: "A03" },
+    { title: "가구/가방/수납", value: "A04" },
+    { title: "랜턴/조명", value: "A05" },
+    { title: "키친", value: "A06" },
+    { title: "버너/토치/화로", value: "A07" },
+    { title: "쿨러/워터저그", value: "A08" },
+    { title: "웨건/카드", value: "A09" },
+    { title: "계절용품/기타", value: "A10" }
+  ];
+
   const [prodData, setProdData] = useState({
     prod_title: '',
     prod_price: '',
@@ -361,17 +382,19 @@ export default function ProductUpdate() {
 
           {/* 카테고리 */}
           <div className={styles.product_category}>
-            <button type="button" className={styles.category_btn}>
-              {prodData.prod_category || '카테고리'}
-            </button>
+            <select name="prod_category" value={prodData.prod_category} onChange={handleChange}>
+              <option value="" disabled defaultValue="" >카테고리 선택</option>
+              {categories.map((category, idx) => <option key={idx} value={category.value}>{category.title}</option>)}
+            </select>
           </div>
 
           {/* 브랜드  */}
           <div className={styles.product_brand}>
-            <button type="button" className={styles.brand_btn}>
-              {prodData.prod_brand || '브랜드'}
-            </button>
-          </div>
+            <select name="prod_brand" value={prodData.prod_brand} onChange={handleChange}>
+              <option value="" disabled defaultValue="" >브랜드 선택</option>
+              {brands.map((brand, idx) => <option key={idx} value={brand.value}>{brand.title}</option>)}
+            </select>
+          </div >
 
           {/* 제품 상태  */}
           <div className={styles.product_status}>
@@ -528,6 +551,7 @@ export default function ProductUpdate() {
           </div>
 
           <button type="submit" className={styles.submit_button} disabled={isSubmitting}>
+            상품 수정
           </button>
         </form>
       </div>

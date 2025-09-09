@@ -330,7 +330,7 @@ export default function Salelist() {
               key={product.id} 
               className={`${styles.product_card_2col} ${product.isSoldout ? styles.disable : ''}`}
             >
-              <Link href="#">
+              <Link href={`/prod_detail/${product.id}`}>
                 {product.isSoldout && 
                 <div className={styles.soldout_badge}>판매 완료</div>}
                 <div className={styles.product_image}>
