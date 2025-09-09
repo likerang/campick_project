@@ -85,7 +85,7 @@ export default function AddProd() {
       trade_method: prodData.trade_method.join(","), // 배열 → 문자열 저장
       tag: prodData.tag.join(","),
       prod_images: prodData.prod_images.join(","),
-      user_id: 1
+      user_id: 'f32aa74b-365e-4dff-a302-4d526ecdd38c'
     });
     if (error) {
       console.error(error);
