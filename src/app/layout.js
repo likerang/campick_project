@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
             <nav className="gnb">
               <ul>
                 <li><Link className="small_tr" href="/">전체</Link></li>
-                <li><Link className="small_tr" href="/marketplace">중고거래</Link></li>
+                <li><Link className="small_tr" href="/store">중고거래</Link></li>
                 <li><Link className="small_tr" href="/brands">브랜드</Link></li>
                 <li><Link className="small_tr" href="/community">커뮤니티</Link></li>
               </ul>
