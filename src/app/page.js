@@ -38,7 +38,8 @@ export default function Home() {
     const getProd = async () => {
       const { data: product, error: product_error } = await supabase
         .from("Product")
-        .select();
+        .select()
+        .order("created_at", { ascending: false }); // 내림차순 정렬;
       setProduct(product);
     }
     getProd();
