@@ -705,7 +705,6 @@ body {
 
 /* 검색 결과 없을 때, 나오는 UI */
 .no_result {
-    display: none;
     text-align: center;
     color: var(--font-color-light-gray);
     padding: 40px 0;
