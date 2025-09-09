@@ -8,11 +8,6 @@ import styles from "./page.module.css";
 // 환경 변수 검증
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  console.error('Supabase 환경 변수가 설정되지 않았습니다.');
-}
-
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function timeAgo(timestamp) {
@@ -33,7 +28,7 @@ function timeAgo(timestamp) {
 
 export default function Store() {
   const [allProducts, setAllProducts] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState("텐트/타프");
+  const [currentCategory, setCurrentCategory] = useState("A01"); // 코드값으로 변경
   const [currentBrands, setCurrentBrands] = useState([]);
   const [brandPopupActive, setBrandPopupActive] = useState(false);
   const [brandSearch, setBrandSearch] = useState("");
@@ -41,27 +36,40 @@ export default function Store() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const categoryList = [
-    "텐트/타프",
-    "침구/매트",
-    "체어/테이블",
-    "가구/가방/수납",
-    "랜턴/조명",
-    "키친",
-    "버너/토치/화로",
-    "쿨러/워터저그",
-    "웨건/카드",
-    "계절용품/기타",
+  // 카테고리 매핑 (코드값과 표시명)
+  const categories = [
+    { title: "텐트/타프", value: "A01" },
+    { title: "침구/매트", value: "A02" },
+    { title: "체어/테이블", value: "A03" },
+    { title: "가구/가방/수납", value: "A04" },
+    { title: "랜턴/조명", value: "A05" },
+    { title: "키친", value: "A06" },
+    { title: "버너/토치/화로", value: "A07" },
+    { title: "쿨러/워터저그", value: "A08" },
+    { title: "웨건/카드", value: "A09" },
+    { title: "계절용품/기타", value: "A10" }
   ];
 
+  // 브랜드 매핑 (코드값과 표시명)
   const brands = [
-    { title: "힐레베르그 Hilleberg", value: "힐레베르그" },
-    { title: "몽벨 Montbell", value: "몽벨" },
-    { title: "헬리녹스 Helinox", value: "헬리녹스" },
-    { title: "노르디스트 Nordisk", value: "노르디스트" },
-    { title: "엠에스알 Msr", value: "엠에스알" },
-    { title: "니모 Nemo", value: "니모" },
+    { title: "힐레베르그 Hilleberg", value: "A01" },
+    { title: "몽벨 Montbell", value: "A02" },
+    { title: "헬리녹스 Helinox", value: "A03" },
+    { title: "노르디스트 Nordisk", value: "A04" },
+    { title: "엠에스알 Msr", value: "A05" },
+    { title: "니모 Nemo", value: "A06" },
   ];
+
+  // 헬퍼 함수: 코드값을 표시명으로 변환
+  const getCategoryTitle = (value) => {
+    const category = categories.find(cat => cat.value === value);
+    return category ? category.title : value;
+  };
+
+  const getBrandTitle = (value) => {
+    const brand = brands.find(br => br.value === value);
+    return brand ? brand.title : value;
+  };
 
   /* DB > 상품 불러오기 */
   useEffect(() => {
@@ -83,46 +91,56 @@ export default function Store() {
           return;
         }
 
-        const mapped = data.map((p) => ({
-          id: p.prod_id || p.id,
-          product_image: {
-            src: p.prod_images || '/images/default-product.jpg',
-            alt: p.prod_title || '상품 이미지'
-          },
-          product_info: {
-            title: p.prod_title || '제목 없음',
-            category: p.prod_category || '기타',
-            brand: p.prod_brand || '브랜드 없음',
-            meta: {
-              location: p.location || "지역 없음",
-              date: timeAgo(p.created_at)
-            },
-            footer: {
-              price: `${(p.prod_price || 0).toLocaleString()} 원`,
-              stats: [
-                {
-                  type: "view",
-                  label: "조회수",
-                  icon: "/images/prod_detail_view.svg",
-                  count: p.view || 0
-                },
-                {
-                  type: "message",
-                  label: "메시지",
-                  icon: "/images/prod_detail_chat.svg",
-                  count: Math.floor(Math.random() * 5) // 임시 랜덤
-                },
-                {
-                  type: "like",
-                  label: "즐겨찾기",
-                  icon: "/images/prod_detail_bookmark.svg",
-                  count: p.like || 0
-                }
-              ]
-            }
-          }
-        }));
+        console.log("불러온 상품 데이터:", data); // 디버깅용
 
+const mapped = data.map((p) => {
+  // DB에서 받은 이미지 문자열을 배열로 변환, 없으면 기본 이미지
+  const imagesArray = p.prod_images
+    ? p.prod_images.split(",").map((img) => img.trim())
+    : ["/images/default-product.jpg"];
+
+  return {
+    id: p.prod_id || p.id,
+    product_image: imagesArray.map((src) => ({
+      src,
+      alt: p.prod_title || "상품 이미지",
+    })),
+    product_info: {
+      title: p.prod_title || "제목 없음",
+      category: p.prod_category || "A01",
+      brand: p.prod_brand || "A01",
+      meta: {
+        location: p.location || "지역 없음",
+        date: timeAgo(p.created_at),
+      },
+      footer: {
+        price: `${(p.prod_price || 0).toLocaleString()} 원`,
+        stats: [
+          {
+            type: "view",
+            label: "조회수",
+            icon: "/images/prod_detail_view.svg",
+            count: p.view || 0,
+          },
+          {
+            type: "message",
+            label: "메시지",
+            icon: "/images/prod_detail_chat.svg",
+            count: Math.floor(Math.random() * 5),
+          },
+          {
+            type: "like",
+            label: "즐겨찾기",
+            icon: "/images/prod_detail_bookmark.svg",
+            count: p.like || 0,
+          },
+        ],
+      },
+    },
+  };
+});
+
+        console.log("매핑된 상품 데이터:", mapped); // 디버깅용
         setAllProducts(mapped);
       } catch (err) {
         console.error("상품 불러오기 중 오류:", err);
@@ -136,8 +154,8 @@ export default function Store() {
     fetchProducts();
   }, []);
 
-  const handleCategoryClick = (category) => {
-    setCurrentCategory(category);
+  const handleCategoryClick = (categoryValue) => {
+    setCurrentCategory(categoryValue);
     setCurrentBrands([]);
   };
 
@@ -155,7 +173,7 @@ export default function Store() {
   };
 
   const applyBrands = () => {
-    setCurrentBrands([...tempSelectedBrands]); // 임시 선택을 실제로 적용
+    setCurrentBrands([...tempSelectedBrands]);
     setBrandPopupActive(false);
     setBrandSearch("");
     setTempSelectedBrands([]); 
@@ -167,13 +185,32 @@ export default function Store() {
   );
 
   /* 상품 필터링 */
+  console.log("=== 필터링 디버깅 ===");
+  console.log("현재 선택된 카테고리:", currentCategory);
+  console.log("현재 선택된 브랜드들:", currentBrands);
+  console.log("전체 상품 수:", allProducts.length);
+  
+  // 각 상품의 카테고리와 브랜드 값들을 확인
+  allProducts.forEach((product, index) => {
+    if (index < 3) { // 처음 3개만 출력
+      console.log(`상품 ${index + 1}:`, {
+        title: product.product_info.title,
+        category: product.product_info.category,
+        brand: product.product_info.brand
+      });
+    }
+  });
+
   const filteredProducts = allProducts.filter((product) => {
     const matchCategory = product.product_info.category === currentCategory;
     const matchBrand =
       currentBrands.length === 0 ||
       currentBrands.includes(product.product_info.brand);
+    
     return matchCategory && matchBrand;
   });
+
+  console.log("필터된 상품 수:", filteredProducts.length);
 
   if (loading) {
     return (
@@ -198,15 +235,15 @@ export default function Store() {
         <h3 className="medium_tb">캠핑</h3>
         <nav className={styles.category_menu}>
           <ul className="small_tr">
-            {categoryList.map((cat) => (
-              <li key={cat}>
+            {categories.map((cat) => (
+              <li key={cat.value}>
                 <button
                   className={`category ${
-                    currentCategory === cat ? "selected" : ""
+                    currentCategory === cat.value ? "selected" : ""
                   }`}
-                  onClick={() => handleCategoryClick(cat)}
+                  onClick={() => handleCategoryClick(cat.value)}
                 >
-                  {cat}
+                  {cat.title}
                 </button>
               </li>
             ))}
@@ -215,7 +252,7 @@ export default function Store() {
       </div>
 
       <div className={styles.brand_filter}>
-        <h3 className="medium_tb">{currentCategory}</h3>
+        <h3 className="medium_tb">{getCategoryTitle(currentCategory)}</h3>
         <div>
           <div className={styles.brand_header}>
             <span className={styles.brand_label} onClick={toggleBrandPopup}>
@@ -233,7 +270,7 @@ export default function Store() {
           <div className={styles.brand_selected}>
             {currentBrands.map((brand) => (
               <span key={brand} className={styles.brand_badge}>
-                {brand}{" "}
+                {getBrandTitle(brand)}{" "}
                 <button
                   className="remove"
                   onClick={() =>
@@ -263,21 +300,19 @@ export default function Store() {
               height={54}
             />
             <p className="small_tb">해당 카테고리의 상품이 없습니다.</p>
+            <p className="small_tb">전체 상품 수: {allProducts.length}</p>
           </li>
         ) : (
           filteredProducts.map((product) => (
             <li key={product.id} className="product_card">
-              <Link href="#">
+              <Link href={`/prod_detail/${product.id}`}>
                 <div className="product_image">
-                  <Image
-                    src={product.product_image.src}
-                    alt={product.product_image.alt}
-                    width={357}
-                    height={357}
-                    onError={(e) => {
-                      e.target.src = '/images/default-product.jpg';
-                    }}
-                  />
+                <Image
+                  src={product.product_image[0].src}
+                  alt={product.product_image[0].alt}
+                  width={357}
+                  height={357}
+                />
                 </div>
                 <div className="product_info">
                   <h3 className={`product_title small_tr ${styles.product_title}`}>

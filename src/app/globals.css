@@ -592,7 +592,8 @@ body {
 
 .modify_btn,
 .delete_btn,
-.soldout_btn {
+.soldout_btn,
+.resale_btn {
     width: 100%;
     padding: 14px;
     cursor: pointer;
@@ -600,7 +601,8 @@ body {
 
 .modify_btn:active,
 .delete_btn:active,
-.soldout_btn:active {
+.soldout_btn:active,
+.resale_btn:active {
     color: var(--primary);
 }
 
@@ -708,7 +710,6 @@ body {
 
 /* 검색 결과 없을 때, 나오는 UI */
 .no_result {
-    display: none;
     text-align: center;
     color: var(--font-color-light-gray);
     padding: 40px 0;

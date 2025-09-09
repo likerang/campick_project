@@ -3,18 +3,13 @@
 import Image from "next/image";
 import Link from 'next/link';
 import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 import { createClient } from "@supabase/supabase-js";
 
 import styles from "./page.module.css";
 
-// 환경 변수 검증
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  console.error('Supabase 환경 변수가 설정되지 않았습니다.');
-}
-
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function timeAgo(timestamp) {
@@ -40,6 +35,8 @@ export default function Salelist() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const router = useRouter();
 
   /* DB > 상품 불러오기 */
   useEffect(() => {
@@ -145,6 +142,8 @@ export default function Salelist() {
 
         setActiveTab('soldout');
         closePopup();
+        alert('판매완료 상품으로 변경되었습니다.');
+
       } catch (err) {
         console.error('상태 변경 중 오류:', err);
         alert('상태 변경 중 오류가 발생했습니다.');
@@ -177,6 +176,7 @@ export default function Salelist() {
 
         setActiveTab('selling');
         closePopup();
+        alert('판매 상품으로 변경되었습니다.');
       } catch (err) {
         console.error('상태 변경 중 오류:', err);
         alert('상태 변경 중 오류가 발생했습니다.');
@@ -184,13 +184,50 @@ export default function Salelist() {
     }
   }
 
-  /* 삭제 클릭 */
-  function handleDelete() {
-    if (selectedProduct && confirm('정말 삭제하시겠습니까?')) {
-      const updatedProducts = products.filter(p => p.id !== selectedProduct.id);
-      setProducts(updatedProducts);
-
+  /* 수정 클릭 */
+  function handleEdit() {
+    console.log('수정 버튼 클릭됨', selectedProduct.id);
+    if (selectedProduct) {
+      router.push(`/update/${selectedProduct.id}`);
       closePopup();
+    }
+  }
+
+  /* 삭제 클릭 */
+  async function handleDelete() {
+    if (!selectedProduct) return;
+    if (!confirm('정말 삭제하시겠습니까?')) return;
+    
+    try {
+      console.log('삭제할 상품 ID:', selectedProduct.id);
+      
+      // 삭제 실행
+      const { data, error } = await supabase
+        .from('Product')
+        .delete()
+        .eq('prod_id', selectedProduct.id)
+        .select('prod_id'); // 삭제된 레코드의 prod_id만 반환
+
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        console.log('selectedProduct:', selectedProduct);
+        alert('삭제 대상 0건입니다. (ID 불일치 가능)');
+        return;
+      }
+
+      console.log('삭제 완료:', data);
+
+      // 로컬 목록에서도 제거 (일관성 있게 selectedProduct.id 사용)
+      setProducts(prev => prev.filter(p => p.id !== selectedProduct.id));
+
+      // 삭제 완료 메시지
+      alert('삭제가 완료되었습니다.');
+      
+      closePopup();
+    } catch (err) {
+      console.error('삭제 중 오류:', err);
+      alert('삭제 중 오류가 발생했습니다.');
     }
   }
 
@@ -202,19 +239,8 @@ export default function Salelist() {
   if (loading) {
     return (
       <div className="salelist_page">
-        <div style={{ textAlign: 'center', padding: '50px' }}>
-          <p>상품을 불러오는 중 🔥</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="salelist_page">
-        <div style={{ textAlign: 'center', padding: '50px' }}>
-          <p>오류: {error}</p>
-          <button onClick={() => window.location.reload()}>다시 시도</button>
+        <div className="loading" style={{ textAlign: 'center', padding: '50px' }}>
+          <p>상품 불러오는 중 🔥</p>
         </div>
       </div>
     );
@@ -273,7 +299,7 @@ export default function Salelist() {
             e.preventDefault();
             handleTabClick('soldout');
           }}>
-          결제완료
+          판매완료
         </Link>
       </div>
 
@@ -304,14 +330,14 @@ export default function Salelist() {
               key={product.id} 
               className={`${styles.product_card_2col} ${product.isSoldout ? styles.disable : ''}`}
             >
-              <Link href="#">
+              <Link href={`/prod_detail/${product.id}`}>
                 {product.isSoldout && 
                 <div className={styles.soldout_badge}>판매 완료</div>}
                 <div className={styles.product_image}>
                   <Image 
-                    src={product.image} 
+                    src={product.image.split(",")[0]} 
                     width={357} 
-                    height={357} 
+                    height={357}
                     alt={product.title}
                   />
                 </div>
@@ -366,7 +392,7 @@ export default function Salelist() {
           <div className={`more_popup ${popupState === 'active' ? 'active' : ''}`}>
             <ul>
               <li>
-                <button className="modify_btn small_tb" onClick={closePopup}>
+                <button className="modify_btn small_tb" onClick={handleEdit}>
                   수정
                 </button>
               </li>
