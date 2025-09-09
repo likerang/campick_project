@@ -65,7 +65,7 @@ export default function Mypage() {
         <h2>고객편의</h2>
         <ul>
           <li><Link href="#"><Image src="/images/mypage_notice.svg" width={40} height={40} alt="공지사항"/><span>공지사항</span></Link></li>
-          <li><Link href="#"><Image src="/images/mypage_FAQ.svg" width={40} height={40} alt="고객센터"/><span>고객센터</span></Link></li>
+          <li><Link href="#"><Image src="/images/mypage_faq.svg" width={40} height={40} alt="고객센터"/><span>고객센터</span></Link></li>
           <li><Link href="#"><Image src="/images/mypage_reporting.svg" width={40} height={40} alt="신고센터"/><span>신고센터</span></Link></li>
         </ul>
       </div>
