@@ -391,22 +391,24 @@ export default function Salelist() {
           
           <div className={`more_popup ${popupState === 'active' ? 'active' : ''}`}>
             <ul>
-              <li>
-                <button className="modify_btn small_tb" onClick={handleEdit}>
-                  수정
-                </button>
-              </li>
-              <li>
-                <button className="delete_btn small_tb" onClick={handleDelete}>
-                  삭제
-                </button>
-              </li>
               {selectedProduct && !selectedProduct.isSoldout ? (
-                <li>
-                  <button className="soldout_btn small_tb" onClick={handleSoldout}>
-                    판매완료
-                  </button>
-                </li>
+                <>
+                  <li>
+                    <button className="modify_btn small_tb" onClick={handleEdit}>
+                      수정
+                    </button>
+                  </li>
+                  <li>
+                    <button className="delete_btn small_tb" onClick={handleDelete}>
+                      삭제
+                    </button>
+                  </li>
+                  <li>
+                    <button className="soldout_btn small_tb" onClick={handleSoldout}>
+                      판매완료
+                    </button>
+                  </li>
+                </>
               ) : selectedProduct && (
                 <li>
                   <button className="resale_btn small_tb" onClick={handleResale}>
