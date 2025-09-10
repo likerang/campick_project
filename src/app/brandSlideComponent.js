@@ -14,50 +14,60 @@ import { FreeMode } from 'swiper/modules';
 export default function App() {
   const brandSlide = [{
     src: '/images/main_brand1.png',
+    alt: '브랜드 로고',
     width: 71,
     height: 47
   },
   {
     src: '/images/main_brand2.png',
+    alt: '브랜드 로고',
     width: 83,
     height: 18
   },
   {
     src: '/images/main_brand3.png',
+    alt: '브랜드 로고',
     width: 79,
     height: 21
   },
   {
     src: '/images/main_brand4.png',
+    alt: '브랜드 로고',
     width: 79,
     height: 21
   },
   {
     src: '/images/main_brand5.png',
+    alt: '브랜드 로고',
     width: 74,
     height: 21
   }, {
     src: '/images/main_brand1.png',
+    alt: '브랜드 로고',
     width: 71,
     height: 47
   },
   {
     src: '/images/main_brand2.png',
+    alt: '브랜드 로고',
     width: 83,
     height: 18
   },
   {
     src: '/images/main_brand3.png',
+    alt: '브랜드 로고',
     width: 79,
     height: 21
   },
   {
     src: '/images/main_brand4.png',
+    alt: '브랜드 로고',
     width: 79,
     height: 21
   },
   {
     src: '/images/main_brand5.png',
+    alt: '브랜드 로고',
     width: 74,
     height: 21
   }]
@@ -78,7 +88,7 @@ export default function App() {
                   src={item.src}
                   width={item.width}
                   height={item.height}
-                  alt=""
+                  alt={item.alt}
                 />
               </Link>
             </SwiperSlide>

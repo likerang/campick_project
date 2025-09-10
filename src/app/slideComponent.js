@@ -29,7 +29,7 @@ export default function ProdDetailClient({ images }) {
                 src={item}
                 width={780}
                 height={240}
-                alt=""
+                alt="배너 이미지"
               />
             </Link>
             {/* <h3 className="slide_title">필수 겨울템</h3>

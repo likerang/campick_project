@@ -93,19 +93,7 @@ export default function ProductUpdate() {
           trade_method: data.trade_method ?
             (typeof data.trade_method === 'string' ? data.trade_method.split(',') :
               Array.isArray(data.trade_method) ? data.trade_method : []) : [],
-          tag: data.tag ?
-            Array.isArray(data.tag)
-            ? data.tag
-            : typeof data.tag === 'string'
-              ? (() => {
-                  try {
-                    return JSON.parse(data.tag).map(t => t.trim());
-                  } catch {
-                    return data.tag.split(',').map(t => t.trim());
-                  }
-                })()
-              : []
-          : [],
+          tag: data.tag ? data.tag.split(',').map(t => t.trim()) : [],
           prod_images: data.prod_images ?
             (typeof data.prod_images === 'string' ? data.prod_images.split(',') :
               Array.isArray(data.prod_images) ? data.prod_images : []) : []
@@ -270,7 +258,7 @@ export default function ProductUpdate() {
         warranty: prodData.warranty,
         prod_desc: prodData.prod_desc,
         trade_method: prodData.trade_method.join(","), // 배열 → 문자열 저장
-        tag: prodData.tag,
+        tag: prodData.tag.join(","),
         prod_images: prodData.prod_images.join(",") // 배열 → 문자열 저장
       };
 
