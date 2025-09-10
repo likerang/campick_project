@@ -7,34 +7,27 @@
  * 수정이력:
  *  2025-09-04: prod_detail.html의 코드 next.js 문법으로 변경
 */
-import { createClient } from '../../../utils/supabase/client';
+import { createClient } from "../../../utils/supabase/server";
 import ProdDetailClient from './component';
+import Change from "./change";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css"
 
 export default async function ProdDetail({ params }) {
-  console.log(params)
   const supabase = await createClient();
-  const { data: product, error: product_error } = await supabase
+  const { data: { user } } = await supabase.auth.getUser(); // 유저 정보 조회
+  const { data: product, error: product_error } = await supabase // 현재 선택 된 상품만 조회
     .from("Product")
     .select("*")
     .eq('prod_id', params.id)
     .single();
-
-  const { data: allProduct, error: all_error } = await supabase
+  const { data: allProduct, error: all_error } = await supabase // 전체 상품 조회
     .from("Product")
     .select();
   // 문자열로 이루어진 데이터를 배열로 반환 및 변수 할당
-
-  console.log(product.tag);
   const tags = product.tag.split(',');
   const images = product.prod_images.split(',');
-  console.log(tags);
-  console.log(images);
-
-  console.log(product)
-  console.log(allProduct)
   return (
     <>
       {/* product_detail  */}
@@ -109,7 +102,7 @@ export default async function ProdDetail({ params }) {
               </li>)}
             </ul>
             {/* 해당 상품이 로그인된 사용자의 상품이라면 */}
-
+            {product.user_id === user.id && (<Change option={product}/>)}
           </div >
 
 

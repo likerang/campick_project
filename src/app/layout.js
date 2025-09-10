@@ -1,46 +1,41 @@
 
-'use client';
+
+import { createClient } from "../utils/supabase/server";
 import Image from "next/image";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import AddProdButton from "./AddProdButton";
 import "./css/reset.css";
 import './globals.css'
-// import "./css/common.css";
 import "./css/header.css";
 import "./css/footer.css";
 
 
-/* 폰트 설정 예시
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// 폰트 설정 예시
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-*/
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
-// export const metadata = {
-//   title: "Campick",
-//   description: "Welcome to Campick",
-// };
+export const metadata = {
+  title: "Campick",
+  description: "Welcome to Campick",
+};
 
-export default function RootLayout({ children }) {
-  const pathname = usePathname();
+export default async function RootLayout({ children }) {
+  const supabase = await createClient(); // await 추가 필요
+  const { data: { user } } = await supabase.auth.getUser();
+  console.log(user);
   return (
     <html lang="ko">
       <body>
         <div className="container">
           {/* 상품등록 버튼 */}
-          {pathname !== '/addprod' && (
-            <div className='btn_group'>
-              <Link className="addprod_btn small_tr" href="/addprod">
-                상품등록 +
-              </Link>
-            </div>
-          )}
+          <AddProdButton />
           {/* //상품등록 버튼 */}
           <header>
             <div className="header_top">
@@ -84,15 +79,26 @@ export default function RootLayout({ children }) {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/login">
+                    {user ? (<Link href="/mypage">
                       <Image
                         src="/images/header_person.svg"
                         alt="로그인"
                         width={14}
                         height={14}
                       />
-                      <span className="ir_pm">로그인</span>
+                      <span className="ir_pm">마이페이지</span>
                     </Link>
+                    ) : (
+                      <Link href="/login">
+                        <Image
+                          src="/images/header_person.svg"
+                          alt="로그인"
+                          width={14}
+                          height={14}
+                        />
+                        <span className="ir_pm">로그인</span>
+                      </Link>
+                    )}
                   </li>
                 </ul>
               </nav>
@@ -192,7 +198,7 @@ export default function RootLayout({ children }) {
             </p>
           </footer>
         </div>
-      </body>
-    </html>
+      </body >
+    </html >
   );
 }
