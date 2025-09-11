@@ -245,7 +245,7 @@ export default function AddProd() {
 
           {/* 카테고리 */}
           <div className={styles.product_category}>
-            <select name="prod_category" onChange={handleChange}>
+            <select className={styles.category_btn}name="prod_category" onChange={handleChange}>
               <option value="" disabled defaultValue="" >카테고리 선택</option>
               {categories.map((category, idx) => <option key={idx} value={category.value}>{category.title}</option>)}
             </select>
@@ -253,7 +253,7 @@ export default function AddProd() {
 
           {/* 브랜드  */}
           <div className={styles.product_brand}>
-            <select name="prod_brand" onChange={handleChange}>
+            <select className={styles.brand_btn}name="prod_brand" onChange={handleChange}>
               <option value="" disabled defaultValue="" >브랜드 선택</option>
               {brands.map((brand, idx) => <option key={idx} value={brand.value}>{brand.title}</option>)}
             </select>
