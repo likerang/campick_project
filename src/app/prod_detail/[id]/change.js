@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react";
 import { createClient } from '../../../utils/supabase/client';
+import styles from "./page.module.css"
 
 export default function Change({ option }) {
   const supabase = createClient();
@@ -28,6 +29,7 @@ export default function Change({ option }) {
   return (
     <>
       <select
+      className={styles.brand_btn}
         value={product.prod_status}
         onChange={handle}
       >
