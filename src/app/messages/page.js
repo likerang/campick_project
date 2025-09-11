@@ -11,20 +11,16 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css"
 import { createClient } from "../../utils/supabase/server";
+import ChatTabs from "./tabs"
 
 export const metadata = {
   title: "Campick - 메세지",
   description: "Welcome to Campick",
 };
 
-
-// const { data: chat, error: chat_error } = await supabase
-//   .from("ChatRoom")
-//   .select()
-//   .or(`seller_id.eq.${user.id},buyer_id.eq.${user.id}`);
-
 export default async function messages() {
   const supabase = await createClient();
+
   const { data: { user } } = await supabase.auth.getUser(); // 유저 정보 조회
   const { data: seller_chat, error: seller_error } = await supabase // 내가 판매자인 채팅
     .from("ChatRoom")
@@ -83,55 +79,14 @@ export default async function messages() {
       </div>
       {/* //user_profile mypage.ver */}
 
-      {/* tab_menu_title */}
-      <ul className={styles.tab_menu}>
-        <li className={`medium_tr active ${styles.tab_menu_title}`}>
-          <h3><a href="">전체</a></h3>
-        </li >
-        <li className={`medium_tr ${styles.tab_menu_title}`}>
-          <h3><a href="">판매</a></h3>
-        </li >
-        <li className={`medium_tr ${styles.tab_menu_title}`}>
-          <h3><a href="">구매</a></h3>
-        </li >
-      </ul >
-      {/* //tab_menu_title  */}
+  
 
-      {/*  tab_menu_content  */}
-      <ul className={styles.chat_list}>
-        {seller_chat.map((item, idx) => {
-          const fd = product.filter(p => { return p.prod_id === item.prod_id; }) //prod_id값이 같은것 찾기
-          return (
-            <li key={idx} className={`${styles.chat_item} ${styles.message}`}>
-              <Link className={styles.chat_link} href={`/chat/${item.chat_id}`}>
-                <div className={styles.chat_thumbnail}>
-                  <Image
-                    className={styles.product_thumb}
-                    src={fd[0].prod_images.split(",")[0]}
-                    width={64}
-                    height={64}
-                    alt=""
-                  />
-                  <Image
-                    className={styles.user_thumb}
-                    src="/images/user_profile_img.jpg"
-                    width={48}
-                    height={48}
-                    alt=""
-                  />
-                </div >
-                <div className={styles.chat_info}>
-                  <h4 className={`small_tr ${styles.chat_userid}`}>캠핑이조아랑</h4 >
-                  <p className={`xsmall_tr ${styles.chat_message}`}> 안녕하세요! 오늘 직거래 가능 한가요 ?</p >
-                  <span className={styles.chat_time} > 30분 전</span >
-                  {/* <!-- ::after --> */}
-                </div >
-              </Link >
-            </li >
-          )
-        })}
-      </ul>
-      {/* //tab_menu_content  */}
+      {/* 클라이언트 컴포넌트로 탭 기능 분리 */}
+      <ChatTabs
+        seller_chat={seller_chat}
+        buyer_chat={buyer_chat}
+        product={product}
+      />
     </>
   )
 }

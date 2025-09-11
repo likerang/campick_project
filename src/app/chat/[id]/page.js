@@ -15,13 +15,6 @@ import Image from "next/image"
 import Link from "next/link"
 import styles from "./page.module.css"
 
-
-
-// export const metadata = {
-//   title: "Campick - 상대방ID",
-//   description: "Welcome to Campick",
-// };
-
 export default function Chat({ params }) {
   const supabase = createClient();
   const router = useRouter();
@@ -36,71 +29,43 @@ export default function Chat({ params }) {
   const [product, setProduct] = useState("");
   const messagesEndRef = useRef(null);
   const chatRoomId = id;
- useEffect(() => {
-  const getUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error) {
-      console.error("유저 불러오기 실패:", error.message);
-    } else {
-      setUser(data.user);
-    }
-    setLoading(false);
-  };
+  useEffect(() => {
+    const loadAll = async () => {
+      try {
+        const { data: userData } = await supabase.auth.getUser();
+        setUser(userData.user);
 
-  const loadChatRoomAndData = async () => {
-    try {
-      // 1. 채팅룸 불러오기 (loadChatRoom)
-      const { data, error } = await supabase
-        .from('ChatRoom')
-        .select('*')
-        .eq('chat_id', chatRoomId)
-        .single();
-
-      if (error) {
-        throw error;
-      }
-      setChatRoom(data);
-
-      // 2. 메시지 불러오기 (loadMessages)
-      const { data: messagesData, error: messagesError } = await supabase
-        .from('ChatMessage')
-        .select('message_id, chat_id, sender_id, content, created_at, is_read')
-        .eq('chat_id', chatRoomId)
-        .order('created_at', { ascending: true });
-
-      if (messagesError) {
-        throw messagesError;
-      }
-      setMessages(messagesData || []);
-
-      // 3. 상품 정보 불러오기 (getProduct)
-      const prodId = data?.prod_id;
-      if (prodId) {
-        const { data: productData, error: productError } = await supabase
-          .from("Product")
+        const { data: chatData } = await supabase
+          .from("ChatRoom")
           .select("*")
-          .eq("prod_id", prodId)
+          .eq("chat_id", chatRoomId)
           .single();
 
-        if (productError) {
-          console.error("상품 불러오기 실패:", productError.message);
-        } else {
-          setProduct(productData);
-        }
+        setChatRoom(chatData);
+
+        const [{ data: messagesData }, { data: productData }] = await Promise.all([
+          supabase.from("ChatMessage")
+            .select("*")
+            .eq("chat_id", chatRoomId)
+            .order("created_at", { ascending: true }),
+          supabase.from("Product")
+            .select("*")
+            .eq("prod_id", chatData.prod_id)
+            .single(),
+        ]);
+
+        setMessages(messagesData);
+        setProduct(productData);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error('데이터 로드 에러:', err);
-      setChatRoom(null);
-      setMessages([]);
-      setProduct(null);
-    }
-  };
+    };
 
-  getUser();
-  loadChatRoomAndData();
-
-  // eslint-disable-next-line
-}, [chatRoomId]);
+    loadAll();
+    // eslint-disable-next-line
+  }, [chatRoomId]);
   if (loading) return <p>불러오는 중...</p>;
   if (!user) return <p>로그인이 필요합니다.</p>;
   const currentUserId = user?.id;
@@ -176,15 +141,15 @@ export default function Chat({ params }) {
           <div className={styles.chat_product_info}>
             <Link className={styles.chat_thumbnail} href={""}>
               <Image
-                src={product.prod_images.split(",")[0]}
+                src={product?.prod_images.split(",")[0] || ("로딩중")}
                 width={60}
                 height={60}
                 alt=""
               />
             </Link>
             <div className={styles.chat_meta}>
-              <h4 className={`xsmall_tr ${styles.chat_product_title}`}>{product.prod_title}</h4>
-              <p className={`small_tb ${styles.chat_product_price}`}>{product.prod_price.toLocaleString()}원</p>
+              <h4 className={`xsmall_tr ${styles.chat_product_title}`}>{product?.prod_title || ("로딩중")}</h4>
+              <p className={`small_tb ${styles.chat_product_price}`}>{product?.prod_price.toLocaleString() || ("로딩중")}원</p>
             </div >
             <div className={styles.chat_button_group} >
               <button className={styles.wishlist} > 찜</button >
