@@ -9,6 +9,7 @@
 */
 "use client"
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { createClient } from '../../../utils/supabase/client';
 import Image from "next/image"
 import Link from "next/link"
@@ -23,6 +24,7 @@ import styles from "./page.module.css"
 
 export default function Chat({ params }) {
   const supabase = createClient();
+  const router = useRouter();
   const { id } = React.use(params);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,59 +33,81 @@ export default function Chat({ params }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [product, setProduct] = useState("");
   const messagesEndRef = useRef(null);
   const chatRoomId = id;
-  useEffect(() => {
-    const getUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
+ useEffect(() => {
+  const getUser = async () => {
+    const { data, error } = await supabase.auth.getUser();
+    if (error) {
+      console.error("유저 불러오기 실패:", error.message);
+    } else {
+      setUser(data.user);
+    }
+    setLoading(false);
+  };
+
+  const loadChatRoomAndData = async () => {
+    try {
+      // 1. 채팅룸 불러오기 (loadChatRoom)
+      const { data, error } = await supabase
+        .from('ChatRoom')
+        .select('*')
+        .eq('chat_id', chatRoomId)
+        .single();
+
       if (error) {
-        console.error("유저 불러오기 실패:", error.message);
-      } else {
-        setUser(data.user);   // 로그인된 유저 정보 세팅
+        throw error;
       }
-      setLoading(false);
-    };
-    getUser();
+      setChatRoom(data);
 
+      // 2. 메시지 불러오기 (loadMessages)
+      const { data: messagesData, error: messagesError } = await supabase
+        .from('ChatMessage')
+        .select('message_id, chat_id, sender_id, content, created_at, is_read')
+        .eq('chat_id', chatRoomId)
+        .order('created_at', { ascending: true });
 
-    const loadChatRoom = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('ChatRoom')
-          .select('*')
-          .eq('chat_id', chatRoomId)
+      if (messagesError) {
+        throw messagesError;
+      }
+      setMessages(messagesData || []);
+
+      // 3. 상품 정보 불러오기 (getProduct)
+      const prodId = data?.prod_id;
+      if (prodId) {
+        const { data: productData, error: productError } = await supabase
+          .from("Product")
+          .select("*")
+          .eq("prod_id", prodId)
           .single();
 
-        if (error) throw error;
-        setChatRoom(data);
-      } catch (err) {
-        console.error('채팅방 로드 에러:', err);
-        setChatRoom(null);
+        if (productError) {
+          console.error("상품 불러오기 실패:", productError.message);
+        } else {
+          setProduct(productData);
+        }
       }
-    };
-    // 메시지 불러오기 (ChatMessage 테이블에서 chat_id 기준)
-    const loadMessages = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('ChatMessage')
-          .select('message_id, chat_id, sender_id, content, created_at, is_read')
-          .eq('chat_id', chatRoomId)
-          .order('created_at', { ascending: true });
+    } catch (err) {
+      console.error('데이터 로드 에러:', err);
+      setChatRoom(null);
+      setMessages([]);
+      setProduct(null);
+    }
+  };
 
-        if (error) throw error;
-        setMessages(data || []);
-      } catch (err) {
-        console.error('메시지 로드 에러:', err);
-      }
-    };
-    loadChatRoom();
-    loadMessages();
-    // eslint-disable-next-line
-  }, [chatRoomId]);
+  getUser();
+  loadChatRoomAndData();
+
+  // eslint-disable-next-line
+}, [chatRoomId]);
   if (loading) return <p>불러오는 중...</p>;
   if (!user) return <p>로그인이 필요합니다.</p>;
   const currentUserId = user?.id;
   console.log(user);
+  console.log(chatRoom);
+  console.log(chatRoom?.prod_id);
+  console.log(product);
 
   // 메시지 전송 (insert 후 반환된 행을 상태에 추가)
   const sendMessage = async () => {
@@ -130,6 +154,11 @@ export default function Chat({ params }) {
     const [hour, minute] = time.split(':');
     return `${period} ${hour}시 ${minute}분`;
   };
+
+  const prev = () => {
+    router.back();
+  }
+
   return (
     <>
       <div className={styles.chat_content}>
@@ -137,7 +166,7 @@ export default function Chat({ params }) {
         <div className={styles.chat_header}>
           <div className={styles.chat_header_top}>
             <h3 className={`small_tb ${styles.chat_title}`}>user_id</h3>
-            <button className={styles.prev}>
+            <button className={styles.prev} onClick={prev}>
               <svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 -960 960 960"
                 width="12.1758H4" fill="#666666">
                 <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
@@ -145,17 +174,17 @@ export default function Chat({ params }) {
             </button>
           </div>
           <div className={styles.chat_product_info}>
-            <a className={styles.chat_thumbnail}>
+            <Link className={styles.chat_thumbnail} href={""}>
               <Image
-                src="/images/product_img01.jpg"
+                src={product.prod_images.split(",")[0]}
                 width={60}
                 height={60}
                 alt=""
               />
-            </a>
+            </Link>
             <div className={styles.chat_meta}>
-              <h4 className={`xsmall_tr ${styles.chat_product_title}`}>[힐레베르그] 알락 2 텐트 (Allak 2)</h4>
-              <p className={`small_tb ${styles.chat_product_price}`}>1,893,000원</p>
+              <h4 className={`xsmall_tr ${styles.chat_product_title}`}>{product.prod_title}</h4>
+              <p className={`small_tb ${styles.chat_product_price}`}>{product.prod_price.toLocaleString()}원</p>
             </div >
             <div className={styles.chat_button_group} >
               <button className={styles.wishlist} > 찜</button >
