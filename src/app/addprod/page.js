@@ -9,10 +9,11 @@
 */
 "use client";
 import { createClient } from '../../utils/supabase/client';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
+
 import Image from "next/image";
-import Link from 'next/link';
 import styles from './page.module.css'
-import { useState } from 'react';
 
 // export const metadata = {
 //   title: "Campick - 상품등록",
@@ -21,6 +22,33 @@ import { useState } from 'react';
 
 export default function AddProd() {
   const supabase = createClient();
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [prodData, setProdData] = useState({
+    prod_title: "",
+    prod_price: "",
+    prod_category: "",
+    prod_brand: "",
+    prod_condition: "",
+    warranty: "",
+    prod_desc: "",
+    trade_method: ["delivery"],
+    tag: [],
+    prod_images: [],
+    user_id: ""
+  });
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+      setLoading(false);
+    };
+    checkUser();
+  }, []);
+  if (loading) return <div> 사용자 정보를 불러오고 있습니다...</div>
+
   const brands = [
     { title: "힐레베르그 Hilleberg", value: "A01" },
     { title: "몽벨 Montbell", value: "A02" },
@@ -41,20 +69,6 @@ export default function AddProd() {
     { title: "웨건/카드", value: "A09" },
     { title: "계절용품/기타", value: "A10" }
   ];
-  const [prodData, setProdData] = useState({
-    prod_title: "",
-    prod_price: "",
-    prod_category: "",
-    prod_brand: "",
-    prod_condition: "",
-    warranty: "",
-    prod_desc: "",
-    trade_method: ["delivery"],
-    tag: [],
-    prod_images: [],
-    user_id: ""
-  });
-
   const handleChange = (evt) => {
     const { name, value, type, checked } = evt.target
     if (type === "checkbox") {
@@ -71,7 +85,6 @@ export default function AddProd() {
       setProdData((prev) => ({ ...prev, [name]: value }));
     }
   }
-
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const { error } = await supabase.from("Product").insert({
@@ -85,7 +98,7 @@ export default function AddProd() {
       trade_method: prodData.trade_method.join(","), // 배열 → 문자열 저장
       tag: prodData.tag.join(","),
       prod_images: prodData.prod_images.join(","),
-      user_id: 'f32aa74b-365e-4dff-a302-4d526ecdd38c'
+      user_id: user.id
     });
     if (error) {
       console.error(error);
@@ -105,9 +118,9 @@ export default function AddProd() {
         prod_images: [],
         user_id: ""
       });
+      router.push("/");
     }
   };
-
   const handleFileChange = async (evt) => {
     const files = evt.target.files;
     if (!files || files.length === 0) return;
@@ -144,7 +157,6 @@ export default function AddProd() {
       prod_images: [...prev.prod_images, ...uploadedUrls],//배열에 내용 추가
     }));
   };
-
   // 이미지 삭제 함수 추가
   const removeImage = (indexToRemove) => {
     setProdData((prev) => ({
@@ -152,7 +164,6 @@ export default function AddProd() {
       prod_images: prev.prod_images.filter((_, index) => index !== indexToRemove) // 선택된 index 번호를 제외한 나머지를 필터링해서 다시 저장
     }));
   };
-
   const addTags = () => {
     const tagInput = document.getElementById('tagInput');
     const inputValue = tagInput.value.trim();//공백삭제
@@ -164,21 +175,18 @@ export default function AddProd() {
     });
     tagInput.value = '';
   }
-
   const enterKeyPress = (evt) => {
     if (evt.key === 'Enter') {
       evt.preventDefault();
       addTags();
     }
   };
-
   const removeTag = (indexToRemove) => {
     setProdData({
       ...prodData,
       tag: prodData.tag.filter((_, index) => index !== indexToRemove)
     });
   };
-
   return (
     <>
       {/* form  */}
