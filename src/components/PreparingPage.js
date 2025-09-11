@@ -1,26 +1,20 @@
 import Image from "next/image";
+import styles from "./PreparingPage.module.css";
 
 export default function PreparingPage({ title }) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        textAlign: 'center'
-        }}
-      >
+    <div className={styles.container}>
         <Image
-          src="/images/store_logo_small.svg"
+          src="/images/color_logo_small.png"
           alt="검색 결과 없음"
-          width={35}
-          height={54}
+          width={48}
+          height={76}
         />
         <br/>
-        <h1>{title}</h1>
-        <p>🚧 준비중입니다 🚧</p>
+        <div className={styles.preparingDesc}>
+          <h1 className={styles.pagename}>{title}</h1>
+          <p className={styles.preparing}> Comming Soon !</p>
+        </div>
     </div>
   );
 }
