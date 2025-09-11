@@ -199,8 +199,8 @@
 }
 
 .btn_group .soldout {
-    border: none;
-    background-color: var(--btn-bg-color-basic);
-    color: var(--font-color-white);
+    border: 1px solid var(--border-color-basic);
+    background-color: #fff;
+    color: var(--font-color-placeholder);
     pointer-events: none;
 }
