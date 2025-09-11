@@ -13,14 +13,14 @@ import Change from "./change";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css"
-
 export default async function ProdDetail({ params }) {
+  const { id } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser(); // 유저 정보 조회
   const { data: product, error: product_error } = await supabase // 현재 선택 된 상품만 조회
     .from("Product")
     .select("*")
-    .eq('prod_id', params.id)
+    .eq('prod_id', id)
     .single();
   const { data: allProduct, error: all_error } = await supabase // 전체 상품 조회
     .from("Product")
@@ -102,14 +102,21 @@ export default async function ProdDetail({ params }) {
               </li>)}
             </ul>
             {/* 해당 상품이 로그인된 사용자의 상품이라면 */}
-            {product.user_id === user.id && (<Change option={product}/>)}
+            {product.user_id === user.id && (<Change option={product} />)}
           </div >
 
 
           <div className={styles.btn_group}>
-            {/* 해당 상품이 로그인된 사용자의 상품이라면 */}
-            <button className={styles.chat}><Link href={`/chat/${product.prod_id}`}>채팅하기</Link></button >
-            <button className={styles.pay}><Link href={`/payment_select`}>결제하기</Link></button >
+            {product.prod_status === 0 ? (
+              <>
+                <button className={styles.soldout} disabled> 판매 완료 </button >
+              </>
+            ) : (
+              <>
+                <button className={styles.chat}><Link href={product.user_id === user.id ? "/messages" : `/chat/${product.prod_id}`}>채팅하기</Link></button >
+                <button className={styles.pay}><Link href="/payment_select">결제하기</Link></button >
+              </>
+            )}
           </div >
         </div >
 
