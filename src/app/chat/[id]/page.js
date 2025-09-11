@@ -8,7 +8,6 @@
  *  2025-09-04: chat.html의 코드 next.js 문법으로 변경
 */
 "use client"
-
 import React, { useState, useEffect, useRef } from "react";
 import { createClient } from '../../../utils/supabase/client';
 import Image from "next/image"
@@ -24,19 +23,29 @@ import styles from "./page.module.css"
 
 export default function Chat({ params }) {
   const supabase = createClient();
-  // URL params가 있으면 사용하고, 없으면 임시값(chat_id=3) 사용
-  // const chatRoomId = params?.chatId ? Number(params.chatId) : 3;
-  const chatRoomId = 3;
-  // 현재 로그인된 사용자 (문제에서 seller(user_id=4)로 가정)
-  const currentUserId = 4;
-
+  const { id } = React.use(params);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [chatRoom, setChatRoom] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef(null);
-  // 컴포넌트 마운트 또는 chatRoomId 변경 시 채팅방 정보&메시지 로드
-  useEffect(() => {  // 채팅방 정보 로드 (ChatRoom 테이블에서 chat_id로 단일 조회)
+  const chatRoomId = id;
+  useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error("유저 불러오기 실패:", error.message);
+      } else {
+        setUser(data.user);   // 로그인된 유저 정보 세팅
+      }
+      setLoading(false);
+    };
+    getUser();
+
+
     const loadChatRoom = async () => {
       try {
         const { data, error } = await supabase
@@ -52,7 +61,6 @@ export default function Chat({ params }) {
         setChatRoom(null);
       }
     };
-
     // 메시지 불러오기 (ChatMessage 테이블에서 chat_id 기준)
     const loadMessages = async () => {
       try {
@@ -68,20 +76,19 @@ export default function Chat({ params }) {
         console.error('메시지 로드 에러:', err);
       }
     };
-
     loadChatRoom();
     loadMessages();
     // eslint-disable-next-line
   }, [chatRoomId]);
-
-
-
+  if (loading) return <p>불러오는 중...</p>;
+  if (!user) return <p>로그인이 필요합니다.</p>;
+  const currentUserId = user?.id;
+  console.log(user);
 
   // 메시지 전송 (insert 후 반환된 행을 상태에 추가)
   const sendMessage = async () => {
     const text = newMessage.trim();
-    if (!text || isSending) return;
-
+    if (!text || isSending || !currentUserId) return;
     setIsSending(true);
     try {
       // created_at은 DB default(now())로 처리되어 있다고 가정
@@ -91,16 +98,11 @@ export default function Chat({ params }) {
           chat_id: chatRoomId,
           sender_id: currentUserId,
           content: text,
-          is_read: false
+          is_read: false,
         })
-        // 삽입된 행을 받기 위해 select 후 single 호출
-        .select('message_id, chat_id, sender_id, content, created_at, is_read')
+        .select("message_id, chat_id, sender_id, content, created_at, is_read")
         .single();
-
-
       if (error) throw error;
-
-
       // 서버에서 받은 실제 행을 messages에 추가
       setMessages((prev) => [...prev, data]);
       setNewMessage("");
@@ -128,9 +130,6 @@ export default function Chat({ params }) {
     const [hour, minute] = time.split(':');
     return `${period} ${hour}시 ${minute}분`;
   };
-
-
-  console.log(params)
   return (
     <>
       <div className={styles.chat_content}>
