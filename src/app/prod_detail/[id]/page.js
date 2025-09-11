@@ -16,16 +16,40 @@ import styles from "./page.module.css"
 export default async function ProdDetail({ params }) {
   const { id } = await params;
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser(); // 유저 정보 조회
-  const { data: product, error: product_error } = await supabase // 현재 선택 된 상품만 조회
+
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data: product, error: product_error } = await supabase
     .from("Product")
     .select("*")
-    .eq('prod_id', id)
+    .eq("prod_id", id)
     .single();
-  const { data: allProduct, error: all_error } = await supabase // 전체 상품 조회
+  if (product_error || !product) {
+    console.error("상품 조회 실패:", product_error?.message);
+    return;
+  }
+  const { data: allProduct, error: all_error } = await supabase
     .from("Product")
     .select();
-  // 문자열로 이루어진 데이터를 배열로 반환 및 변수 할당
+  if (all_error) {
+    console.error("전체 상품 조회 실패:", all_error.message);
+  }
+  // 4. 상품 조회가 끝난 뒤 -> prod_id 기반으로 채팅룸 조회
+  let chatRoom = null;
+  let chatRoom_error = null;
+
+  if (product?.prod_id) {
+    const { data, error } = await supabase
+      .from("ChatRoom")
+      .select("*")
+      .eq("prod_id", product.prod_id) // ✅ 하드코딩 제거
+      .single();
+    chatRoom = data;
+    chatRoom_error = error;
+    if (chatRoom_error) {
+      console.error("채팅룸 조회 실패:", chatRoom_error.message);
+    }
+  }
+  console.log('채팅룸', chatRoom);
   const tags = product.tag.split(',');
   const images = product.prod_images.split(',');
   return (
@@ -113,7 +137,7 @@ export default async function ProdDetail({ params }) {
               </>
             ) : (
               <>
-                <button className={styles.chat}><Link href={product.user_id === user.id ? "/messages" : `/chat/${product.prod_id}`}>채팅하기</Link></button >
+                <button className={styles.chat}><Link href={product.user_id === user.id ? "/messages" : `/chat/${chatRoom.chat_id}`}>채팅하기</Link></button >
                 <button className={styles.pay}><Link href="/payment_select">결제하기</Link></button >
               </>
             )}
