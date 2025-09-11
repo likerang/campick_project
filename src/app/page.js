@@ -24,9 +24,11 @@ export default async function Home() {
     .order("created_at", { ascending: false }); // 내림차순 정렬
   return (
     <>
+    {/*
       <div>
         {user.email}
       </div>
+    */}
       {/* common_slide_content */}
       <div className={`common_slider_container ${styles.common_slider_container}`}>
         <div className="common_slider_wrapper">
