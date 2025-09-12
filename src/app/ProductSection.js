@@ -26,7 +26,7 @@ export default function ProductSection({ products }) {
                   src={item.prod_images.split(",")[0]}
                   width={250}
                   height={250}
-                  alt=""
+                  alt="캠핑상품"
                 />
               </div>
               <div className="product_info">

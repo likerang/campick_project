@@ -116,7 +116,7 @@ export default async function Home() {
                     src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
-                    alt=""
+                    alt="캠핑상품"
                   />
                 </div>
                 <div className="product_info">
@@ -169,7 +169,7 @@ export default async function Home() {
                     src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
-                    alt=""
+                    alt="캠핑상품"
                   />
                 </div>
                 <div className="product_info">
@@ -220,7 +220,7 @@ export default async function Home() {
                 src="/images/community_img01.jpg"
                 width={312}
                 height={240}
-                alt=""
+                alt="캠핑상품"
               />
             </Link>
           </div>
@@ -283,7 +283,7 @@ export default async function Home() {
                     src={item.prod_images.split(",")[0]}
                     width={250}
                     height={250}
-                    alt=""
+                    alt="캠핑상품"
                   />
                 </div>
                 <div className="product_info">
