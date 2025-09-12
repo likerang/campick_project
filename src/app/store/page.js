@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@supabase/supabase-js";
 import styles from "./page.module.css";
+import BannerSlide from '../slideComponent';
 
 // 환경 변수 검증
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -250,6 +251,14 @@ const mapped = data.map((p) => {
           </ul>
         </nav>
       </div>
+
+      {/* common_slide_content */}
+      <div className={`common_slider_container ${styles.common_slider_container}`}>
+        <div className="common_slider_wrapper">
+          <BannerSlide />
+        </div>
+      </div>
+      {/* common_slide_content */}
 
       <div className={styles.brand_filter}>
         <h3 className="medium_tb">{getCategoryTitle(currentCategory)}</h3>
