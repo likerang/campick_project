@@ -19,9 +19,9 @@ export default async function Mypage() {
             <Image src="/images/user_profile_img.jpg" alt="사용자 프로필" width={72} height={72} />
           </div>
           <div className="user_info">
-            <div>
+            <div className="user_info_inner">
               <h2 id="user_id">{user?.user_metadata.nickname || ("로그인해주세요")}</h2>
-              <Link href="/logout">로그아웃</Link>
+              <Link href="/logout" className="logout">로그아웃</Link>
             </div>
             <ul className="stats_wrapper">
               <li className="stat_item">

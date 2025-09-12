@@ -355,6 +355,26 @@ body {
     gap: var(--spacing-sm);
 }
 
+.user_info_inner {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.user_info .logout {
+    border: 1px solid rgba(255,62,27,.3);
+    color: #ff6b57;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    transition: all .2s ease;
+}
+
+.user_info .logout:hover {
+    background: rgba(255,62,27,.3);
+    color: var(--bg-color-white)
+}
+
 .stats_wrapper {
     display: flex;
     gap: var(--spacing-lg);
