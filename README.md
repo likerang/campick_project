@@ -4,7 +4,7 @@
 - 3차 프로젝트: 2025/08/27 ~ 2025/09/19
 
 ## 🔗 빠른 링크
-- 📑 기획서(피그마 슬라이드): https://www.figma.com/slides/zK4M9g6HWJUNBgfIf2RMCg/%EC%82%BC%EC%82%BC%EC%82%BC?node-id=319-280&t=jhaIZb9Eq8hirOd7-1
+- 📑 기획서(피그마 슬라이드): https://www.figma.com/deck/zK4M9g6HWJUNBgfIf2RMCg/%EC%82%BC%EC%82%BC%EC%82%BC?node-id=33-46&t=Uv1RmEcdwVHOVaK8-1
 - 🎨 디자인 원본(피그마): https://www.figma.com/design/bvrnIg5RzhsIGNqnQJF3Kf/%EC%82%BC%EC%82%BC%EC%82%BC?node-id=0-1&t=sbNQW62e4b4skIbE-1
 
 ---
@@ -20,9 +20,9 @@
 ### 1.2 👥 팀원
 | 이름 | 역할 | 주요 담당 | GitHub |
 | --- | --- | --- | --- |
-| 김영태 | 팀원 · FE 개발 | 레이아웃/컴포넌트, Auth/CRUD, 코드리뷰 | [@kyt0830](https://github.com/kyt0830) |
-| A | 팀장 · 기획/BE | 아키텍처 설계, Supabase 정책, CI/CD | - |
-| B | FE · UI/디자인 | 디자인 시스템, 반응형, 이미지 최적화 | - |
+| 김영태 | 팀장 · FE/BE | 프론트 엔드(메인/상품 상세/채팅(목록, 채팅창) 페이지), Auth, 백엔드 구축 | [@kyt0830](https://github.com/kyt0830) |
+| 박연미 | 팀원 · 기획 · UI/디자인 리드 · FE | 디자인, Auth, 프론트 엔드(로그인/회원가입/결제/검색 페이지) | [@yeonmi0818](https://github.com/yeonmi0818) |
+| 조아랑 | 팀원 · 기획 · UI/디자인 · FE | 디자인, CRUD, 프론트 엔드(마이/판매 상품 목록/스토어 페이지) | [@likerang](https://github.com/likerang) |
 
 ### 1.3 🗓️ 마일스톤
 - **1주차 – 기획/설계**: IA/요구사항 정의, Figma 디자인, DB 스키마 및 RLS 설계  
@@ -109,13 +109,14 @@ npm run dev
 ---
 
 ## 7. 기획/디자인 문서
-- **기획서**: https://www.figma.com/file/XXXX  
-- **디자인 원본**: https://www.figma.com/file/YYYY  
+- **기획서**: https://www.figma.com/deck/zK4M9g6HWJUNBgfIf2RMCg/%EC%82%BC%EC%82%BC%EC%82%BC?node-id=33-46&t=Uv1RmEcdwVHOVaK8-1  
+- **디자인 원본**: https://www.figma.com/design/bvrnIg5RzhsIGNqnQJF3Kf/%EC%82%BC%EC%82%BC%EC%82%BC?node-id=0-1&t=sbNQW62e4b4skIbE-1
 
 ---
 
 ## 8. 미리보기
-[![사이트 미리보기](./public/readme/preview.png)](https://campick.vercel.app "사이트 보기")
+[![사이트 미리보기](./public/readme/figma-slides-thumb.png)](https://www.figma.com/deck/zK4M9g6HWJUNBgfIf2RMCg/%EC%82%BC%EC%82%BC%EC%82%BC?node-id=33-46&t=Uv1RmEcdwVHOVaK8-1 "피그마 슬라이드로 이동")
+[![사이트 미리보기](./public/readme/figma-design-thumb.png)](https://www.figma.com/design/bvrnIg5RzhsIGNqnQJF3Kf/%EC%82%BC%EC%82%BC%EC%82%BC?node-id=0-1&t=sbNQW62e4b4skIbE-1 "피그마 디자인으로 이동")
 
 ---
 
