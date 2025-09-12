@@ -19,7 +19,10 @@ export default async function Mypage() {
             <Image src="/images/user_profile_img.jpg" alt="사용자 프로필" width={72} height={72} />
           </div>
           <div className="user_info">
-            <h2 id="user_id">{user?.user_metadata.nickname || ("로그인해주세요")}</h2>
+            <div>
+              <h2 id="user_id">{user?.user_metadata.nickname || ("로그인해주세요")}</h2>
+              <Link href="/logout">로그아웃</Link>
+            </div>
             <ul className="stats_wrapper">
               <li className="stat_item">
                 <h4 className="stat_title">게시글</h4>
@@ -36,7 +39,6 @@ export default async function Mypage() {
             </ul>
           </div>
         </div>
-
         <div className="point_card">
           <h3 className="point_title">캠픽페이</h3>
           <p className="point_value">5,000,000 원</p>
