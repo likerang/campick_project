@@ -64,8 +64,8 @@ export default function ChatTabs({ seller_chat, buyer_chat, product }) {
                   />
                 </div>
                 <div className={styles.chat_info}>
-                  <h4 className={`small_tr ${styles.chat_userid}`}>캠핑이조아랑</h4>
-                  <p className={`xsmall_tr ${styles.chat_message}`}>안녕하세요! 오늘 직거래 가능 한가요?</p>
+                  <h4 className={`small_tr ${styles.chat_userid}`}>유저 정보</h4>
+                  <p className={`xsmall_tr ${styles.chat_message}`}>메세지 정보</p>
                   <span className={styles.chat_time}>30분 전</span>
                 </div>
               </Link>
