@@ -40,21 +40,77 @@ export default function Salelist() {
 
   const router = useRouter();
 
-  /* DB > 상품 불러오기 */
+  /* 유저 정보 가져오기 */
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        setUserLoading(true);
+
+        // 세션부터 확인
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        console.log('세션 정보:', session);
+
+        if (sessionError) {
+          console.error('세션 오류:', sessionError);
+          setUser(null);
+          return;
+        }
+
+        if (!session) {
+          console.log('세션이 없습니다 - 로그인되지 않음');
+          setUser(null);
+          return;
+        }
+
+        // 유저 정보 가져오기
+        const { data: { user }, error } = await supabase.auth.getUser();
+        console.log('유저 정보:', user);
+
+        if (error) {
+          console.error('유저 정보 조회 실패:', error);
+          setUser(null);
+          return;
+        }
+
+        setUser(user);
+      } catch (error) {
+        console.error('예외 발생:', error);
+        setUser(null);
+      } finally {
+        setUserLoading(false);
+      }
+    };
+
+    getUser();
+  }, []);
+
+  /* DB > 상품 불러오기 - user 정보가 로드된 후에만 실행 */
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         setError(null);
 
+        // user가 없으면 빈 배열로 설정하고 종료
+        if (!user || !user.id) {
+          console.log('사용자 정보가 없습니다.');
+          setProducts([]);
+          return;
+        }
+
+        console.log('사용자 ID로 상품 조회:', user.id);
+
         let { data, error } = await supabase
           .from("Product")
           .select("*")
+          .eq('user_id', user.id)
           .order("created_at", { ascending: false });
-        
+
         if (error) {
           console.error("상품 불러오기 실패:", error.message, error.status, error.details);
-          console.log("더미 데이터를 사용합니다.");
+          setError("상품을 불러오는 중 오류가 발생했습니다.");
+          setProducts([]);
+          return;
         }
 
         if (!data || !Array.isArray(data)) {
@@ -76,6 +132,7 @@ export default function Salelist() {
           isSoldout: p.prod_status === 0,
         }));
 
+        console.log('매핑된 상품 데이터:', mapped);
         setProducts(mapped);
       } catch (err) {
         console.error("상품 불러오기 중 오류:", err);
@@ -86,49 +143,28 @@ export default function Salelist() {
       }
     };
 
-    fetchProducts();
-  }, []);
+    // userLoading이 완료되고 user 정보가 있을 때만 상품을 불러옴
+    if (!userLoading) {
+      fetchProducts();
+    }
+  }, [user, userLoading]); // user와 userLoading 상태에 의존
 
-  /* 유저 정보 가져오기 */
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        setUserLoading(true);
-        
-        // 세션부터 확인
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        console.log('세션 정보:', session);
-        
-        if (sessionError) {
-          console.error('세션 오류:', sessionError);
-          return;
-        }
-        
-        if (!session) {
-          console.log('세션이 없습니다 - 로그인되지 않음');
-          setUser(null);
-          return;
-        }
-        
-        // 유저 정보 가져오기
-        const { data: { user }, error } = await supabase.auth.getUser();
-        console.log('유저 정보:', user);
-        
-        if (error) {
-          console.error('유저 정보 조회 실패:', error);
-          return;
-        }
-        
-        setUser(user);
-      } catch (error) {
-        console.error('예외 발생:', error);
-      } finally {
-        setUserLoading(false);
-      }
-    };
-    
-    getUser();
-  }, []);
+  // 로딩 상태 처리
+  if (userLoading) {
+    return <div>사용자 정보를 불러오는 중...</div>;
+  }
+
+  if (!user) {
+    return <div>로그인이 필요합니다.</div>;
+  }
+
+  if (loading) {
+    return <div>상품을 불러오는 중...</div>;
+  }
+
+  if (error) {
+    return <div>오류: {error}</div>;
+  }
 
   /* 탭 클릭 */
   function handleTabClick(tabName) {
@@ -168,7 +204,7 @@ export default function Salelist() {
           .from('Product')
           .update({ prod_status: 0 }) // 0 = 판매완료
           .eq('prod_id', selectedProduct.id);
-        
+
         if (error) {
           console.error('상태 변경 실패:', error);
           alert('상태 변경에 실패했습니다.');
@@ -202,7 +238,7 @@ export default function Salelist() {
           .from('Product')
           .update({ prod_status: 1 }) // 1 = 판매중
           .eq('prod_id', selectedProduct.id);
-        
+
         if (error) {
           console.error('상태 변경 실패:', error);
           alert('상태 변경에 실패했습니다.');
@@ -240,10 +276,10 @@ export default function Salelist() {
   async function handleDelete() {
     if (!selectedProduct) return;
     if (!confirm('정말 삭제하시겠습니까?')) return;
-    
+
     try {
       console.log('삭제할 상품 ID:', selectedProduct.id);
-      
+
       // 삭제 실행
       const { data, error } = await supabase
         .from('Product')
@@ -266,7 +302,7 @@ export default function Salelist() {
 
       // 삭제 완료 메시지
       alert('삭제가 완료되었습니다.');
-      
+
       closePopup();
     } catch (err) {
       console.error('삭제 중 오류:', err);
@@ -297,10 +333,10 @@ export default function Salelist() {
             <Image src="/images/user_profile_img.jpg" width={72} height={72} alt="사용자 프로필" />
           </div>
           <div className="user_info">
-          <h2 id="user_id">
-            {user ? user.user_metadata?.nickname : "유저 없음"}
-            {/* 디버깅: {JSON.stringify(user)} */}
-          </h2>
+            <h2 id="user_id">
+              {user ? user.user_metadata?.nickname : "유저 없음"}
+              {/* 디버깅: {JSON.stringify(user)} */}
+            </h2>
             <ul className="stats_wrapper">
               <li className="stat_item">
                 <h4 className="stat_title">게시글</h4>
@@ -329,18 +365,18 @@ export default function Salelist() {
       </div>
 
       <div className={styles.tab_menu}>
-        <Link 
-          href="#" 
-          className={activeTab === 'selling' ? styles.active : ''} 
+        <Link
+          href="#"
+          className={activeTab === 'selling' ? styles.active : ''}
           onClick={(e) => {
             e.preventDefault();
             handleTabClick('selling');
           }}>
           판매중
         </Link>
-        <Link 
-          href="#" 
-          className={activeTab === 'soldout' ? styles.active : ''} 
+        <Link
+          href="#"
+          className={activeTab === 'soldout' ? styles.active : ''}
           onClick={(e) => {
             e.preventDefault();
             handleTabClick('soldout');
@@ -378,17 +414,17 @@ export default function Salelist() {
           </li>
         ) : (
           displayProducts.map((product) => (
-            <li 
-              key={product.id} 
+            <li
+              key={product.id}
               className={`${styles.product_card_2col} ${product.isSoldout ? styles.disable : ''}`}
             >
               <Link href={`/prod_detail/${product.id}`}>
-                {product.isSoldout && 
-                <div className={styles.soldout_badge}>판매 완료</div>}
+                {product.isSoldout &&
+                  <div className={styles.soldout_badge}>판매 완료</div>}
                 <div className={styles.product_image}>
-                  <Image 
-                    src={product.image.split(",")[0]} 
-                    width={357} 
+                  <Image
+                    src={product.image.split(",")[0]}
+                    width={357}
                     height={357}
                     alt={product.title}
                   />
@@ -424,9 +460,9 @@ export default function Salelist() {
                   </div>
                 </div>
               </Link>
-              
+
               {/* 더보기 버튼 */}
-              <button 
+              <button
                 className={styles.more_btn}
                 onClick={() => handleMoreClick(product)}
               >
@@ -436,11 +472,11 @@ export default function Salelist() {
           ))
         )}
       </ul>
-      
+
       {(popupState !== 'hidden') && (
         <>
           <div className="overlay active" onClick={closePopup}></div>
-          
+
           <div className={`more_popup ${popupState === 'active' ? 'active' : ''}`}>
             <ul>
               {selectedProduct && !selectedProduct.isSoldout ? (
