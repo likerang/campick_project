@@ -137,7 +137,11 @@ export default async function ProdDetail({ params }) {
               </>
             ) : (
               <>
-                <button className={styles.chat}><Link href={user && product.user_id === user.id ? "/messages" : `/chat/${chatRoom.chat_id}`}>채팅하기</Link></button >
+                <button className={styles.chat}>
+                  <Link href={user && product.user_id === user.id ? "/messages" : chatRoom ? `/chat/${chatRoom.chat_id}` : '#' }>
+                    채팅하기
+                  </Link>
+                </button >
                 <button className={styles.pay}><Link href="/payment_select">결제하기</Link></button >
               </>
             )}

@@ -54,7 +54,6 @@ export default async function RootLayout({ children }) {
           <footer>
             <div className="footer_logo">
               <Link href="/">
-                <a>
                   <Image
                     src="/images/logo_white.png"
                     alt="campick logo"
@@ -62,7 +61,6 @@ export default async function RootLayout({ children }) {
                     height={69}
                   />
                   <span className="ir_pm">campick</span>
-                </a>
               </Link>
             </div>
             <nav>
