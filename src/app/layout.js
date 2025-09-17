@@ -1,26 +1,11 @@
-
-
 import { createClient } from "../utils/supabase/server";
-import Image from "next/image";
-import Link from 'next/link';
 import AddProdButton from "./AddProdButton";
 import "./css/reset.css";
-import './globals.css'
+import "./globals.css";
 import "./css/header.css";
 import "./css/footer.css";
 
-
-// 폰트 설정 예시
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
+import HeaderClient from "./HeaderClient";
 
 export const metadata = {
   title: "Campick",
@@ -31,7 +16,7 @@ export const metadata = {
       { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon/android-icon-192x192.png", sizes: "192x192", type: "image/png" }
+      { url: "/favicon/android-icon-192x192.png", sizes: "192x192", type: "image/png" },
     ],
   },
   apple: [
@@ -44,145 +29,46 @@ export const metadata = {
     { url: "/favicon/apple-icon-144x144.png", sizes: "144x144" },
     { url: "/favicon/apple-icon-152x152.png", sizes: "152x152" },
     { url: "/favicon/apple-icon-180x180.png", sizes: "180x180" },
-    { url: "/favicon/apple-touch-icon.png" }
+    { url: "/favicon/apple-touch-icon.png" },
   ],
-  manifest: "/favicon/manifest.json"
-}
-
+  manifest: "/favicon/manifest.json",
+};
 
 export default async function RootLayout({ children }) {
-  const supabase = await createClient(); // await 추가 필요
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  console.log(user);
+
   return (
     <html lang="ko">
       <body>
         <div className="container">
           {/* 상품등록 버튼 */}
           <AddProdButton />
-          {/* //상품등록 버튼 */}
-          <header>
-            <div className="header_top">
-              <h1 className="logo">
-                <Link href="/">
-                  <Image
-                    src="/images/logo_black.png"
-                    alt="campick logo"
-                    width={120}
-                    height={49}
-                  />
-                  <span className="ir_pm">campick</span>
-                </Link>
-              </h1>
-              <Link href="/search" className="search_area">
-                <input type="text" placeholder="어떤 캠핑 정보를 찾으시나요?" />
-                <button type="button"></button>
-              </Link>
-              <nav className="user_menu">
-                <ul>
-                  <li>
-                    <Link href="/messages">
-                      <Image
-                        src="/images/header_chat.svg"
-                        alt="메세지"
-                        width={14}
-                        height={14}
-                      />
-                      <span className="ir_pm">메세지</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/notifications">
-                      <Image
-                        src="/images/header_notifications.svg"
-                        alt="알림"
-                        width={14}
-                        height={14}
-                      />
-                      <span className="ir_pm">알림</span>
-                    </Link>
-                  </li>
-                  <li>
-                    {user ? (<Link href="/mypage">
-                      <Image
-                        src="/images/header_person.svg"
-                        alt="로그인"
-                        width={14}
-                        height={14}
-                      />
-                      <span className="ir_pm">마이페이지</span>
-                    </Link>
-                    ) : (
-                      <Link href="/login">
-                        <Image
-                          src="/images/header_person.svg"
-                          alt="로그인"
-                          width={14}
-                          height={14}
-                        />
-                        <span className="ir_pm">로그인</span>
-                      </Link>
-                    )}
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <nav className="gnb">
-              <ul>
-                <li><Link className="small_tr" href="/">전체</Link></li>
-                <li><Link className="small_tr" href="/store">중고거래</Link></li>
-                <li><Link className="small_tr" href="/brands">브랜드</Link></li>
-                <li><Link className="small_tr" href="/community">커뮤니티</Link></li>
-              </ul>
-            </nav>
-          </header>
-          <main>
-            {children}
-          </main>
+          {/* 헤더 */}
+          <HeaderClient serverUser={user} />
+          {/* 메인 */}
+          <main>{children}</main>
+          {/* 푸터 */}
           <footer>
             <div className="footer_logo">
-              <Link href="/">
-                <Image
+              <a href="/">
+                <img
                   src="/images/logo_white.png"
                   alt="campick logo"
                   width={168}
                   height={69}
                 />
                 <span className="ir_pm">campick</span>
-              </Link>
+              </a>
             </div>
             <nav>
               <ul className="nav_links small_tb">
-                <li>
-                  <Link href="/terms">
-                    <span>이용약관</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy">
-                    <span>개인정보처리방침</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/guide">
-                    <span>이용안내</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/notice">
-                    <span>공지사항</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/content">
-                    <span>콘텐츠</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/partnership">
-                    <span>입점/제휴문의</span>
-                  </Link>
-                </li>
+                <li><a href="/terms"><span>이용약관</span></a></li>
+                <li><a href="/privacy"><span>개인정보처리방침</span></a></li>
+                <li><a href="/guide"><span>이용안내</span></a></li>
+                <li><a href="/notice"><span>공지사항</span></a></li>
+                <li><a href="/content"><span>콘텐츠</span></a></li>
+                <li><a href="/partnership"><span>입점/제휴문의</span></a></li>
               </ul>
             </nav>
             <div className="footer_content small_tr">
@@ -222,7 +108,7 @@ export default async function RootLayout({ children }) {
             </p>
           </footer>
         </div>
-      </body >
-    </html >
+      </body>
+    </html>
   );
 }

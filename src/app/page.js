@@ -106,7 +106,11 @@ export default async function Home() {
 
       {/* keyword_product_content  */}
       <div className={styles.keyword_product_content}>
-        <h3 className={`medium_tb ${styles.keyword_product_title}`}>식집사에요 님이 주목하는 키워드 상품</h3>
+      <h3 className={`medium_tb ${styles.keyword_product_title}`}>
+        {user?.user_metadata?.nickname 
+          ? `${user.user_metadata.nickname}님이`
+          : "유저들이"} 주목하는 키워드 상품
+      </h3>
         <ul className={`product_list_wrapper ${styles.product_list_wrapper}`}>
           {product.slice(0, 3).map(item =>
             <li className="product_card" key={item.prod_id}>
