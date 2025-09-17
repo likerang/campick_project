@@ -6,6 +6,8 @@ import "./css/header.css";
 import "./css/footer.css";
 
 import HeaderClient from "./HeaderClient";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata = {
   title: "Campick",
@@ -51,24 +53,26 @@ export default async function RootLayout({ children }) {
           {/* 푸터 */}
           <footer>
             <div className="footer_logo">
-              <a href="/">
-                <img
-                  src="/images/logo_white.png"
-                  alt="campick logo"
-                  width={168}
-                  height={69}
-                />
-                <span className="ir_pm">campick</span>
-              </a>
+              <Link href="/">
+                <a>
+                  <Image
+                    src="/images/logo_white.png"
+                    alt="campick logo"
+                    width={168}
+                    height={69}
+                  />
+                  <span className="ir_pm">campick</span>
+                </a>
+              </Link>
             </div>
             <nav>
               <ul className="nav_links small_tb">
-                <li><a href="/terms"><span>이용약관</span></a></li>
-                <li><a href="/privacy"><span>개인정보처리방침</span></a></li>
-                <li><a href="/guide"><span>이용안내</span></a></li>
-                <li><a href="/notice"><span>공지사항</span></a></li>
-                <li><a href="/content"><span>콘텐츠</span></a></li>
-                <li><a href="/partnership"><span>입점/제휴문의</span></a></li>
+                <li><Link href="/terms"><span>이용약관</span></Link></li>
+                <li><Link href="/privacy"><span>개인정보처리방침</span></Link></li>
+                <li><Link href="/guide"><span>이용안내</span></Link></li>
+                <li><Link href="/notice"><span>공지사항</span></Link></li>
+                <li><Link href="/content"><span>콘텐츠</span></Link></li>
+                <li><Link href="/partnership"><span>입점/제휴문의</span></Link></li>
               </ul>
             </nav>
             <div className="footer_content small_tr">
@@ -79,7 +83,7 @@ export default async function RootLayout({ children }) {
                   <p>통신판매업신고:2025-서울중부-3256호 | 서울시영등포구청</p>
                   <address>본사:서울 영등포구 0452-0684(예금주:주식회사 캠픽)</address>
                   <address>주소:서울특별시 중구로 수표로 96, 2층 (국일빌딩멜파스)</address>
-                  <p>비즈니스 문의:<a href="mailto:abiz@campick.co">abiz@campick.co</a></p>
+                  <p>비즈니스 문의: <a href="mailto:abiz@campick.co">abiz@campick.co</a></p>
                 </div>
               </div>
               <div className="customer_service">
